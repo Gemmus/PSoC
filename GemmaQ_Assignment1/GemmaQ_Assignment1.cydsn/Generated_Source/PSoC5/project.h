@@ -23,6 +23,8 @@
 #include "LED1.h"
 #include "Button_aliases.h"
 #include "Button.h"
+#include "UART.h"
+#include "UART_IntClock.h"
 #include "core_cm3_psoc5.h"
 #include "CyDmac.h"
 #include "CyFlash.h"
