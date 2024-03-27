@@ -26,13 +26,12 @@ int main(void)
     for(;;)  /* Forever loop */
     {
         if (!Button_Read()) {
-            LED1_Write(counter % 2);
+            LED1_Write(counter++ % 2);
             if (counter % 2 == 0) {
-                CyDelay(800);
-            } else {
                 CyDelay(200);
+            } else {
+                CyDelay(800);
             }
-            counter++;
         }
         if (UART_GetChar()) {
             sprintf(str, "%d\r\n", counter);
