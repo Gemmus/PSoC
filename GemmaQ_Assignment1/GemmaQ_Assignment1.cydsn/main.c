@@ -17,11 +17,12 @@ int main(void)
 
     for(;;)  /* Forever loop */
     {
-        /* Place your application code here. */
+        if (!Button_Read()) {
         LED1_Write(1);
         CyDelay(200); 
         LED1_Write(0);
         CyDelay(800);
+        }
     }
 }
 

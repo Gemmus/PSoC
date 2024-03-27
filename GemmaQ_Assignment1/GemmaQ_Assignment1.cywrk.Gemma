@@ -107,6 +107,7 @@
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\Button.lst</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
@@ -130,27 +131,6 @@
 <VisibleNodeIds>
 <v>GemmaQ_Assignment1</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\LED1.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment1.elf</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment1.hex</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment1.map</v>
-<v>GemmaQ_Assignment1\GemmaQ_Assignment1\GemmaQ_Assignment1.gpdsc</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\GemmaQ_Assignment1.rpt</v>
 <v>GemmaQ_Assignment1\GemmaQ_Assignment1\GemmaQ_Assignment1_timing.html</v>
 </VisibleNodeIds>
