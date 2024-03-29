@@ -1,0 +1,6 @@
+C:\Users\Gemma\Desktop\PSoC\TimerInterrupt_example\TimerInterrupt_example.cydsn\TimerInterrupt_example.cyprj|2d455251-8d32-43cb-9e6c-953adba9516c
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|29ad7e83-e092-4c8a-bda3-334e72430535
+C:\Users\Gemma\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|0c0d7f4a-825b-4ee3-9fe5-b036ad816cb4
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|552e5f74-6738-4de4-9197-5149218090a1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|6e37c83e-3702-44ff-9778-b0a0c9dce4c2
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|f5b7a72d-290f-4028-b465-988557622ec6
