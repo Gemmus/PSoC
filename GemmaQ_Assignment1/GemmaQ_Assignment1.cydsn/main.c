@@ -16,13 +16,13 @@
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
-   
+  
+    UART_Start();
+    UART_PutString(str);
+    
     uint8 counter = 0;
     char str[20] = {"Gemma Qin\r\n"}; /* \r: ASCII 13, \n: ASCII 10 */
     
-    UART_Start();
-    UART_PutString(str);
-
     for(;;)  /* Forever loop */
     {
         if (!Button_Read()) {
