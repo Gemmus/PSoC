@@ -28,7 +28,6 @@
 ********************************************************************************/
 /* `#START Button_isr_intc` */
 #include "project.h"
-uint8 btn_pressed = 0;
 /* `#END` */
 
 #ifndef CYINT_IRQ_BASE
@@ -166,7 +165,11 @@ CY_ISR(Button_isr_Interrupt)
 
     /*  Place your Interrupt code here. */
     /* `#START Button_isr_Interrupt` */
-    btn_pressed = 1;
+        UART_PutString("Interrupt event!\r\n");
+        BlueLED_Write(0);
+        CyDelay(10000);
+        Button_ClearInterrupt();
+  
     /* `#END` */
 }
 
