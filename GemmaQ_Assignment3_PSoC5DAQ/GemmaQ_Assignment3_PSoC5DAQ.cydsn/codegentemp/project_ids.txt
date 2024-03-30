@@ -1,0 +1,9 @@
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|080d308e-a55e-4c18-9852-54197a6af54d
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|29ad7e83-e092-4c8a-bda3-334e72430535
+C:\Users\Gemma\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|0c0d7f4a-825b-4ee3-9fe5-b036ad816cb4
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|552e5f74-6738-4de4-9197-5149218090a1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|6e37c83e-3702-44ff-9778-b0a0c9dce4c2
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|f5b7a72d-290f-4028-b465-988557622ec6
+C:\Users\Gemma\Documents\PSoC Creator\My Templates\GemmaQ_Assignment2.cydsn\GemmaQ_Assignment2.cyprj|f4e68453-db7a-436f-9389-f5feaf7471f6
+C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment3_PSoC5DAQ\GemmaQ_Assignment3_PSoC5DAQ.cydsn\GemmaQ_Assignment3_PSoC5DAQ.cyprj|dc1c3487-b890-4e7a-a5fb-30560f9ca75f
+C:\Users\Gemma\Documents\PSoC Creator\My Templates\GemmaQ_Assignment1.cydsn\GemmaQ_Assignment1.cyprj|e1ddee1c-756c-4623-b91b-abd3dd6e23d6

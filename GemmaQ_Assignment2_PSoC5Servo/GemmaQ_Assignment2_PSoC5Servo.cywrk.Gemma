@@ -227,6 +227,7 @@
 <OpenDocs>
 <name v=".\GemmaQ_Assignment2_PSoC5Servo.cydsn\TopDesign\TopDesign.cysch" />
 <name v=".\GemmaQ_Assignment2_PSoC5Servo.cydsn\main.c" />
+<name v=".\GemmaQ_Assignment2_PSoC5Servo.cydsn\GemmaQ_Assignment2_PSoC5Servo.cydwr" />
 </OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
@@ -234,7 +235,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="473, 823" SelectedTabbedMdiWindow="8871800c-d936-4649-95f0-4c17cadf8bc2"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="2ec431b7-245e-4e60-b4cd-6b7ca3a22247" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\TopDesign\TopDesign.cysch" Guid="f45a0e56-52e7-4af6-bb6b-1bdbd7f64026" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\main.c" Guid="8871800c-d936-4649-95f0-4c17cadf8bc2" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="727, 823" SelectedTabbedMdiWindow="5bd0ff23-5d96-4e69-a8e7-6d2092a69730"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="2ec431b7-245e-4e60-b4cd-6b7ca3a22247" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\TopDesign\TopDesign.cysch" Guid="f45a0e56-52e7-4af6-bb6b-1bdbd7f64026" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\main.c" Guid="8871800c-d936-4649-95f0-4c17cadf8bc2" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\GemmaQ_Assignment2_PSoC5Servo.cydwr" Guid="5bd0ff23-5d96-4e69-a8e7-6d2092a69730" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
