@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 1
 
 
    1              		.syntax unified
@@ -40,12 +40,11 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
   10:main.c        **** */
   11:main.c        **** 
   12:main.c        **** #include <stdio.h>
-  13:main.c        **** #include <string.h>
-  14:main.c        **** #include "project.h"
-  15:main.c        **** 
-  16:main.c        **** int main(void)
-  17:main.c        **** {
-  28              		.loc 1 17 0
+  13:main.c        **** #include "project.h"
+  14:main.c        **** 
+  15:main.c        **** int main(void)
+  16:main.c        **** {
+  28              		.loc 1 16 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 24
   31              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -56,17 +55,18 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
   36              		.cfi_offset 14, -4
   37 0002 87B0     		sub	sp, sp, #28
   38              		.cfi_def_cfa_offset 40
-  18:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
-  39              		.loc 1 18 0
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 2
-
-
+  17:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  39              		.loc 1 17 0
   40              		.syntax unified
-  41              	@ 18 "main.c" 1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 2
+
+
+  41              	@ 17 "main.c" 1
   42 0004 62B6     		CPSIE   i
   43              	@ 0 "" 2
   44              	.LVL0:
-  19:main.c        ****    
+  18:main.c        ****   
+  19:main.c        ****     /* Variables */
   20:main.c        ****     uint8 counter = 0;
   21:main.c        ****     char str[20] = {"Gemma Qin\r\n"}; /* \r: ASCII 13, \n: ASCII 10 */
   45              		.loc 1 21 0
@@ -80,82 +80,85 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
   53 0014 0495     		str	r5, [sp, #16]
   54 0016 0595     		str	r5, [sp, #20]
   22:main.c        ****     
-  23:main.c        ****     UART_Start();
-  55              		.loc 1 23 0
+  23:main.c        ****     /* Initialisation of components*/
+  24:main.c        ****     UART_Start();
+  55              		.loc 1 24 0
   56 0018 FFF7FEFF 		bl	UART_Start
   57              	.LVL1:
-  24:main.c        ****     UART_PutString(str);
-  58              		.loc 1 24 0
+  25:main.c        **** 
+  26:main.c        ****     /* UART transmission of string */
+  27:main.c        ****     UART_PutString(str);
+  58              		.loc 1 27 0
   59 001c 2046     		mov	r0, r4
   60 001e FFF7FEFF 		bl	UART_PutString
   61              	.LVL2:
   62              	.L2:
-  25:main.c        **** 
-  26:main.c        ****     for(;;)  /* Forever loop */
-  27:main.c        ****     {
-  28:main.c        ****         if (!Button_Read()) {
-  63              		.loc 1 28 0
+  28:main.c        ****     
+  29:main.c        ****     for(;;)  /* Forever loop */
+  30:main.c        ****     {
+  31:main.c        ****         if (!Button_Read()) {
+  63              		.loc 1 31 0
   64 0022 FFF7FEFF 		bl	Button_Read
   65              	.LVL3:
   66 0026 90B9     		cbnz	r0, .L3
-  29:main.c        ****             LED1_Write(counter++ % 2);
-  67              		.loc 1 29 0
+  32:main.c        ****             LED1_Write(counter++ % 2);
+  67              		.loc 1 32 0
   68 0028 6C1C     		adds	r4, r5, #1
   69 002a E4B2     		uxtb	r4, r4
   70              	.LVL4:
   71 002c 05F00100 		and	r0, r5, #1
   72 0030 FFF7FEFF 		bl	LED1_Write
   73              	.LVL5:
-  30:main.c        ****             if (counter % 2 == 0) {
-  74              		.loc 1 30 0
+  33:main.c        ****             if (counter % 2 == 0) {
+  74              		.loc 1 33 0
   75 0034 14F0010F 		tst	r4, #1
   76 0038 04D1     		bne	.L4
-  31:main.c        ****                 CyDelay(200);
-  77              		.loc 1 31 0
+  34:main.c        ****                 CyDelay(200);   // 200 ms ON
+  77              		.loc 1 34 0
   78 003a C820     		movs	r0, #200
   79 003c FFF7FEFF 		bl	CyDelay
   80              	.LVL6:
-  29:main.c        ****             LED1_Write(counter++ % 2);
-  81              		.loc 1 29 0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 3
+
+
+  32:main.c        ****             LED1_Write(counter++ % 2);
+  81              		.loc 1 32 0
   82 0040 2546     		mov	r5, r4
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 3
-
-
   83 0042 04E0     		b	.L3
   84              	.L4:
-  32:main.c        ****             } else {
-  33:main.c        ****                 CyDelay(800);
-  85              		.loc 1 33 0
+  35:main.c        ****             } else {
+  36:main.c        ****                 CyDelay(800);   // 800 ms OFF 
+  85              		.loc 1 36 0
   86 0044 4FF44870 		mov	r0, #800
   87 0048 FFF7FEFF 		bl	CyDelay
   88              	.LVL7:
-  29:main.c        ****             if (counter % 2 == 0) {
-  89              		.loc 1 29 0
+  32:main.c        ****             if (counter % 2 == 0) {
+  89              		.loc 1 32 0
   90 004c 2546     		mov	r5, r4
   91              	.LVL8:
   92              	.L3:
-  34:main.c        ****             }
-  35:main.c        ****         }
-  36:main.c        ****         if (UART_GetChar()) {
-  93              		.loc 1 36 0
+  37:main.c        ****             }
+  38:main.c        ****         }
+  39:main.c        ****         if (UART_GetChar()) {
+  93              		.loc 1 39 0
   94 004e FFF7FEFF 		bl	UART_GetChar
   95              	.LVL9:
   96 0052 0028     		cmp	r0, #0
   97 0054 E5D0     		beq	.L2
-  37:main.c        ****             sprintf(str, "%d\r\n", counter);
-  98              		.loc 1 37 0
+  40:main.c        ****             sprintf(str, "%d\r\n", counter);
+  98              		.loc 1 40 0
   99 0056 2A46     		mov	r2, r5
  100 0058 0649     		ldr	r1, .L7+4
  101 005a 01A8     		add	r0, sp, #4
  102 005c FFF7FEFF 		bl	sprintf
  103              	.LVL10:
-  38:main.c        ****             UART_PutString(str);
- 104              		.loc 1 38 0
+  41:main.c        ****             UART_PutString(str);
+ 104              		.loc 1 41 0
  105 0060 01A8     		add	r0, sp, #4
  106 0062 FFF7FEFF 		bl	UART_PutString
  107              	.LVL11:
-  39:main.c        ****             CyDelay(1000);
- 108              		.loc 1 39 0
+  42:main.c        ****             CyDelay(1000);
+ 108              		.loc 1 42 0
  109 0066 4FF47A70 		mov	r0, #1000
  110 006a FFF7FEFF 		bl	CyDelay
  111              	.LVL12:
@@ -175,12 +178,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  125 0000 47656D6D 		.ascii	"Gemma Qin\015\012\000"
  125      61205169 
  125      6E0D0A00 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 4
+
+
  126 000c 00000000 		.space	8
  126      00000000 
  127              		.section	.rodata.str1.4,"aMS",%progbits,1
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 4
-
-
  128              		.align	2
  129              	.LC1:
  130 0000 25640D0A 		.ascii	"%d\015\012\000"
@@ -235,12 +238,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  178 004d 04       		.byte	0x4
  179 004e 05       		.byte	0x5
  180 004f C8010000 		.4byte	.LASF4
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 5
+
+
  181 0053 02       		.uleb128 0x2
  182 0054 04       		.byte	0x4
  183 0055 07       		.byte	0x7
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 5
-
-
  184 0056 07010000 		.4byte	.LASF5
  185 005a 02       		.uleb128 0x2
  186 005b 08       		.byte	0x8
@@ -291,16 +294,16 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  231 00b0 06       		.uleb128 0x6
  232 00b1 4B010000 		.4byte	.LASF28
  233 00b5 01       		.byte	0x1
- 234 00b6 10       		.byte	0x10
+ 234 00b6 0F       		.byte	0xf
  235 00b7 68000000 		.4byte	0x68
  236 00bb 00000000 		.4byte	.LFB64
  237 00bf 78000000 		.4byte	.LFE64-.LFB64
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 6
+
+
  238 00c3 01       		.uleb128 0x1
  239 00c4 9C       		.byte	0x9c
  240 00c5 9D010000 		.4byte	0x19d
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 6
-
-
  241 00c9 07       		.uleb128 0x7
  242 00ca 1B000000 		.4byte	.LASF17
  243 00ce 01       		.byte	0x1
@@ -355,12 +358,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  292 0132 02       		.uleb128 0x2
  293 0133 08       		.byte	0x8
  294 0134 C8       		.byte	0xc8
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 7
+
+
  295 0135 00       		.byte	0
  296 0136 0A       		.uleb128 0xa
  297 0137 4C000000 		.4byte	.LVL7
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 7
-
-
  298 013b EA010000 		.4byte	0x1ea
  299 013f 4B010000 		.4byte	0x14b
  300 0143 0B       		.uleb128 0xb
@@ -415,12 +418,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  349 0196 50       		.byte	0x50
  350 0197 03       		.uleb128 0x3
  351 0198 0A       		.byte	0xa
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 8
+
+
  352 0199 E803     		.2byte	0x3e8
  353 019b 00       		.byte	0
  354 019c 00       		.byte	0
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 8
-
-
  355 019d 0D       		.uleb128 0xd
  356 019e 84000000 		.4byte	0x84
  357 01a2 AD010000 		.4byte	0x1ad
@@ -475,12 +478,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  406              	.Ldebug_abbrev0:
  407 0000 01       		.uleb128 0x1
  408 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 9
+
+
  409 0002 01       		.byte	0x1
  410 0003 25       		.uleb128 0x25
  411 0004 0E       		.uleb128 0xe
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 9
-
-
  412 0005 13       		.uleb128 0x13
  413 0006 0B       		.uleb128 0xb
  414 0007 03       		.uleb128 0x3
@@ -535,12 +538,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  463 0038 00       		.byte	0
  464 0039 03       		.uleb128 0x3
  465 003a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 10
+
+
  466 003b 3A       		.uleb128 0x3a
  467 003c 0B       		.uleb128 0xb
  468 003d 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 10
-
-
  469 003e 05       		.uleb128 0x5
  470 003f 49       		.uleb128 0x49
  471 0040 13       		.uleb128 0x13
@@ -595,12 +598,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  520 0073 00       		.byte	0
  521 0074 03       		.uleb128 0x3
  522 0075 08       		.uleb128 0x8
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 11
+
+
  523 0076 3A       		.uleb128 0x3a
  524 0077 0B       		.uleb128 0xb
  525 0078 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 11
-
-
  526 0079 0B       		.uleb128 0xb
  527 007a 49       		.uleb128 0x49
  528 007b 13       		.uleb128 0x13
@@ -655,12 +658,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  577 00b5 13       		.uleb128 0x13
  578 00b6 00       		.byte	0
  579 00b7 00       		.byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 12
+
+
  580 00b8 0E       		.uleb128 0xe
  581 00b9 21       		.uleb128 0x21
  582 00ba 00       		.byte	0
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 12
-
-
  583 00bb 49       		.uleb128 0x49
  584 00bc 13       		.uleb128 0x13
  585 00bd 2F       		.uleb128 0x2f
@@ -715,12 +718,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  634 0000 06000000 		.4byte	.LVL0
  635 0004 22000000 		.4byte	.LVL2
  636 0008 0200     		.2byte	0x2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 13
+
+
  637 000a 30       		.byte	0x30
  638 000b 9F       		.byte	0x9f
  639 000c 22000000 		.4byte	.LVL2
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 13
-
-
  640 0010 2C000000 		.4byte	.LVL4
  641 0014 0100     		.2byte	0x1
  642 0016 55       		.byte	0x55
@@ -775,12 +778,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  681      74657200 
  682              	.LASF1:
  683 0023 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 14
+
+
  683      676E6564 
  683      20636861 
  683      7200
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 14
-
-
  684              	.LASF25:
  685 0031 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
  685      43313120 
@@ -835,12 +838,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  701              	.LASF28:
  702 014b 6D61696E 		.ascii	"main\000"
  702      00
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 15
+
+
  703              	.LASF8:
  704 0150 756E7369 		.ascii	"unsigned int\000"
  704      676E6564 
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 15
-
-
  704      20696E74 
  704      00
  705              	.LASF7:
@@ -895,12 +898,12 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 1
  730 01dd 7369676E 		.ascii	"signed char\000"
  730      65642063 
  730      68617200 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccrd0xGG.s 			page 16
+
+
  731              	.LASF19:
  732 01e9 55415254 		.ascii	"UART_PutString\000"
  732      5F507574 
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccZIaNyh.s 			page 16
-
-
  732      53747269 
  732      6E6700
  733              	.LASF24:

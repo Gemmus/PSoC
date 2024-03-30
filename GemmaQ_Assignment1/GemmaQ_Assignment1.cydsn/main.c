@@ -10,29 +10,34 @@
 */
 
 #include <stdio.h>
-#include <string.h>
 #include "project.h"
 
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
   
-    UART_Start();
-    UART_PutString(str);
-    
+    /* Variables */
     uint8 counter = 0;
     char str[20] = {"Gemma Qin\r\n"}; /* \r: ASCII 13, \n: ASCII 10 */
     
+    /* Initialisation of components*/
+    UART_Start();
+
+    /* UART transmission of string */
+    UART_PutString(str);
+    
     for(;;)  /* Forever loop */
     {
+        /* Blinks blue LED if button pressed and increments blink counter */
         if (!Button_Read()) {
             LED1_Write(counter++ % 2);
             if (counter % 2 == 0) {
-                CyDelay(200);
+                CyDelay(200);   // 200 ms ON
             } else {
-                CyDelay(800);
+                CyDelay(800);   // 800 ms OFF 
             }
         }
+        /* Reads char from UART and transmits blink counter */ 
         if (UART_GetChar()) {
             sprintf(str, "%d\r\n", counter);
             UART_PutString(str);
