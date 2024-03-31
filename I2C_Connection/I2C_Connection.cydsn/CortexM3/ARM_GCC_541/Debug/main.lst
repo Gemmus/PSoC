@@ -1,0 +1,1017 @@
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB64:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include "project.h"
+  13:main.c        **** #include <stdio.h>
+  14:main.c        **** 
+  15:main.c        **** int main(void)
+  16:main.c        **** {
+  28              		.loc 1 16 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 32
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  36 0002 88B0     		sub	sp, sp, #32
+  37              		.cfi_def_cfa_offset 40
+  38              	.LVL0:
+  17:main.c        ****     const int TC74addr = 0x4a;
+  18:main.c        ****     uint16 sI2Cval = 0x0000;
+  19:main.c        ****     uint8 status;
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 2
+
+
+  20:main.c        ****     char buffer[32];
+  21:main.c        **** 
+  22:main.c        **** //    CyGlobalIntEnable; /* Enable global interrupts. */
+  23:main.c        **** 
+  24:main.c        ****     UART_Start();
+  39              		.loc 1 24 0
+  40 0004 FFF7FEFF 		bl	UART_Start
+  41              	.LVL1:
+  25:main.c        ****     I2C_Start();
+  42              		.loc 1 25 0
+  43 0008 FFF7FEFF 		bl	I2C_Start
+  44              	.LVL2:
+  26:main.c        ****     
+  27:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  28:main.c        **** 
+  29:main.c        ****     UART_PutString("COM Port Open\r\n");
+  45              		.loc 1 29 0
+  46 000c 1048     		ldr	r0, .L4
+  47 000e FFF7FEFF 		bl	UART_PutString
+  48              	.LVL3:
+  49              	.L2:
+  30:main.c        ****     
+  31:main.c        ****     for(;;)
+  32:main.c        ****     {
+  33:main.c        ****         /* Place your application code here. */
+  34:main.c        **** #if 0
+  35:main.c        ****         SCL_1_SetDriveMode(PIN_DM_OD_LO);
+  36:main.c        ****         SDA_1_SetDriveMode(PIN_DM_OD_LO);
+  37:main.c        ****         SCL_1_BYP = 0;
+  38:main.c        ****         SDA_1_BYP = 0;
+  39:main.c        ****         SCL_1_Write(1);
+  40:main.c        ****         SDA_1_Write(1);
+  41:main.c        ****         CyDelay(1);
+  42:main.c        ****         SCL_1_Write(0);
+  43:main.c        ****         SDA_1_Write(0);
+  44:main.c        ****         CyDelay(1);
+  45:main.c        ****         SCL_1_Write(1);
+  46:main.c        ****         SDA_1_Write(1);
+  47:main.c        ****         SCL_1_BYP = 1;
+  48:main.c        ****         SDA_1_BYP = 1;
+  49:main.c        **** #endif
+  50:main.c        ****         status = I2C_MasterSendStart(TC74addr, I2C_WRITE_XFER_MODE);
+  50              		.loc 1 50 0 discriminator 1
+  51 0012 0021     		movs	r1, #0
+  52 0014 4A20     		movs	r0, #74
+  53 0016 FFF7FEFF 		bl	I2C_MasterSendStart
+  54              	.LVL4:
+  51:main.c        ****         status = I2C_MasterWriteByte(0x00);
+  55              		.loc 1 51 0 discriminator 1
+  56 001a 0020     		movs	r0, #0
+  57 001c FFF7FEFF 		bl	I2C_MasterWriteByte
+  58              	.LVL5:
+  52:main.c        ****         status = I2C_MasterSendRestart(TC74addr, I2C_READ_XFER_MODE);
+  59              		.loc 1 52 0 discriminator 1
+  60 0020 0121     		movs	r1, #1
+  61 0022 4A20     		movs	r0, #74
+  62 0024 FFF7FEFF 		bl	I2C_MasterSendRestart
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 3
+
+
+  63              	.LVL6:
+  53:main.c        ****         sI2Cval = I2C_MasterReadByte(I2C_NAK_DATA);
+  64              		.loc 1 53 0 discriminator 1
+  65 0028 0020     		movs	r0, #0
+  66 002a FFF7FEFF 		bl	I2C_MasterReadByte
+  67              	.LVL7:
+  68 002e 0446     		mov	r4, r0
+  69              	.LVL8:
+  54:main.c        ****         status = I2C_MasterSendStop();
+  70              		.loc 1 54 0 discriminator 1
+  71 0030 FFF7FEFF 		bl	I2C_MasterSendStop
+  72              	.LVL9:
+  55:main.c        ****         sprintf(buffer, "status: %d, data: %d\r\n", status, sI2Cval);
+  73              		.loc 1 55 0 discriminator 1
+  74 0034 2346     		mov	r3, r4
+  75 0036 0246     		mov	r2, r0
+  76 0038 0649     		ldr	r1, .L4+4
+  77 003a 6846     		mov	r0, sp
+  78              	.LVL10:
+  79 003c FFF7FEFF 		bl	sprintf
+  80              	.LVL11:
+  56:main.c        ****         UART_PutString(buffer);
+  81              		.loc 1 56 0 discriminator 1
+  82 0040 6846     		mov	r0, sp
+  83 0042 FFF7FEFF 		bl	UART_PutString
+  84              	.LVL12:
+  57:main.c        ****         CyDelay(100);
+  85              		.loc 1 57 0 discriminator 1
+  86 0046 6420     		movs	r0, #100
+  87 0048 FFF7FEFF 		bl	CyDelay
+  88              	.LVL13:
+  89 004c E1E7     		b	.L2
+  90              	.L5:
+  91 004e 00BF     		.align	2
+  92              	.L4:
+  93 0050 00000000 		.word	.LC0
+  94 0054 10000000 		.word	.LC1
+  95              		.cfi_endproc
+  96              	.LFE64:
+  97              		.size	main, .-main
+  98              		.section	.rodata.str1.4,"aMS",%progbits,1
+  99              		.align	2
+ 100              	.LC0:
+ 101 0000 434F4D20 		.ascii	"COM Port Open\015\012\000"
+ 101      506F7274 
+ 101      204F7065 
+ 101      6E0D0A00 
+ 102              	.LC1:
+ 103 0010 73746174 		.ascii	"status: %d, data: %d\015\012\000"
+ 103      75733A20 
+ 103      25642C20 
+ 103      64617461 
+ 103      3A202564 
+ 104              		.text
+ 105              	.Letext0:
+ 106              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 107              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 4
+
+
+ 108              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 109              		.file 5 "Generated_Source\\PSoC5/UART.h"
+ 110              		.file 6 "Generated_Source\\PSoC5/I2C.h"
+ 111              		.file 7 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 112              		.file 8 "Generated_Source\\PSoC5/CyLib.h"
+ 113              		.file 9 "Generated_Source\\PSoC5/core_cm3.h"
+ 114              		.section	.debug_info,"",%progbits
+ 115              	.Ldebug_info0:
+ 116 0000 70020000 		.4byte	0x270
+ 117 0004 0400     		.2byte	0x4
+ 118 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 119 000a 04       		.byte	0x4
+ 120 000b 01       		.uleb128 0x1
+ 121 000c 96000000 		.4byte	.LASF32
+ 122 0010 0C       		.byte	0xc
+ 123 0011 EA010000 		.4byte	.LASF33
+ 124 0015 13000000 		.4byte	.LASF34
+ 125 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 126 001d 00000000 		.4byte	0
+ 127 0021 00000000 		.4byte	.Ldebug_line0
+ 128 0025 02       		.uleb128 0x2
+ 129 0026 01       		.byte	0x1
+ 130 0027 06       		.byte	0x6
+ 131 0028 3D020000 		.4byte	.LASF0
+ 132 002c 02       		.uleb128 0x2
+ 133 002d 01       		.byte	0x1
+ 134 002e 08       		.byte	0x8
+ 135 002f 88000000 		.4byte	.LASF1
+ 136 0033 02       		.uleb128 0x2
+ 137 0034 02       		.byte	0x2
+ 138 0035 05       		.byte	0x5
+ 139 0036 11020000 		.4byte	.LASF2
+ 140 003a 02       		.uleb128 0x2
+ 141 003b 02       		.byte	0x2
+ 142 003c 07       		.byte	0x7
+ 143 003d 36010000 		.4byte	.LASF3
+ 144 0041 03       		.uleb128 0x3
+ 145 0042 53000000 		.4byte	.LASF9
+ 146 0046 02       		.byte	0x2
+ 147 0047 3F       		.byte	0x3f
+ 148 0048 4C000000 		.4byte	0x4c
+ 149 004c 02       		.uleb128 0x2
+ 150 004d 04       		.byte	0x4
+ 151 004e 05       		.byte	0x5
+ 152 004f 28020000 		.4byte	.LASF4
+ 153 0053 02       		.uleb128 0x2
+ 154 0054 04       		.byte	0x4
+ 155 0055 07       		.byte	0x7
+ 156 0056 24010000 		.4byte	.LASF5
+ 157 005a 02       		.uleb128 0x2
+ 158 005b 08       		.byte	0x8
+ 159 005c 05       		.byte	0x5
+ 160 005d DC010000 		.4byte	.LASF6
+ 161 0061 02       		.uleb128 0x2
+ 162 0062 08       		.byte	0x8
+ 163 0063 07       		.byte	0x7
+ 164 0064 95010000 		.4byte	.LASF7
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 5
+
+
+ 165 0068 04       		.uleb128 0x4
+ 166 0069 04       		.byte	0x4
+ 167 006a 05       		.byte	0x5
+ 168 006b 696E7400 		.ascii	"int\000"
+ 169 006f 02       		.uleb128 0x2
+ 170 0070 04       		.byte	0x4
+ 171 0071 07       		.byte	0x7
+ 172 0072 88010000 		.4byte	.LASF8
+ 173 0076 03       		.uleb128 0x3
+ 174 0077 CB010000 		.4byte	.LASF10
+ 175 007b 03       		.byte	0x3
+ 176 007c 2C       		.byte	0x2c
+ 177 007d 41000000 		.4byte	0x41
+ 178 0081 05       		.uleb128 0x5
+ 179 0082 22020000 		.4byte	.LASF11
+ 180 0086 04       		.byte	0x4
+ 181 0087 E401     		.2byte	0x1e4
+ 182 0089 2C000000 		.4byte	0x2c
+ 183 008d 05       		.uleb128 0x5
+ 184 008e 81010000 		.4byte	.LASF12
+ 185 0092 04       		.byte	0x4
+ 186 0093 E501     		.2byte	0x1e5
+ 187 0095 3A000000 		.4byte	0x3a
+ 188 0099 02       		.uleb128 0x2
+ 189 009a 04       		.byte	0x4
+ 190 009b 04       		.byte	0x4
+ 191 009c 82000000 		.4byte	.LASF13
+ 192 00a0 02       		.uleb128 0x2
+ 193 00a1 08       		.byte	0x8
+ 194 00a2 04       		.byte	0x4
+ 195 00a3 75010000 		.4byte	.LASF14
+ 196 00a7 02       		.uleb128 0x2
+ 197 00a8 01       		.byte	0x1
+ 198 00a9 08       		.byte	0x8
+ 199 00aa F1010000 		.4byte	.LASF15
+ 200 00ae 02       		.uleb128 0x2
+ 201 00af 08       		.byte	0x8
+ 202 00b0 04       		.byte	0x4
+ 203 00b1 31020000 		.4byte	.LASF16
+ 204 00b5 02       		.uleb128 0x2
+ 205 00b6 04       		.byte	0x4
+ 206 00b7 07       		.byte	0x7
+ 207 00b8 D3010000 		.4byte	.LASF17
+ 208 00bc 06       		.uleb128 0x6
+ 209 00bd 7C010000 		.4byte	.LASF35
+ 210 00c1 01       		.byte	0x1
+ 211 00c2 0F       		.byte	0xf
+ 212 00c3 68000000 		.4byte	0x68
+ 213 00c7 00000000 		.4byte	.LFB64
+ 214 00cb 58000000 		.4byte	.LFE64-.LFB64
+ 215 00cf 01       		.uleb128 0x1
+ 216 00d0 9C       		.byte	0x9c
+ 217 00d1 DF010000 		.4byte	0x1df
+ 218 00d5 07       		.uleb128 0x7
+ 219 00d6 AC010000 		.4byte	.LASF18
+ 220 00da 01       		.byte	0x1
+ 221 00db 11       		.byte	0x11
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 6
+
+
+ 222 00dc DF010000 		.4byte	0x1df
+ 223 00e0 4A       		.byte	0x4a
+ 224 00e1 08       		.uleb128 0x8
+ 225 00e2 F6010000 		.4byte	.LASF19
+ 226 00e6 01       		.byte	0x1
+ 227 00e7 12       		.byte	0x12
+ 228 00e8 8D000000 		.4byte	0x8d
+ 229 00ec 00000000 		.4byte	.LLST0
+ 230 00f0 08       		.uleb128 0x8
+ 231 00f1 71000000 		.4byte	.LASF20
+ 232 00f5 01       		.byte	0x1
+ 233 00f6 13       		.byte	0x13
+ 234 00f7 81000000 		.4byte	0x81
+ 235 00fb 24000000 		.4byte	.LLST1
+ 236 00ff 09       		.uleb128 0x9
+ 237 0100 1B020000 		.4byte	.LASF21
+ 238 0104 01       		.byte	0x1
+ 239 0105 14       		.byte	0x14
+ 240 0106 E4010000 		.4byte	0x1e4
+ 241 010a 02       		.uleb128 0x2
+ 242 010b 91       		.byte	0x91
+ 243 010c 58       		.sleb128 -40
+ 244 010d 0A       		.uleb128 0xa
+ 245 010e 08000000 		.4byte	.LVL1
+ 246 0112 05020000 		.4byte	0x205
+ 247 0116 0A       		.uleb128 0xa
+ 248 0117 0C000000 		.4byte	.LVL2
+ 249 011b 10020000 		.4byte	0x210
+ 250 011f 0B       		.uleb128 0xb
+ 251 0120 12000000 		.4byte	.LVL3
+ 252 0124 1B020000 		.4byte	0x21b
+ 253 0128 36010000 		.4byte	0x136
+ 254 012c 0C       		.uleb128 0xc
+ 255 012d 01       		.uleb128 0x1
+ 256 012e 50       		.byte	0x50
+ 257 012f 05       		.uleb128 0x5
+ 258 0130 03       		.byte	0x3
+ 259 0131 00000000 		.4byte	.LC0
+ 260 0135 00       		.byte	0
+ 261 0136 0B       		.uleb128 0xb
+ 262 0137 1A000000 		.4byte	.LVL4
+ 263 013b 26020000 		.4byte	0x226
+ 264 013f 4F010000 		.4byte	0x14f
+ 265 0143 0C       		.uleb128 0xc
+ 266 0144 01       		.uleb128 0x1
+ 267 0145 50       		.byte	0x50
+ 268 0146 02       		.uleb128 0x2
+ 269 0147 08       		.byte	0x8
+ 270 0148 4A       		.byte	0x4a
+ 271 0149 0C       		.uleb128 0xc
+ 272 014a 01       		.uleb128 0x1
+ 273 014b 51       		.byte	0x51
+ 274 014c 01       		.uleb128 0x1
+ 275 014d 30       		.byte	0x30
+ 276 014e 00       		.byte	0
+ 277 014f 0B       		.uleb128 0xb
+ 278 0150 20000000 		.4byte	.LVL5
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 7
+
+
+ 279 0154 31020000 		.4byte	0x231
+ 280 0158 62010000 		.4byte	0x162
+ 281 015c 0C       		.uleb128 0xc
+ 282 015d 01       		.uleb128 0x1
+ 283 015e 50       		.byte	0x50
+ 284 015f 01       		.uleb128 0x1
+ 285 0160 30       		.byte	0x30
+ 286 0161 00       		.byte	0
+ 287 0162 0B       		.uleb128 0xb
+ 288 0163 28000000 		.4byte	.LVL6
+ 289 0167 3C020000 		.4byte	0x23c
+ 290 016b 7B010000 		.4byte	0x17b
+ 291 016f 0C       		.uleb128 0xc
+ 292 0170 01       		.uleb128 0x1
+ 293 0171 50       		.byte	0x50
+ 294 0172 02       		.uleb128 0x2
+ 295 0173 08       		.byte	0x8
+ 296 0174 4A       		.byte	0x4a
+ 297 0175 0C       		.uleb128 0xc
+ 298 0176 01       		.uleb128 0x1
+ 299 0177 51       		.byte	0x51
+ 300 0178 01       		.uleb128 0x1
+ 301 0179 31       		.byte	0x31
+ 302 017a 00       		.byte	0
+ 303 017b 0B       		.uleb128 0xb
+ 304 017c 2E000000 		.4byte	.LVL7
+ 305 0180 47020000 		.4byte	0x247
+ 306 0184 8E010000 		.4byte	0x18e
+ 307 0188 0C       		.uleb128 0xc
+ 308 0189 01       		.uleb128 0x1
+ 309 018a 50       		.byte	0x50
+ 310 018b 01       		.uleb128 0x1
+ 311 018c 30       		.byte	0x30
+ 312 018d 00       		.byte	0
+ 313 018e 0A       		.uleb128 0xa
+ 314 018f 34000000 		.4byte	.LVL9
+ 315 0193 52020000 		.4byte	0x252
+ 316 0197 0B       		.uleb128 0xb
+ 317 0198 40000000 		.4byte	.LVL11
+ 318 019c 5D020000 		.4byte	0x25d
+ 319 01a0 BA010000 		.4byte	0x1ba
+ 320 01a4 0C       		.uleb128 0xc
+ 321 01a5 01       		.uleb128 0x1
+ 322 01a6 50       		.byte	0x50
+ 323 01a7 02       		.uleb128 0x2
+ 324 01a8 7D       		.byte	0x7d
+ 325 01a9 00       		.sleb128 0
+ 326 01aa 0C       		.uleb128 0xc
+ 327 01ab 01       		.uleb128 0x1
+ 328 01ac 51       		.byte	0x51
+ 329 01ad 05       		.uleb128 0x5
+ 330 01ae 03       		.byte	0x3
+ 331 01af 10000000 		.4byte	.LC1
+ 332 01b3 0C       		.uleb128 0xc
+ 333 01b4 01       		.uleb128 0x1
+ 334 01b5 53       		.byte	0x53
+ 335 01b6 02       		.uleb128 0x2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 8
+
+
+ 336 01b7 74       		.byte	0x74
+ 337 01b8 00       		.sleb128 0
+ 338 01b9 00       		.byte	0
+ 339 01ba 0B       		.uleb128 0xb
+ 340 01bb 46000000 		.4byte	.LVL12
+ 341 01bf 1B020000 		.4byte	0x21b
+ 342 01c3 CE010000 		.4byte	0x1ce
+ 343 01c7 0C       		.uleb128 0xc
+ 344 01c8 01       		.uleb128 0x1
+ 345 01c9 50       		.byte	0x50
+ 346 01ca 02       		.uleb128 0x2
+ 347 01cb 7D       		.byte	0x7d
+ 348 01cc 00       		.sleb128 0
+ 349 01cd 00       		.byte	0
+ 350 01ce 0D       		.uleb128 0xd
+ 351 01cf 4C000000 		.4byte	.LVL13
+ 352 01d3 68020000 		.4byte	0x268
+ 353 01d7 0C       		.uleb128 0xc
+ 354 01d8 01       		.uleb128 0x1
+ 355 01d9 50       		.byte	0x50
+ 356 01da 02       		.uleb128 0x2
+ 357 01db 08       		.byte	0x8
+ 358 01dc 64       		.byte	0x64
+ 359 01dd 00       		.byte	0
+ 360 01de 00       		.byte	0
+ 361 01df 0E       		.uleb128 0xe
+ 362 01e0 68000000 		.4byte	0x68
+ 363 01e4 0F       		.uleb128 0xf
+ 364 01e5 A7000000 		.4byte	0xa7
+ 365 01e9 F4010000 		.4byte	0x1f4
+ 366 01ed 10       		.uleb128 0x10
+ 367 01ee B5000000 		.4byte	0xb5
+ 368 01f2 1F       		.byte	0x1f
+ 369 01f3 00       		.byte	0
+ 370 01f4 11       		.uleb128 0x11
+ 371 01f5 68010000 		.4byte	.LASF36
+ 372 01f9 09       		.byte	0x9
+ 373 01fa 1207     		.2byte	0x712
+ 374 01fc 00020000 		.4byte	0x200
+ 375 0200 12       		.uleb128 0x12
+ 376 0201 76000000 		.4byte	0x76
+ 377 0205 13       		.uleb128 0x13
+ 378 0206 49010000 		.4byte	.LASF22
+ 379 020a 49010000 		.4byte	.LASF22
+ 380 020e 05       		.byte	0x5
+ 381 020f 54       		.byte	0x54
+ 382 0210 13       		.uleb128 0x13
+ 383 0211 78000000 		.4byte	.LASF23
+ 384 0215 78000000 		.4byte	.LASF23
+ 385 0219 06       		.byte	0x6
+ 386 021a 93       		.byte	0x93
+ 387 021b 13       		.uleb128 0x13
+ 388 021c 49020000 		.4byte	.LASF24
+ 389 0220 49020000 		.4byte	.LASF24
+ 390 0224 05       		.byte	0x5
+ 391 0225 8B       		.byte	0x8b
+ 392 0226 13       		.uleb128 0x13
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 9
+
+
+ 393 0227 54010000 		.4byte	.LASF25
+ 394 022b 54010000 		.4byte	.LASF25
+ 395 022f 06       		.byte	0x6
+ 396 0230 B1       		.byte	0xb1
+ 397 0231 13       		.uleb128 0x13
+ 398 0232 5D000000 		.4byte	.LASF26
+ 399 0236 5D000000 		.4byte	.LASF26
+ 400 023a 06       		.byte	0x6
+ 401 023b B6       		.byte	0xb6
+ 402 023c 13       		.uleb128 0x13
+ 403 023d B5010000 		.4byte	.LASF27
+ 404 0241 B5010000 		.4byte	.LASF27
+ 405 0245 06       		.byte	0x6
+ 406 0246 B3       		.byte	0xb3
+ 407 0247 13       		.uleb128 0x13
+ 408 0248 FE010000 		.4byte	.LASF28
+ 409 024c FE010000 		.4byte	.LASF28
+ 410 0250 06       		.byte	0x6
+ 411 0251 B7       		.byte	0xb7
+ 412 0252 13       		.uleb128 0x13
+ 413 0253 00000000 		.4byte	.LASF29
+ 414 0257 00000000 		.4byte	.LASF29
+ 415 025b 06       		.byte	0x6
+ 416 025c B5       		.byte	0xb5
+ 417 025d 13       		.uleb128 0x13
+ 418 025e 58020000 		.4byte	.LASF30
+ 419 0262 58020000 		.4byte	.LASF30
+ 420 0266 07       		.byte	0x7
+ 421 0267 E7       		.byte	0xe7
+ 422 0268 13       		.uleb128 0x13
+ 423 0269 60020000 		.4byte	.LASF31
+ 424 026d 60020000 		.4byte	.LASF31
+ 425 0271 08       		.byte	0x8
+ 426 0272 76       		.byte	0x76
+ 427 0273 00       		.byte	0
+ 428              		.section	.debug_abbrev,"",%progbits
+ 429              	.Ldebug_abbrev0:
+ 430 0000 01       		.uleb128 0x1
+ 431 0001 11       		.uleb128 0x11
+ 432 0002 01       		.byte	0x1
+ 433 0003 25       		.uleb128 0x25
+ 434 0004 0E       		.uleb128 0xe
+ 435 0005 13       		.uleb128 0x13
+ 436 0006 0B       		.uleb128 0xb
+ 437 0007 03       		.uleb128 0x3
+ 438 0008 0E       		.uleb128 0xe
+ 439 0009 1B       		.uleb128 0x1b
+ 440 000a 0E       		.uleb128 0xe
+ 441 000b 55       		.uleb128 0x55
+ 442 000c 17       		.uleb128 0x17
+ 443 000d 11       		.uleb128 0x11
+ 444 000e 01       		.uleb128 0x1
+ 445 000f 10       		.uleb128 0x10
+ 446 0010 17       		.uleb128 0x17
+ 447 0011 00       		.byte	0
+ 448 0012 00       		.byte	0
+ 449 0013 02       		.uleb128 0x2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 10
+
+
+ 450 0014 24       		.uleb128 0x24
+ 451 0015 00       		.byte	0
+ 452 0016 0B       		.uleb128 0xb
+ 453 0017 0B       		.uleb128 0xb
+ 454 0018 3E       		.uleb128 0x3e
+ 455 0019 0B       		.uleb128 0xb
+ 456 001a 03       		.uleb128 0x3
+ 457 001b 0E       		.uleb128 0xe
+ 458 001c 00       		.byte	0
+ 459 001d 00       		.byte	0
+ 460 001e 03       		.uleb128 0x3
+ 461 001f 16       		.uleb128 0x16
+ 462 0020 00       		.byte	0
+ 463 0021 03       		.uleb128 0x3
+ 464 0022 0E       		.uleb128 0xe
+ 465 0023 3A       		.uleb128 0x3a
+ 466 0024 0B       		.uleb128 0xb
+ 467 0025 3B       		.uleb128 0x3b
+ 468 0026 0B       		.uleb128 0xb
+ 469 0027 49       		.uleb128 0x49
+ 470 0028 13       		.uleb128 0x13
+ 471 0029 00       		.byte	0
+ 472 002a 00       		.byte	0
+ 473 002b 04       		.uleb128 0x4
+ 474 002c 24       		.uleb128 0x24
+ 475 002d 00       		.byte	0
+ 476 002e 0B       		.uleb128 0xb
+ 477 002f 0B       		.uleb128 0xb
+ 478 0030 3E       		.uleb128 0x3e
+ 479 0031 0B       		.uleb128 0xb
+ 480 0032 03       		.uleb128 0x3
+ 481 0033 08       		.uleb128 0x8
+ 482 0034 00       		.byte	0
+ 483 0035 00       		.byte	0
+ 484 0036 05       		.uleb128 0x5
+ 485 0037 16       		.uleb128 0x16
+ 486 0038 00       		.byte	0
+ 487 0039 03       		.uleb128 0x3
+ 488 003a 0E       		.uleb128 0xe
+ 489 003b 3A       		.uleb128 0x3a
+ 490 003c 0B       		.uleb128 0xb
+ 491 003d 3B       		.uleb128 0x3b
+ 492 003e 05       		.uleb128 0x5
+ 493 003f 49       		.uleb128 0x49
+ 494 0040 13       		.uleb128 0x13
+ 495 0041 00       		.byte	0
+ 496 0042 00       		.byte	0
+ 497 0043 06       		.uleb128 0x6
+ 498 0044 2E       		.uleb128 0x2e
+ 499 0045 01       		.byte	0x1
+ 500 0046 3F       		.uleb128 0x3f
+ 501 0047 19       		.uleb128 0x19
+ 502 0048 03       		.uleb128 0x3
+ 503 0049 0E       		.uleb128 0xe
+ 504 004a 3A       		.uleb128 0x3a
+ 505 004b 0B       		.uleb128 0xb
+ 506 004c 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 11
+
+
+ 507 004d 0B       		.uleb128 0xb
+ 508 004e 27       		.uleb128 0x27
+ 509 004f 19       		.uleb128 0x19
+ 510 0050 49       		.uleb128 0x49
+ 511 0051 13       		.uleb128 0x13
+ 512 0052 8701     		.uleb128 0x87
+ 513 0054 19       		.uleb128 0x19
+ 514 0055 11       		.uleb128 0x11
+ 515 0056 01       		.uleb128 0x1
+ 516 0057 12       		.uleb128 0x12
+ 517 0058 06       		.uleb128 0x6
+ 518 0059 40       		.uleb128 0x40
+ 519 005a 18       		.uleb128 0x18
+ 520 005b 9742     		.uleb128 0x2117
+ 521 005d 19       		.uleb128 0x19
+ 522 005e 01       		.uleb128 0x1
+ 523 005f 13       		.uleb128 0x13
+ 524 0060 00       		.byte	0
+ 525 0061 00       		.byte	0
+ 526 0062 07       		.uleb128 0x7
+ 527 0063 34       		.uleb128 0x34
+ 528 0064 00       		.byte	0
+ 529 0065 03       		.uleb128 0x3
+ 530 0066 0E       		.uleb128 0xe
+ 531 0067 3A       		.uleb128 0x3a
+ 532 0068 0B       		.uleb128 0xb
+ 533 0069 3B       		.uleb128 0x3b
+ 534 006a 0B       		.uleb128 0xb
+ 535 006b 49       		.uleb128 0x49
+ 536 006c 13       		.uleb128 0x13
+ 537 006d 1C       		.uleb128 0x1c
+ 538 006e 0B       		.uleb128 0xb
+ 539 006f 00       		.byte	0
+ 540 0070 00       		.byte	0
+ 541 0071 08       		.uleb128 0x8
+ 542 0072 34       		.uleb128 0x34
+ 543 0073 00       		.byte	0
+ 544 0074 03       		.uleb128 0x3
+ 545 0075 0E       		.uleb128 0xe
+ 546 0076 3A       		.uleb128 0x3a
+ 547 0077 0B       		.uleb128 0xb
+ 548 0078 3B       		.uleb128 0x3b
+ 549 0079 0B       		.uleb128 0xb
+ 550 007a 49       		.uleb128 0x49
+ 551 007b 13       		.uleb128 0x13
+ 552 007c 02       		.uleb128 0x2
+ 553 007d 17       		.uleb128 0x17
+ 554 007e 00       		.byte	0
+ 555 007f 00       		.byte	0
+ 556 0080 09       		.uleb128 0x9
+ 557 0081 34       		.uleb128 0x34
+ 558 0082 00       		.byte	0
+ 559 0083 03       		.uleb128 0x3
+ 560 0084 0E       		.uleb128 0xe
+ 561 0085 3A       		.uleb128 0x3a
+ 562 0086 0B       		.uleb128 0xb
+ 563 0087 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 12
+
+
+ 564 0088 0B       		.uleb128 0xb
+ 565 0089 49       		.uleb128 0x49
+ 566 008a 13       		.uleb128 0x13
+ 567 008b 02       		.uleb128 0x2
+ 568 008c 18       		.uleb128 0x18
+ 569 008d 00       		.byte	0
+ 570 008e 00       		.byte	0
+ 571 008f 0A       		.uleb128 0xa
+ 572 0090 898201   		.uleb128 0x4109
+ 573 0093 00       		.byte	0
+ 574 0094 11       		.uleb128 0x11
+ 575 0095 01       		.uleb128 0x1
+ 576 0096 31       		.uleb128 0x31
+ 577 0097 13       		.uleb128 0x13
+ 578 0098 00       		.byte	0
+ 579 0099 00       		.byte	0
+ 580 009a 0B       		.uleb128 0xb
+ 581 009b 898201   		.uleb128 0x4109
+ 582 009e 01       		.byte	0x1
+ 583 009f 11       		.uleb128 0x11
+ 584 00a0 01       		.uleb128 0x1
+ 585 00a1 31       		.uleb128 0x31
+ 586 00a2 13       		.uleb128 0x13
+ 587 00a3 01       		.uleb128 0x1
+ 588 00a4 13       		.uleb128 0x13
+ 589 00a5 00       		.byte	0
+ 590 00a6 00       		.byte	0
+ 591 00a7 0C       		.uleb128 0xc
+ 592 00a8 8A8201   		.uleb128 0x410a
+ 593 00ab 00       		.byte	0
+ 594 00ac 02       		.uleb128 0x2
+ 595 00ad 18       		.uleb128 0x18
+ 596 00ae 9142     		.uleb128 0x2111
+ 597 00b0 18       		.uleb128 0x18
+ 598 00b1 00       		.byte	0
+ 599 00b2 00       		.byte	0
+ 600 00b3 0D       		.uleb128 0xd
+ 601 00b4 898201   		.uleb128 0x4109
+ 602 00b7 01       		.byte	0x1
+ 603 00b8 11       		.uleb128 0x11
+ 604 00b9 01       		.uleb128 0x1
+ 605 00ba 31       		.uleb128 0x31
+ 606 00bb 13       		.uleb128 0x13
+ 607 00bc 00       		.byte	0
+ 608 00bd 00       		.byte	0
+ 609 00be 0E       		.uleb128 0xe
+ 610 00bf 26       		.uleb128 0x26
+ 611 00c0 00       		.byte	0
+ 612 00c1 49       		.uleb128 0x49
+ 613 00c2 13       		.uleb128 0x13
+ 614 00c3 00       		.byte	0
+ 615 00c4 00       		.byte	0
+ 616 00c5 0F       		.uleb128 0xf
+ 617 00c6 01       		.uleb128 0x1
+ 618 00c7 01       		.byte	0x1
+ 619 00c8 49       		.uleb128 0x49
+ 620 00c9 13       		.uleb128 0x13
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 13
+
+
+ 621 00ca 01       		.uleb128 0x1
+ 622 00cb 13       		.uleb128 0x13
+ 623 00cc 00       		.byte	0
+ 624 00cd 00       		.byte	0
+ 625 00ce 10       		.uleb128 0x10
+ 626 00cf 21       		.uleb128 0x21
+ 627 00d0 00       		.byte	0
+ 628 00d1 49       		.uleb128 0x49
+ 629 00d2 13       		.uleb128 0x13
+ 630 00d3 2F       		.uleb128 0x2f
+ 631 00d4 0B       		.uleb128 0xb
+ 632 00d5 00       		.byte	0
+ 633 00d6 00       		.byte	0
+ 634 00d7 11       		.uleb128 0x11
+ 635 00d8 34       		.uleb128 0x34
+ 636 00d9 00       		.byte	0
+ 637 00da 03       		.uleb128 0x3
+ 638 00db 0E       		.uleb128 0xe
+ 639 00dc 3A       		.uleb128 0x3a
+ 640 00dd 0B       		.uleb128 0xb
+ 641 00de 3B       		.uleb128 0x3b
+ 642 00df 05       		.uleb128 0x5
+ 643 00e0 49       		.uleb128 0x49
+ 644 00e1 13       		.uleb128 0x13
+ 645 00e2 3F       		.uleb128 0x3f
+ 646 00e3 19       		.uleb128 0x19
+ 647 00e4 3C       		.uleb128 0x3c
+ 648 00e5 19       		.uleb128 0x19
+ 649 00e6 00       		.byte	0
+ 650 00e7 00       		.byte	0
+ 651 00e8 12       		.uleb128 0x12
+ 652 00e9 35       		.uleb128 0x35
+ 653 00ea 00       		.byte	0
+ 654 00eb 49       		.uleb128 0x49
+ 655 00ec 13       		.uleb128 0x13
+ 656 00ed 00       		.byte	0
+ 657 00ee 00       		.byte	0
+ 658 00ef 13       		.uleb128 0x13
+ 659 00f0 2E       		.uleb128 0x2e
+ 660 00f1 00       		.byte	0
+ 661 00f2 3F       		.uleb128 0x3f
+ 662 00f3 19       		.uleb128 0x19
+ 663 00f4 3C       		.uleb128 0x3c
+ 664 00f5 19       		.uleb128 0x19
+ 665 00f6 6E       		.uleb128 0x6e
+ 666 00f7 0E       		.uleb128 0xe
+ 667 00f8 03       		.uleb128 0x3
+ 668 00f9 0E       		.uleb128 0xe
+ 669 00fa 3A       		.uleb128 0x3a
+ 670 00fb 0B       		.uleb128 0xb
+ 671 00fc 3B       		.uleb128 0x3b
+ 672 00fd 0B       		.uleb128 0xb
+ 673 00fe 00       		.byte	0
+ 674 00ff 00       		.byte	0
+ 675 0100 00       		.byte	0
+ 676              		.section	.debug_loc,"",%progbits
+ 677              	.Ldebug_loc0:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 14
+
+
+ 678              	.LLST0:
+ 679 0000 04000000 		.4byte	.LVL0
+ 680 0004 12000000 		.4byte	.LVL3
+ 681 0008 0200     		.2byte	0x2
+ 682 000a 30       		.byte	0x30
+ 683 000b 9F       		.byte	0x9f
+ 684 000c 30000000 		.4byte	.LVL8
+ 685 0010 58000000 		.4byte	.LFE64
+ 686 0014 0600     		.2byte	0x6
+ 687 0016 74       		.byte	0x74
+ 688 0017 00       		.sleb128 0
+ 689 0018 08       		.byte	0x8
+ 690 0019 FF       		.byte	0xff
+ 691 001a 1A       		.byte	0x1a
+ 692 001b 9F       		.byte	0x9f
+ 693 001c 00000000 		.4byte	0
+ 694 0020 00000000 		.4byte	0
+ 695              	.LLST1:
+ 696 0024 34000000 		.4byte	.LVL9
+ 697 0028 3C000000 		.4byte	.LVL10
+ 698 002c 0100     		.2byte	0x1
+ 699 002e 50       		.byte	0x50
+ 700 002f 00000000 		.4byte	0
+ 701 0033 00000000 		.4byte	0
+ 702              		.section	.debug_aranges,"",%progbits
+ 703 0000 1C000000 		.4byte	0x1c
+ 704 0004 0200     		.2byte	0x2
+ 705 0006 00000000 		.4byte	.Ldebug_info0
+ 706 000a 04       		.byte	0x4
+ 707 000b 00       		.byte	0
+ 708 000c 0000     		.2byte	0
+ 709 000e 0000     		.2byte	0
+ 710 0010 00000000 		.4byte	.LFB64
+ 711 0014 58000000 		.4byte	.LFE64-.LFB64
+ 712 0018 00000000 		.4byte	0
+ 713 001c 00000000 		.4byte	0
+ 714              		.section	.debug_ranges,"",%progbits
+ 715              	.Ldebug_ranges0:
+ 716 0000 00000000 		.4byte	.LFB64
+ 717 0004 58000000 		.4byte	.LFE64
+ 718 0008 00000000 		.4byte	0
+ 719 000c 00000000 		.4byte	0
+ 720              		.section	.debug_line,"",%progbits
+ 721              	.Ldebug_line0:
+ 722 0000 1F020000 		.section	.debug_str,"MS",%progbits,1
+ 722      0200DD01 
+ 722      00000201 
+ 722      FB0E0D00 
+ 722      01010101 
+ 723              	.LASF29:
+ 724 0000 4932435F 		.ascii	"I2C_MasterSendStop\000"
+ 724      4D617374 
+ 724      65725365 
+ 724      6E645374 
+ 724      6F7000
+ 725              	.LASF34:
+ 726 0013 433A5C55 		.ascii	"C:\\Users\\Gemma\\Desktop\\PSoC\\I2C_Connection\\I2"
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 15
+
+
+ 726      73657273 
+ 726      5C47656D 
+ 726      6D615C44 
+ 726      65736B74 
+ 727 0040 435F436F 		.ascii	"C_Connection.cydsn\000"
+ 727      6E6E6563 
+ 727      74696F6E 
+ 727      2E637964 
+ 727      736E00
+ 728              	.LASF9:
+ 729 0053 5F5F696E 		.ascii	"__int32_t\000"
+ 729      7433325F 
+ 729      7400
+ 730              	.LASF26:
+ 731 005d 4932435F 		.ascii	"I2C_MasterWriteByte\000"
+ 731      4D617374 
+ 731      65725772 
+ 731      69746542 
+ 731      79746500 
+ 732              	.LASF20:
+ 733 0071 73746174 		.ascii	"status\000"
+ 733      757300
+ 734              	.LASF23:
+ 735 0078 4932435F 		.ascii	"I2C_Start\000"
+ 735      53746172 
+ 735      7400
+ 736              	.LASF13:
+ 737 0082 666C6F61 		.ascii	"float\000"
+ 737      7400
+ 738              	.LASF1:
+ 739 0088 756E7369 		.ascii	"unsigned char\000"
+ 739      676E6564 
+ 739      20636861 
+ 739      7200
+ 740              	.LASF32:
+ 741 0096 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 741      43313120 
+ 741      352E342E 
+ 741      31203230 
+ 741      31363036 
+ 742 00c9 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 742      20726576 
+ 742      6973696F 
+ 742      6E203233 
+ 742      37373135 
+ 743 00fc 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 743      66756E63 
+ 743      74696F6E 
+ 743      2D736563 
+ 743      74696F6E 
+ 744              	.LASF5:
+ 745 0124 6C6F6E67 		.ascii	"long unsigned int\000"
+ 745      20756E73 
+ 745      69676E65 
+ 745      6420696E 
+ 745      7400
+ 746              	.LASF3:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 16
+
+
+ 747 0136 73686F72 		.ascii	"short unsigned int\000"
+ 747      7420756E 
+ 747      7369676E 
+ 747      65642069 
+ 747      6E7400
+ 748              	.LASF22:
+ 749 0149 55415254 		.ascii	"UART_Start\000"
+ 749      5F537461 
+ 749      727400
+ 750              	.LASF25:
+ 751 0154 4932435F 		.ascii	"I2C_MasterSendStart\000"
+ 751      4D617374 
+ 751      65725365 
+ 751      6E645374 
+ 751      61727400 
+ 752              	.LASF36:
+ 753 0168 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 753      52784275 
+ 753      66666572 
+ 753      00
+ 754              	.LASF14:
+ 755 0175 646F7562 		.ascii	"double\000"
+ 755      6C6500
+ 756              	.LASF35:
+ 757 017c 6D61696E 		.ascii	"main\000"
+ 757      00
+ 758              	.LASF12:
+ 759 0181 75696E74 		.ascii	"uint16\000"
+ 759      313600
+ 760              	.LASF8:
+ 761 0188 756E7369 		.ascii	"unsigned int\000"
+ 761      676E6564 
+ 761      20696E74 
+ 761      00
+ 762              	.LASF7:
+ 763 0195 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 763      206C6F6E 
+ 763      6720756E 
+ 763      7369676E 
+ 763      65642069 
+ 764              	.LASF18:
+ 765 01ac 54433734 		.ascii	"TC74addr\000"
+ 765      61646472 
+ 765      00
+ 766              	.LASF27:
+ 767 01b5 4932435F 		.ascii	"I2C_MasterSendRestart\000"
+ 767      4D617374 
+ 767      65725365 
+ 767      6E645265 
+ 767      73746172 
+ 768              	.LASF10:
+ 769 01cb 696E7433 		.ascii	"int32_t\000"
+ 769      325F7400 
+ 770              	.LASF17:
+ 771 01d3 73697A65 		.ascii	"sizetype\000"
+ 771      74797065 
+ 771      00
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccRn6ifq.s 			page 17
+
+
+ 772              	.LASF6:
+ 773 01dc 6C6F6E67 		.ascii	"long long int\000"
+ 773      206C6F6E 
+ 773      6720696E 
+ 773      7400
+ 774              	.LASF33:
+ 775 01ea 6D61696E 		.ascii	"main.c\000"
+ 775      2E6300
+ 776              	.LASF15:
+ 777 01f1 63686172 		.ascii	"char\000"
+ 777      00
+ 778              	.LASF19:
+ 779 01f6 73493243 		.ascii	"sI2Cval\000"
+ 779      76616C00 
+ 780              	.LASF28:
+ 781 01fe 4932435F 		.ascii	"I2C_MasterReadByte\000"
+ 781      4D617374 
+ 781      65725265 
+ 781      61644279 
+ 781      746500
+ 782              	.LASF2:
+ 783 0211 73686F72 		.ascii	"short int\000"
+ 783      7420696E 
+ 783      7400
+ 784              	.LASF21:
+ 785 021b 62756666 		.ascii	"buffer\000"
+ 785      657200
+ 786              	.LASF11:
+ 787 0222 75696E74 		.ascii	"uint8\000"
+ 787      3800
+ 788              	.LASF4:
+ 789 0228 6C6F6E67 		.ascii	"long int\000"
+ 789      20696E74 
+ 789      00
+ 790              	.LASF16:
+ 791 0231 6C6F6E67 		.ascii	"long double\000"
+ 791      20646F75 
+ 791      626C6500 
+ 792              	.LASF0:
+ 793 023d 7369676E 		.ascii	"signed char\000"
+ 793      65642063 
+ 793      68617200 
+ 794              	.LASF24:
+ 795 0249 55415254 		.ascii	"UART_PutString\000"
+ 795      5F507574 
+ 795      53747269 
+ 795      6E6700
+ 796              	.LASF30:
+ 797 0258 73707269 		.ascii	"sprintf\000"
+ 797      6E746600 
+ 798              	.LASF31:
+ 799 0260 43794465 		.ascii	"CyDelay\000"
+ 799      6C617900 
+ 800              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
