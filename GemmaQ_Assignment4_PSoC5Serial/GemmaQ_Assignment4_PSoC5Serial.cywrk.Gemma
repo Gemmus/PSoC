@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\TopDesign</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Pins</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Analog</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Clocks</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Interrupts</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\DMA</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\System</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Directives</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Flash Security</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\EEPROM</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Header Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Header Files\cyapicallbacks.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Source Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Source Files\main.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\TopDesign</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Pins</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Analog</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Clocks</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Interrupts</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\DMA</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\System</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Directives</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\Flash Security</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydwr\EEPROM</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Header Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Header Files\cyapicallbacks.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Source Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Source Files\main.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\Clock_Isr</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cy_boot</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_BOOT.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_INT.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_MASTER.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_PM.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_PVT.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_SLAVE.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C_CLK</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\RST</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SCL</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SDA</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\Timer</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\UART</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\UART_IntClock</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cycodeshareexport.ld</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cycodeshareimport.ld</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cycodeshareimport.scat</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevice.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevice_trm.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicegnu.inc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicegnu_trm.inc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydeviceiar.inc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydeviceiar_trm.inc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicerv.inc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicerv_trm.inc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydisabledsheets.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfitter.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfitter_cfg.c</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfitter_cfg.h</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfittergnu.inc</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\TopDesign</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\TopDesign</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_Isr.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_BOOT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_CLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_MASTER.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_SLAVE.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\RST.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SCL.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SDA.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_BOOT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_IntClock.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.elf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.hex</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.map</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.gpdsc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.rpt</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_Isr.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_BOOT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_CLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_MASTER.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_SLAVE.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\RST.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SCL.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SDA.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_BOOT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_IntClock.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.elf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.hex</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.map</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.gpdsc</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.rpt</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial_timing.html</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\PSoC 5LP Architecture TRM</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CY8C58LP Family Datasheet</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides\cy_boot_v5_70</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\I2C_v3_50.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Timer_v2_80.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\UART_v2_50.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\ZeroTerminal.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\PSoC 5LP Architecture TRM</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CY8C58LP Family Datasheet</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides\cy_boot_v5_70</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\I2C_v3_50.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Timer_v2_80.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\UART_v2_50.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\ZeroTerminal.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\GemmaQ_Assignment4_PSoC5Serial.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\GemmaQ_Assignment4_PSoC5Serial.cydsn\main.c" />
+<name v=".\GemmaQ_Assignment4_PSoC5Serial.cydsn\GemmaQ_Assignment4_PSoC5Serial.cydwr" />
+<name v=".\GemmaQ_Assignment4_PSoC5Serial.cydsn\Generated_Source\PSoC5\I2C_MASTER.c" />
+<name v=".\GemmaQ_Assignment4_PSoC5Serial.cydsn\Generated_Source\PSoC5\I2C.h" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="640, 823" SelectedTabbedMdiWindow="29a3af85-5fee-4723-bc86-0a02a2b35c0e"><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\TopDesign\TopDesign.cysch" Guid="29a3af85-5fee-4723-bc86-0a02a2b35c0e" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\main.c" Guid="53d2ff09-6f3a-470f-97fc-1e2c7c07096b" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\GemmaQ_Assignment4_PSoC5Serial.cydwr" Guid="6ea95710-5aa8-4b16-a38b-38cdb35fe2ce" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\Generated_Source\PSoC5\I2C_MASTER.c" Guid="66d59ce7-2ca8-4d93-b5d7-b283d8a9a145" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\Generated_Source\PSoC5\I2C.h" Guid="dd3a82d3-4585-47a5-8e7f-9292b5505ea1" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="2ec431b7-245e-4e60-b4cd-6b7ca3a22247" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>
