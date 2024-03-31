@@ -1,5 +1,5 @@
 # GemmaQ_Assignment4_PSoC5Serial
-# 2024-03-31 05:16:50Z
+# 2024-03-31 15:09:43Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -7,7 +7,12 @@ dont_use_io iocell 1 0
 dont_use_io iocell 1 1
 # IO_3@[IOP=(1)][IoId=(3)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 3
+set_io "Vin(0)" iocell 0 0
 set_io "Rx(0)" iocell 12 6
 set_io "Tx(0)" iocell 12 7
 set_io "SDA(0)" iocell 12 1
 set_io "SCL(0)" iocell 12 0
+set_io "SPIM_SCLK(0)" iocell 12 5
+set_io "SPIM_SS(0)" iocell 12 3
+set_io "SPIM_MISO(0)" iocell 12 4
+set_location "\ADC_DelSig:DSM\" dsmodcell -1 -1 0

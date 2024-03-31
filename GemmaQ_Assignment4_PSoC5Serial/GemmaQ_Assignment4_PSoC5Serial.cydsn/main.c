@@ -4,8 +4,8 @@
  *
  * PSoC Design Course 2024: Exercise 4, SPI & I2C
  *
- * Connect digital sensors to PSoC, and transfer the data to 
- * computer. 
+ * Connect digital temperature sensors to PSoC via I2C and SPI, 
+ * and transfer the data to computer via UART. 
  *
  * ================================================================
 */
@@ -14,7 +14,7 @@
 #include "stdio.h"
 
 /* Project Defines */
-#define TRANSMIT_BUFFER_SIZE  16
+#define TRANSMIT_BUFFER_SIZE 64
 
 /* Global variables */
 // Flag for data transmission:
@@ -32,7 +32,6 @@ float32 Vout_average;
 
 /* Function declarations */
 void tempCalc();
-void sendDataAsJson();
 
 /* Interrupt declarations */
 CY_ISR_PROTO(MyADCIsr);
@@ -44,7 +43,8 @@ CY_ISR(MyClockIsr);
 *
 * Summary:
 *  Initialises components and interrupts.
-*  If flag is set, transmit respective information to UART, then clears flag.
+*  Reads data from two temperature sensors using I2C and SPI interfaces.
+*  Transmit read data via UART.
 *
 * Parameters:
 *  None.
@@ -52,48 +52,84 @@ CY_ISR(MyClockIsr);
 * Return:
 *  None.
 *
+* Remarks: 
+*  - Specification: 
+*       - UART: 12[6] RX, 12[7] TX, 115200 bps
+*       - I2C: 12[0] SCL, 12[1] SDA (different from exercise description, 
+*              followed datasheet recommendation), I2C_CLK 800kHz
+*       - SPI: 12[3] SS, 12[4] MISO, 12[5] SCLK, SPI_CLK 1.6 MHz, 16-bit
+*  - Design works without external pull up resistor, internal pull up resistor 
+     of 5 kOhm resolves same matter.
+*
 *******************************************************************************/
 int main()
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
+    
+    /* Local variables */
+    // UART
+    char transmit_buffer[TRANSMIT_BUFFER_SIZE];
+    // SPI
+    uint16 SPIM_value = 0x0000;
+    float32 SPIM_temp;
+    // I2C
+    const int TC74_addr = 0x4a;
+    uint8 TC74_value;
+    uint8 status;
 
     /* Start the components and interrupts */
-    //ADC_DelSig_Start();
     UART_Start();
+    SPIM_Start();
     I2C_Start();
-    //Timer_Start();
-
-    //ADC_Isr_StartEx(MyADCIsr);
-    //Clock_Isr_StartEx(MyClockIsr);
+    ADC_DelSig_Start();
+    Timer_Start();
+    
+    ADC_Isr_StartEx(MyADCIsr);
+    Clock_Isr_StartEx(MyClockIsr);
 
     /* Send message to verify COM port is connected properly */
-    UART_PutString("COM Port Open\r\n");
-
+    UART_PutString("COM Port Open\r\n");    
+    
     /* Start the ADC conversion */
-    //ADC_DelSig_StartConvert();
-    
-    uint8 slaveAddress = 0x4A;//0b1001010;
-    
-    I2C_MasterSendStart(slaveAddress, 0);
-    uint8 retval = I2C_MasterStatus();
-    I2C_MasterWriteByte(0);  // Reading temp, command 0
-    retval = I2C_MasterStatus();
-    UART_PutString("Did something\r\n");
-    I2C_MasterSendRestart(slaveAddress, 1);
-    retval = I2C_MasterStatus();
-    
-    uint8 acknNak = I2C_ACK_DATA;
-    uint8 temp = I2C_MasterReadByte(acknNak);
-    retval = I2C_MasterStatus();
-    I2C_MasterSendStop();
-    
+    ADC_DelSig_StartConvert();
 
     for(;;)
     {   
+        /* When Timer Isr called */
         if (new_data) {
+            /* Data acquisition from SPI, initalization */ 
+            SPIM_WriteTxData(SPIM_value);
+
+            /* Data acquisition from I2C */ 
+            TC74_value = UINT8_MAX; // Error value in case it cannot read
+            status = I2C_MasterSendStart(TC74_addr, I2C_WRITE_XFER_MODE);
+            if ((status & I2C_MSTAT_ERR_MASK) == 0) {
+                status = I2C_MasterWriteByte(0x00);
+                if ((status & I2C_MSTAT_ERR_MASK) == 0) {
+                    status = I2C_MasterSendRestart(TC74_addr, I2C_READ_XFER_MODE);
+                    if ((status & I2C_MSTAT_ERR_MASK) == 0) {
+                        TC74_value = I2C_MasterReadByte(I2C_NAK_DATA);
+                    }
+                }
+            }
+            I2C_MasterSendStop();
+        
+            /* Data acquisition from SPI, reading (Placed here on purpose to use I2C as delay) */ 
+            SPIM_value = SPIM_ReadRxData();
+            SPIM_value = (SPIM_value >> 1) & 0x0fff; // Handling received data: shift and mask
+            
+            /* Calculate Vout running average */
             tempCalc();
-            sendDataAsJson();
-            new_data = 0;        
+            
+            /* Format data */ 
+            sprintf(transmit_buffer, 
+                "{ \"ADC\": %d , \"LM35\": %.1f, \"TC74\": %d, \"SPI\": %.1f }\r\n", 
+                (int)Vout_average, temp, TC74_value, (float)SPIM_value/10 );     
+            /* Send data to UART */
+            UART_PutString(transmit_buffer);
+            
+            /* Clears flag */
+            new_data = 0;  
         }
     }
 }
@@ -119,28 +155,6 @@ void tempCalc() {
 }
 
 /*******************************************************************************
-* Function Name: sendDataAsJson
-********************************************************************************
-*
-* Summary:
-*  Parses data into JSON format, transmits to UART.
-*
-* Parameters:
-*  None.
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
-void sendDataAsJson() {
-    char transmit_buffer[TRANSMIT_BUFFER_SIZE];
-    uint16 int_Vout_ave = (int)Vout_average;
-    sprintf(transmit_buffer, "{ \"ADC\": %d , \"LM35\": %.1f }\r\n", int_Vout_ave, temp);
-    UART_PutString(transmit_buffer);
-    return;
-}
-
-/*******************************************************************************
 * Function Name: MyADCIsr         ADC Interrupt Service Routine
 ********************************************************************************
 *
@@ -155,9 +169,9 @@ void sendDataAsJson() {
 *
 *******************************************************************************/
 CY_ISR(MyADCIsr) {
-    //uint32 Output = ADC_DelSig_CountsTo_mVolts(ADC_DelSig_GetResult16());
-    //Vout_sum += Output;
-    //n++;
+    uint32 Output = ADC_DelSig_CountsTo_mVolts(ADC_DelSig_GetResult16());
+    Vout_sum += Output;
+    n++;
 }
 
 /*******************************************************************************
@@ -176,14 +190,14 @@ CY_ISR(MyADCIsr) {
 *
 *******************************************************************************/
 CY_ISR(MyClockIsr) {
-    //Timer_ReadStatusRegister();
-    //ADC_Isr_Disable();
-    //Vout_sum_isr = Vout_sum;
-    //n_isr = n;
-    //Vout_sum = 0;
-    //n = 0;
-    //ADC_Isr_Enable();
-    //new_data = 1;
+    Timer_ReadStatusRegister();
+    ADC_Isr_Disable();
+    Vout_sum_isr = Vout_sum;
+    n_isr = n;
+    Vout_sum = 0;
+    n = 0;
+    ADC_Isr_Enable();
+    new_data = 1;
 }
 
 /* [] END OF FILE */

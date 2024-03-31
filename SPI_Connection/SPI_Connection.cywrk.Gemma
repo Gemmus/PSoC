@@ -190,6 +190,12 @@
 <v>SPI_Connection\SPI_Connection\PSoC 5LP Architecture TRM</v>
 <v>SPI_Connection\SPI_Connection\CY8C58LP Family Datasheet</v>
 <v>SPI_Connection\SPI_Connection\System Reference Guides</v>
+<v>SPI_Connection\SPI_Connection\System Reference Guides\cy_boot_v5_70</v>
+<v>SPI_Connection\SPI_Connection\cy_clock_v2_20.pdf</v>
+<v>SPI_Connection\SPI_Connection\cy_pins_v2_20</v>
+<v>SPI_Connection\SPI_Connection\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>SPI_Connection\SPI_Connection\SPI_Master_v2_50.pdf</v>
+<v>SPI_Connection\SPI_Connection\UART_v2_50.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>SPI_Connection</v>
@@ -197,6 +203,12 @@
 <v>SPI_Connection\SPI_Connection\PSoC 5LP Architecture TRM</v>
 <v>SPI_Connection\SPI_Connection\CY8C58LP Family Datasheet</v>
 <v>SPI_Connection\SPI_Connection\System Reference Guides</v>
+<v>SPI_Connection\SPI_Connection\System Reference Guides\cy_boot_v5_70</v>
+<v>SPI_Connection\SPI_Connection\cy_clock_v2_20.pdf</v>
+<v>SPI_Connection\SPI_Connection\cy_pins_v2_20</v>
+<v>SPI_Connection\SPI_Connection\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>SPI_Connection\SPI_Connection\SPI_Master_v2_50.pdf</v>
+<v>SPI_Connection\SPI_Connection\UART_v2_50.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -216,7 +228,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="663, 823" SelectedTabbedMdiWindow="e7460c2b-266a-4e9d-ac64-22f7b1d03c34"><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\SPI_Connection\SPI_Connection.cydsn\TopDesign\TopDesign.cysch" Guid="02c15cc7-dead-4afd-bbd7-e11d845b1aad" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\SPI_Connection\SPI_Connection.cydsn\SPI_Connection.cydwr" Guid="2dec2251-980b-447b-899f-4da8889b15aa" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\SPI_Connection\SPI_Connection.cydsn\main.c" Guid="e7460c2b-266a-4e9d-ac64-22f7b1d03c34" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="2ec431b7-245e-4e60-b4cd-6b7ca3a22247" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1376, 831" SelectedTabbedMdiWindow="02c15cc7-dead-4afd-bbd7-e11d845b1aad"><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\SPI_Connection\SPI_Connection.cydsn\TopDesign\TopDesign.cysch" Guid="02c15cc7-dead-4afd-bbd7-e11d845b1aad" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\SPI_Connection\SPI_Connection.cydsn\SPI_Connection.cydwr" Guid="2dec2251-980b-447b-899f-4da8889b15aa" /><DocumentWindow Key="C:\Users\Gemma\Desktop\PSoC\SPI_Connection\SPI_Connection.cydsn\main.c" Guid="e7460c2b-266a-4e9d-ac64-22f7b1d03c34" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="2ec431b7-245e-4e60-b4cd-6b7ca3a22247" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

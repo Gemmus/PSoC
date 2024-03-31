@@ -18,11 +18,20 @@
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\cyfitteriar.inc" value="HEADER;;;;;" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\cyfitter.h" value="HEADER;;;;;" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\cydisabledsheets.h" value="HEADER;;;;;" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig.h" value="HEADER;;;;;ADC_DelSig" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_PM.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_INT.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\Vin_aliases.h" value="HEADER;;;;;Vin" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\Vin.c" value="SOURCE_C;CortexM3;;;;Vin" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\Vin.h" value="HEADER;;;;;Vin" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\UART.c" value="SOURCE_C;CortexM3;;;;UART" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\UART.h" value="HEADER;;;;;UART" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\UART_PM.c" value="SOURCE_C;CortexM3;;;;UART" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\UART_INT.c" value="SOURCE_C;CortexM3;;;;UART" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\UART_BOOT.c" value="SOURCE_C;CortexM3;;;;UART" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_Isr.c" value="SOURCE_C;CortexM3;;;;ADC_Isr" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_Isr.h" value="HEADER;;;;;ADC_Isr" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\Clock_Isr.c" value="SOURCE_C;CortexM3;;;;Clock_Isr" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\Clock_Isr.h" value="HEADER;;;;;Clock_Isr" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\Timer.c" value="SOURCE_C;CortexM3;;;;Timer" />
@@ -36,9 +45,6 @@
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SCL.h" value="HEADER;;;;;SCL" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C_CLK.c" value="SOURCE_C;CortexM3;;;;I2C_CLK" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C_CLK.h" value="HEADER;;;;;I2C_CLK" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\RST_aliases.h" value="HEADER;;;;;RST" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\RST.c" value="SOURCE_C;CortexM3;;;;RST" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\RST.h" value="HEADER;;;;;RST" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C.c" value="SOURCE_C;CortexM3;;;;I2C" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C.h" value="HEADER;;;;;I2C" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C_BOOT.c" value="SOURCE_C;CortexM3;;;;I2C" />
@@ -47,6 +53,30 @@
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C_SLAVE.c" value="SOURCE_C;CortexM3;;;;I2C" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C_MASTER.c" value="SOURCE_C;CortexM3;;;;I2C" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\I2C_PVT.h" value="HEADER;;;;;I2C" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM.c" value="SOURCE_C;CortexM3;;;;SPIM" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM.h" value="HEADER;;;;;SPIM" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_PM.c" value="SOURCE_C;CortexM3;;;;SPIM" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_INT.c" value="SOURCE_C;CortexM3;;;;SPIM" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_PVT.h" value="HEADER;;;;;SPIM" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_SCLK_aliases.h" value="HEADER;;;;;SPIM_SCLK" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_SCLK.c" value="SOURCE_C;CortexM3;;;;SPIM_SCLK" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_SCLK.h" value="HEADER;;;;;SPIM_SCLK" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_SS_aliases.h" value="HEADER;;;;;SPIM_SS" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_SS.c" value="SOURCE_C;CortexM3;;;;SPIM_SS" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_SS.h" value="HEADER;;;;;SPIM_SS" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_MISO_aliases.h" value="HEADER;;;;;SPIM_MISO" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_MISO.c" value="SOURCE_C;CortexM3;;;;SPIM_MISO" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_MISO.h" value="HEADER;;;;;SPIM_MISO" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_CLK.c" value="SOURCE_C;CortexM3;;;;SPIM_CLK" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\SPIM_CLK.h" value="HEADER;;;;;SPIM_CLK" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_AMux.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig_AMux" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_AMux.h" value="HEADER;;;;;ADC_DelSig_AMux" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_Ext_CP_Clk.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig_Ext_CP_Clk" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_Ext_CP_Clk.h" value="HEADER;;;;;ADC_DelSig_Ext_CP_Clk" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_IRQ.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig_IRQ" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_IRQ.h" value="HEADER;;;;;ADC_DelSig_IRQ" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_theACLK.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig_theACLK" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\ADC_DelSig_theACLK.h" value="HEADER;;;;;ADC_DelSig_theACLK" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\UART_IntClock.c" value="SOURCE_C;CortexM3;;;;UART_IntClock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\UART_IntClock.h" value="HEADER;;;;;UART_IntClock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.cydsn\codegentemp\cm3gcc.ld" value="LINKER_SCRIPT;;;b98f980c-3bd1-4fc7-a887-c56a20a46fdd;;cy_boot" />

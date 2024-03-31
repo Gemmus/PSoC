@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: RST.h  
+* File Name: SPIM_MISO.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_RST_ALIASES_H) /* Pins RST_ALIASES_H */
-#define CY_PINS_RST_ALIASES_H
+#if !defined(CY_PINS_SPIM_MISO_ALIASES_H) /* Pins SPIM_MISO_ALIASES_H */
+#define CY_PINS_SPIM_MISO_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define RST_0			(RST__0__PC)
-#define RST_0_INTR	((uint16)((uint16)0x0001u << RST__0__SHIFT))
+#define SPIM_MISO_0			(SPIM_MISO__0__PC)
+#define SPIM_MISO_0_INTR	((uint16)((uint16)0x0001u << SPIM_MISO__0__SHIFT))
 
-#define RST_INTR_ALL	 ((uint16)(RST_0_INTR))
+#define SPIM_MISO_INTR_ALL	 ((uint16)(SPIM_MISO_0_INTR))
 
-#endif /* End Pins RST_ALIASES_H */
+#endif /* End Pins SPIM_MISO_ALIASES_H */
 
 
 /* [] END OF FILE */

@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="GemmaQ_Assignment4_PSoC5Serial">
 <ExpandedNodeIds>
 <v>GemmaQ_Assignment4_PSoC5Serial</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial</v>
@@ -56,6 +56,12 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Source Files\main.c</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\ADC_DelSig</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\ADC_DelSig_AMux</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\ADC_DelSig_Ext_CP_Clk</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\ADC_DelSig_IRQ</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\ADC_DelSig_theACLK</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\ADC_Isr</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\Clock_Isr</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cy_boot</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
@@ -69,28 +75,22 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_PVT.h</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C\I2C_SLAVE.c</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\I2C_CLK</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\RST</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SCL</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SDA</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SPIM</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SPIM_CLK</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SPIM_MISO</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SPIM_SCLK</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\SPIM_SS</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\Timer</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\UART</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\UART_IntClock</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\Vin</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cycodeshareexport.ld</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cycodeshareimport.ld</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cycodeshareimport.scat</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevice.h</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevice_trm.h</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicegnu.inc</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicegnu_trm.inc</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydeviceiar.inc</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydeviceiar_trm.inc</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicerv.inc</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydevicerv_trm.inc</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cydisabledsheets.h</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfitter.h</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfitter_cfg.c</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfitter_cfg.h</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Generated_Source\PSoC5\cyfittergnu.inc</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -115,6 +115,14 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_AMux.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_Ext_CP_Clk.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_IRQ.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_theACLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_Isr.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_Isr.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
@@ -135,9 +143,15 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_PM.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_SLAVE.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\RST.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SCL.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SDA.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_CLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_MISO.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_SCLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_SS.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_PM.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART.lst</v>
@@ -145,6 +159,7 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_INT.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_IntClock.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Vin.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.elf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.hex</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.map</v>
@@ -159,6 +174,14 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_AMux.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_Ext_CP_Clk.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_IRQ.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_theACLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_Isr.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_Isr.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
@@ -179,9 +202,15 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_PM.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_SLAVE.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\RST.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SCL.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SDA.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_CLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_INT.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_MISO.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_SCLK.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\SPIM_SS.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_PM.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART.lst</v>
@@ -189,12 +218,10 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_INT.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_IntClock.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PM.lst</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\Listing Files\Vin.lst</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.elf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.hex</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment4_PSoC5Serial.map</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.gpdsc</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial.rpt</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial_timing.html</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -210,12 +237,15 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CY8C58LP Family Datasheet</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides\cy_boot_v5_70</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\ADC_DelSig_v3_30.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\I2C_v3_50.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\SPI_Master_v2_50.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Timer_v2_80.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\UART_v2_50.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\ZeroTerminal.pdf</v>
@@ -227,12 +257,15 @@
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\CY8C58LP Family Datasheet</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\System Reference Guides\cy_boot_v5_70</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\ADC_DelSig_v3_30.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\I2C_v3_50.pdf</v>
+<v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\SPI_Master_v2_50.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\Timer_v2_80.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\UART_v2_50.pdf</v>
 <v>GemmaQ_Assignment4_PSoC5Serial\GemmaQ_Assignment4_PSoC5Serial\ZeroTerminal.pdf</v>

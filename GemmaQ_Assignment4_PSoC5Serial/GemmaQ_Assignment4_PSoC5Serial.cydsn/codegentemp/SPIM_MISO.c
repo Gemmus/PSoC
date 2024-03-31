@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: RST.c  
+* File Name: SPIM_MISO.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "RST.h"
+#include "SPIM_MISO.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 RST__PORT == 15 && ((RST__MASK & 0xC0) != 0))
+	 SPIM_MISO__PORT == 15 && ((SPIM_MISO__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: RST_Write
+* Function Name: SPIM_MISO_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet RST_SUT.c usage_RST_Write
+*  \snippet SPIM_MISO_SUT.c usage_SPIM_MISO_Write
 *******************************************************************************/
-void RST_Write(uint8 value)
+void SPIM_MISO_Write(uint8 value)
 {
-    uint8 staticBits = (RST_DR & (uint8)(~RST_MASK));
-    RST_DR = staticBits | ((uint8)(value << RST_SHIFT) & RST_MASK);
+    uint8 staticBits = (SPIM_MISO_DR & (uint8)(~SPIM_MISO_MASK));
+    SPIM_MISO_DR = staticBits | ((uint8)(value << SPIM_MISO_SHIFT) & SPIM_MISO_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: RST_SetDriveMode
+* Function Name: SPIM_MISO_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void RST_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet RST_SUT.c usage_RST_SetDriveMode
+*  \snippet SPIM_MISO_SUT.c usage_SPIM_MISO_SetDriveMode
 *******************************************************************************/
-void RST_SetDriveMode(uint8 mode)
+void SPIM_MISO_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(RST_0, mode);
+	CyPins_SetPinDriveMode(SPIM_MISO_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: RST_Read
+* Function Name: SPIM_MISO_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void RST_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet RST_SUT.c usage_RST_Read  
+*  \snippet SPIM_MISO_SUT.c usage_SPIM_MISO_Read  
 *******************************************************************************/
-uint8 RST_Read(void)
+uint8 SPIM_MISO_Read(void)
 {
-    return (RST_PS & RST_MASK) >> RST_SHIFT;
+    return (SPIM_MISO_PS & SPIM_MISO_MASK) >> SPIM_MISO_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: RST_ReadDataReg
+* Function Name: SPIM_MISO_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 RST_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred RST_Read() API because the 
-* RST_ReadDataReg() reads the data register instead of the status 
+* preferred SPIM_MISO_Read() API because the 
+* SPIM_MISO_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 RST_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet RST_SUT.c usage_RST_ReadDataReg 
+*  \snippet SPIM_MISO_SUT.c usage_SPIM_MISO_ReadDataReg 
 *******************************************************************************/
-uint8 RST_ReadDataReg(void)
+uint8 SPIM_MISO_ReadDataReg(void)
 {
-    return (RST_DR & RST_MASK) >> RST_SHIFT;
+    return (SPIM_MISO_DR & SPIM_MISO_MASK) >> SPIM_MISO_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(RST_INTSTAT) 
+#if defined(SPIM_MISO_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: RST_SetInterruptMode
+    * Function Name: SPIM_MISO_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 RST_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use RST_INTR_ALL to configure the
+    *  component. Or you may use SPIM_MISO_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - RST_0_INTR       (First pin in the list)
-    *  - RST_1_INTR       (Second pin in the list)
+    *  - SPIM_MISO_0_INTR       (First pin in the list)
+    *  - SPIM_MISO_1_INTR       (Second pin in the list)
     *  - ...
-    *  - RST_INTR_ALL     (All pins in Pins component)
+    *  - SPIM_MISO_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 RST_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet RST_SUT.c usage_RST_SetInterruptMode
+    *  \snippet SPIM_MISO_SUT.c usage_SPIM_MISO_SetInterruptMode
     *******************************************************************************/
-    void RST_SetInterruptMode(uint16 position, uint16 mode)
+    void SPIM_MISO_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & RST_0_INTR) != 0u) 
+		if((position & SPIM_MISO_0_INTR) != 0u) 
 		{ 
-			 RST_0_INTTYPE_REG = (uint8)mode; 
+			 SPIM_MISO_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: RST_ClearInterrupt
+    * Function Name: SPIM_MISO_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 RST_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet RST_SUT.c usage_RST_ClearInterrupt
+    *  \snippet SPIM_MISO_SUT.c usage_SPIM_MISO_ClearInterrupt
     *******************************************************************************/
-    uint8 RST_ClearInterrupt(void)
+    uint8 SPIM_MISO_ClearInterrupt(void)
     {
-        return (RST_INTSTAT & RST_MASK) >> RST_SHIFT;
+        return (SPIM_MISO_INTSTAT & SPIM_MISO_MASK) >> SPIM_MISO_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 
