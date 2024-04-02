@@ -26,4 +26,10 @@
 
 ## Assignment 5: OneWire
 
+<img src="https://github.com/Gemmus/PSoC/assets/112064697/a82b9b3a-9e9f-4c4f-b79e-8a975d3379d9" alt="Exercise 3 Output" width="50%">
+<p><em>Figure 6: Set up of assignment 5.</em></p>
+
+<img src="https://github.com/Gemmus/PSoC/assets/112064697/c0524af0-1071-4714-83e0-3a8657f0e46f" alt="Exercise 3 Output" width="50%">
+<p><em>Figure 7: Example output of assignment 5.</em></p>
+
 ## Project: 
