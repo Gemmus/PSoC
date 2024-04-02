@@ -4,7 +4,7 @@
  *
  * PSoC Design Course 2024: Exercise 2, Timers and Interrupts
  *
- * Turn servo to different angle when button is pressed.
+ * Turn servo to different speed when button is pressed.
  *
  * CC-NA-SA 4.0 
  *
@@ -13,15 +13,42 @@
 
 #include <stdio.h>
 #include "project.h"
-#define CMP_INIT 1000
-#define CMP_END 2000
 
+/* Project Defines */
+#define NUM_SPEEDS 4
+#define MIN_SPEED 1000
+#define MAX_SPEED 2400
+#define SPEED_STEP 10
+
+/* Global variables */
+uint8_t current_speed_index = 0;
+uint16_t speeds[NUM_SPEEDS] = {1000, 1475, 1525, 2200};
+
+/* Interrupt service routine declarations */
 CY_ISR_PROTO(MyButtonISR);
 CY_ISR_PROTO(MyPWMISR);
 
-uint16 PWM_value = 1500; 
-uint8 button_flaG = 0;
-
+/*******************************************************************************
+* Function Name: main
+********************************************************************************
+*
+* Summary:
+*  
+*
+* Parameters:
+*  None.
+*
+* Return:
+*  None.
+*
+* Remarks: 
+*  - Specification: 
+*       - UART: 12[6] RX, 12[7] TX, 9600 bps
+*       - BlueLED: 2[1]
+*       - PWM: 2[0] PWMOut, PWM_Clock 1 MHz, 16-bit UDB, interrupt: PWM_Isr
+*       - Button: 2[2], interrupt: BTN_Isr
+*
+*******************************************************************************/
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
@@ -30,75 +57,42 @@ int main(void)
     PWM_Start();
     
     BTN_Isr_StartEx(MyButtonISR);
-    //PWM_Isr_StartEx(MyPWMISR);
-//    uint16 cmp_val = CMP_INIT;
+    PWM_Isr_StartEx(MyPWMISR);
 
-    PWM_WriteCompare(1495);
-    CyDelay(6000);
-    PWM_WriteCompare(1420);
-    CyDelay(6000);
-    PWM_WriteCompare(1365);
+    PWM_WriteCompare(MIN_SPEED);
 
     for(;;)  /* Forever loop */
     {
-  #if 0      
-        if (cmp_val == CMP_INIT) {
-            cmp_val= CMP_END;
-        } else {
-            cmp_val = CMP_INIT;
-        }
-        PWM_WriteCompare(cmp_val); 
-        CyDelay(10000);
-        
-          #endif
-            
-
-        BlueLED_Write(0);
-        //empty, everything is done on ISR routines
-        if (button_flaG) {
-            UART_PutString("Interrupt event!\r\n");
-            BlueLED_Write(1);
-            CyDelay(5000);
-            button_flaG = 0;
-        }
-    
+        // :)
     }
 }
 
 CY_ISR(MyButtonISR) {
-    button_flaG = 1;
-    Button_ClearInterrupt();
-}
-
-/*
-void nextpwm() {
-    uint16 PWM_tab[5] = {500, 1000, 1500, 2000, 2400};
-    static uint8 count = 0;
-    
-    PWM_value = PWM_tab[count++];
-    
-    if (count >= 5) {
-        count = 0;
+    // Increment speed index
+    if (++current_speed_index >= NUM_SPEEDS) {
+        // If speeds's last index, reset index to 0
+        current_speed_index = 0;
     }
-    
-    return;
-}
-
-// ISR subroutine for button:
-CY_ISR(MyButtonISR) {
-    nextpwm();
     Button_ClearInterrupt();
 }
 
-// ISR subroutine for PWM:
 CY_ISR(MyPWMISR) {
-    static uint16 cval = 1500;
-    static uint16 PWM_step = 10;
-    
-    if (cval < PWM_value) {
-        cval += PWM_step;
-        PWM_WriteCompare(cval);
+   // Smoothly increase speed towards the desired value
+    static uint16_t current_speed = MIN_SPEED;
+    if (PWM_ReadStatusRegister() & PWM_STATUS_TC) {
+        if (current_speed < speeds[current_speed_index]) {
+            current_speed += SPEED_STEP;
+            if (current_speed > speeds[current_speed_index]) {
+                current_speed = speeds[current_speed_index];
+            }
+            PWM_WriteCompare(current_speed);
+        } else if (current_speed > speeds[current_speed_index]) {
+            current_speed -= SPEED_STEP;
+            if (current_speed < speeds[current_speed_index]) {
+                current_speed = speeds[current_speed_index];
+            }
+            PWM_WriteCompare(current_speed);
+        }
     }
 }
-*/
 /* [] END OF FILE */

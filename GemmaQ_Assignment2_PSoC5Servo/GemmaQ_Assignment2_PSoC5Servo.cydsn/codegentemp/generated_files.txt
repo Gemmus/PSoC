@@ -32,13 +32,15 @@
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWM.c" value="SOURCE_C;CortexM3;;;;PWM" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWM.h" value="HEADER;;;;;PWM" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWM_PM.c" value="SOURCE_C;CortexM3;;;;PWM" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\Clock_1.c" value="SOURCE_C;CortexM3;;;;Clock_1" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\Clock_1.h" value="HEADER;;;;;Clock_1" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWM_Clock.c" value="SOURCE_C;CortexM3;;;;PWM_Clock" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWM_Clock.h" value="HEADER;;;;;PWM_Clock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWMOut_aliases.h" value="HEADER;;;;;PWMOut" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWMOut.c" value="SOURCE_C;CortexM3;;;;PWMOut" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWMOut.h" value="HEADER;;;;;PWMOut" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\BTN_Isr.c" value="SOURCE_C;CortexM3;;;;BTN_Isr" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\BTN_Isr.h" value="HEADER;;;;;BTN_Isr" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWM_Isr.c" value="SOURCE_C;CortexM3;;;;PWM_Isr" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\PWM_Isr.h" value="HEADER;;;;;PWM_Isr" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\UART_IntClock.c" value="SOURCE_C;CortexM3;;;;UART_IntClock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\UART_IntClock.h" value="HEADER;;;;;UART_IntClock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo.cydsn\codegentemp\cm3gcc.ld" value="LINKER_SCRIPT;;;b98f980c-3bd1-4fc7-a887-c56a20a46fdd;;cy_boot" />

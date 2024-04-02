@@ -1,5 +1,5 @@
 -- Project:   GemmaQ_Assignment2_PSoC5Servo
--- Generated: 03/29/2024 17:53:27
+-- Generated: 04/02/2024 15:17:56
 -- PSoC Creator  4.2
 
 ENTITY GemmaQ_Assignment2_PSoC5Servo IS
@@ -36,6 +36,7 @@ ARCHITECTURE __DEFAULT__ OF GemmaQ_Assignment2_PSoC5Servo IS
     SIGNAL ClockBlock_XTAL_32KHZ : bit;
     SIGNAL Net_112 : bit;
     SIGNAL Net_115 : bit;
+    SIGNAL Net_118 : bit;
     SIGNAL Net_28 : bit;
     SIGNAL Net_33 : bit;
     SIGNAL Net_71 : bit;
@@ -1277,7 +1278,8 @@ BEGIN
             status_3 => \PWM:PWMUDB:status_3\,
             status_2 => \PWM:PWMUDB:status_2\,
             status_1 => open,
-            status_0 => \PWM:PWMUDB:status_0\);
+            status_0 => \PWM:PWMUDB:status_0\,
+            interrupt => Net_118);
 
     \PWM:PWMUDB:sP16:pwmdp:u0\:datapathcell
         GENERIC MAP(
@@ -1380,6 +1382,14 @@ BEGIN
             is_nmi => 0)
         PORT MAP(
             interrupt => Net_115,
+            clock => ClockBlock_BUS_CLK);
+
+    PWM_Isr:interrupt
+        GENERIC MAP(
+            int_type => "10",
+            is_nmi => 0)
+        PORT MAP(
+            interrupt => Net_118,
             clock => ClockBlock_BUS_CLK);
 
     \UART:BUART:txn\:macrocell
