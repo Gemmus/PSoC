@@ -1,0 +1,3323 @@
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	UART_flag
+  20              		.bss
+  21              		.type	UART_flag, %object
+  22              		.size	UART_flag, 1
+  23              	UART_flag:
+  24 0000 00       		.space	1
+  25              		.global	OneWire_flag
+  26              		.type	OneWire_flag, %object
+  27              		.size	OneWire_flag, 1
+  28              	OneWire_flag:
+  29 0001 00       		.space	1
+  30              		.global	counter
+  31              		.type	counter, %object
+  32              		.size	counter, 1
+  33              	counter:
+  34 0002 00       		.space	1
+  35              		.comm	retByte_buffer,9,4
+  36              		.global	Vout_sum
+  37 0003 00       		.align	2
+  38              		.type	Vout_sum, %object
+  39              		.size	Vout_sum, 4
+  40              	Vout_sum:
+  41 0004 00000000 		.space	4
+  42              		.global	n
+  43              		.align	2
+  44              		.type	n, %object
+  45              		.size	n, 4
+  46              	n:
+  47 0008 00000000 		.space	4
+  48              		.global	Vout_sum_isr
+  49              		.align	2
+  50              		.type	Vout_sum_isr, %object
+  51              		.size	Vout_sum_isr, 4
+  52              	Vout_sum_isr:
+  53 000c 00000000 		.space	4
+  54              		.global	n_isr
+  55              		.align	2
+  56              		.type	n_isr, %object
+  57              		.size	n_isr, 4
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 2
+
+
+  58              	n_isr:
+  59 0010 00000000 		.space	4
+  60              		.global	LM35_temp
+  61              		.align	2
+  62              		.type	LM35_temp, %object
+  63              		.size	LM35_temp, 4
+  64              	LM35_temp:
+  65 0014 00000000 		.space	4
+  66              		.comm	Vout_average,4,4
+  67              		.global	DS18B20_temp
+  68              		.align	2
+  69              		.type	DS18B20_temp, %object
+  70              		.size	DS18B20_temp, 4
+  71              	DS18B20_temp:
+  72 0018 00000000 		.space	4
+  73              		.section	.rodata
+  74              		.align	2
+  75              	.LC0:
+  76 0000 434F4D20 		.ascii	"COM Port Open\015\012\000"
+  76      506F7274 
+  76      204F7065 
+  76      6E0D0A00 
+  77              		.global	__aeabi_i2f
+  78              		.global	__aeabi_fdiv
+  79              		.global	__aeabi_f2iz
+  80              		.global	__aeabi_f2d
+  81              		.align	2
+  82              	.LC1:
+  83 0010 7B202241 		.ascii	"{ \"ADC\": %d , \"LM35\": %.1f , \"DS18B20\": %.1f "
+  83      4443223A 
+  83      20256420 
+  83      2C20224C 
+  83      4D333522 
+  84 003d 7D0D0A00 		.ascii	"}\015\012\000"
+  85              		.section	.text.main,"ax",%progbits
+  86              		.align	2
+  87              		.global	main
+  88              		.thumb
+  89              		.thumb_func
+  90              		.type	main, %function
+  91              	main:
+  92              	.LFB64:
+  93              		.file 1 "main.c"
+   1:main.c        **** /* ================================================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright: Gemma Qin,  Metropolia UAS, Finland, 2024
+   4:main.c        ****  *
+   5:main.c        ****  * PSoC Design Course 2024: Exercise 5, OneWire
+   6:main.c        ****  *
+   7:main.c        ****  * Connect DS18B20 temperature sensor to PSoC using OneWire, 
+   8:main.c        ****  * and transfer the data to computer via UART. 
+   9:main.c        ****  *
+  10:main.c        ****  * ================================================================
+  11:main.c        **** */
+  12:main.c        **** 
+  13:main.c        **** #include <project.h>
+  14:main.c        **** #include "stdio.h"
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 3
+
+
+  15:main.c        **** 
+  16:main.c        **** /* Project Defines */
+  17:main.c        **** #define TRANSMIT_BUFFER_SIZE 64
+  18:main.c        **** #define CRC_POLYNOMIAL 0x8C         // Equivalent to X^8 + X^5 + X^4 + 1
+  19:main.c        **** #define OW_RESPONSE 0
+  20:main.c        **** #define RETBYTE_BUFFER_SIZE 9
+  21:main.c        **** // From DS18B20 datasheet page 25-26:
+  22:main.c        **** #define tLOW1 3
+  23:main.c        **** #define rLOW0 70
+  24:main.c        **** #define tSLOT 80
+  25:main.c        **** #define tCONV 94
+  26:main.c        **** #define tRSTL 1000
+  27:main.c        **** #define tPDLOW 70
+  28:main.c        **** #define tRDV 3
+  29:main.c        **** 
+  30:main.c        **** /* Global variables */
+  31:main.c        **** // Flags:
+  32:main.c        **** volatile uint8 UART_flag = 0;  
+  33:main.c        **** volatile uint8 OneWire_flag = 0;
+  34:main.c        **** 
+  35:main.c        **** // OneWire related variables:
+  36:main.c        **** uint8 counter = 0;
+  37:main.c        **** uint8 retByte_buffer[RETBYTE_BUFFER_SIZE];
+  38:main.c        **** 
+  39:main.c        **** // Running average related variables:
+  40:main.c        **** uint32 Vout_sum = 0;
+  41:main.c        **** uint32 n = 0;
+  42:main.c        **** uint32 Vout_sum_isr = 0;
+  43:main.c        **** uint32 n_isr = 0;
+  44:main.c        **** 
+  45:main.c        **** // Data to be transmitted:
+  46:main.c        **** float32 LM35_temp = 0;
+  47:main.c        **** float32 Vout_average;
+  48:main.c        **** float32 DS18B20_temp = 0;
+  49:main.c        **** 
+  50:main.c        **** /* Function declarations */
+  51:main.c        **** uint8 calculateCRC(uint8 *data, uint8 len);
+  52:main.c        **** void OWWriteBit(int bit);
+  53:main.c        **** void OWWriteByte(int bit);
+  54:main.c        **** uint8 OWReset();
+  55:main.c        **** uint8 OWCheckBit();
+  56:main.c        **** uint8 OWReadBit();
+  57:main.c        **** uint8 OWReadByte(void);
+  58:main.c        **** void DS18B20_tempCalc();
+  59:main.c        **** void LM35_tempCalc();
+  60:main.c        **** 
+  61:main.c        **** /* Interrupt service routine declarations */
+  62:main.c        **** CY_ISR_PROTO(MyADCIsr);
+  63:main.c        **** CY_ISR_PROTO(MyClockIsr);
+  64:main.c        **** 
+  65:main.c        **** /*******************************************************************************
+  66:main.c        **** * Function Name: main
+  67:main.c        **** ********************************************************************************
+  68:main.c        **** *
+  69:main.c        **** * Summary:
+  70:main.c        **** *  Initialises components and interrupts.
+  71:main.c        **** *  Reads data from DS18B20 temperature sensors using OneWire.
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 4
+
+
+  72:main.c        **** *  Reads data from LM35 temperature sensors.
+  73:main.c        **** *  Transmits read data via UART.
+  74:main.c        **** *
+  75:main.c        **** * Parameters:
+  76:main.c        **** *  None.
+  77:main.c        **** *
+  78:main.c        **** * Return:
+  79:main.c        **** *  None.
+  80:main.c        **** *
+  81:main.c        **** * Remarks: 
+  82:main.c        **** *  - Specification: 
+  83:main.c        **** *       - UART: 12[6] RX, 12[7] TX, 115200 bps
+  84:main.c        **** *       - ADC_Timer: 24-bit (UDB), BUS_CLK: 24 MHz, interrupt: Clock_Isr
+  85:main.c        **** *       - ADC_DelSig: 0[0] Vin, 12-bit interrupt: ADC_Isr
+  86:main.c        **** *       - OneWire_Timer: 16-bit (Fixed), BUS_CLK: 24 MHz, interrupt: OW_Isr
+  87:main.c        **** *       - OneWire: 2[6], Digital input and ouput without hardware, Resistive pull-up - High(1)
+  88:main.c        **** *  - Design works without external pull up resistor, internal pull up resistor 
+  89:main.c        **** *    of 5 kOhm resolves same matter.
+  90:main.c        **** *
+  91:main.c        **** *******************************************************************************/
+  92:main.c        **** int main()
+  93:main.c        **** {  
+  94              		.loc 1 93 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 88
+  97              		@ frame_needed = 1, uses_anonymous_args = 0
+  98 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  99              		.cfi_def_cfa_offset 20
+ 100              		.cfi_offset 4, -20
+ 101              		.cfi_offset 5, -16
+ 102              		.cfi_offset 6, -12
+ 103              		.cfi_offset 7, -8
+ 104              		.cfi_offset 14, -4
+ 105 0002 9BB0     		sub	sp, sp, #108
+ 106              		.cfi_def_cfa_offset 128
+ 107 0004 04AF     		add	r7, sp, #16
+ 108              		.cfi_def_cfa 7, 112
+  94:main.c        ****     /* Local variables */
+  95:main.c        ****     // UART related:
+  96:main.c        ****     char transmit_buffer[TRANSMIT_BUFFER_SIZE];
+  97:main.c        ****     // OneWire related:
+  98:main.c        ****     uint8 status;
+  99:main.c        ****     uint8 CRC_valid;
+ 100:main.c        **** 
+ 101:main.c        ****     /* Start the components and interrupts */
+ 102:main.c        ****     UART_Start();
+ 109              		.loc 1 102 0
+ 110 0006 FFF7FEFF 		bl	UART_Start
+ 103:main.c        ****     ADC_DelSig_Start();
+ 111              		.loc 1 103 0
+ 112 000a FFF7FEFF 		bl	ADC_DelSig_Start
+ 104:main.c        ****     ADC_Timer_Start();
+ 113              		.loc 1 104 0
+ 114 000e FFF7FEFF 		bl	ADC_Timer_Start
+ 105:main.c        **** 
+ 106:main.c        ****     ADC_Isr_StartEx(MyADCIsr);
+ 115              		.loc 1 106 0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 5
+
+
+ 116 0012 7A48     		ldr	r0, .L15
+ 117 0014 FFF7FEFF 		bl	ADC_Isr_StartEx
+ 107:main.c        ****     Clock_Isr_StartEx(MyClockIsr);
+ 118              		.loc 1 107 0
+ 119 0018 7948     		ldr	r0, .L15+4
+ 120 001a FFF7FEFF 		bl	Clock_Isr_StartEx
+ 108:main.c        **** 
+ 109:main.c        ****     /* Send message to verify COM port is connected properly */
+ 110:main.c        ****     UART_PutString("COM Port Open\r\n");
+ 121              		.loc 1 110 0
+ 122 001e 7948     		ldr	r0, .L15+8
+ 123 0020 FFF7FEFF 		bl	UART_PutString
+ 111:main.c        ****     
+ 112:main.c        ****     /* Start the ADC conversion */
+ 113:main.c        ****     ADC_DelSig_StartConvert();
+ 124              		.loc 1 113 0
+ 125 0024 FFF7FEFF 		bl	ADC_DelSig_StartConvert
+ 114:main.c        **** 
+ 115:main.c        ****     /* Memory function for DS18B2 (Table 6) */ 
+ 116:main.c        ****     status = OWReset();
+ 126              		.loc 1 116 0
+ 127 0028 FFF7FEFF 		bl	OWReset
+ 128 002c 0346     		mov	r3, r0
+ 129 002e 87F84B30 		strb	r3, [r7, #75]
+ 117:main.c        ****     if (status == OW_RESPONSE) {                                            // Presence pulse. 0: t
+ 130              		.loc 1 117 0
+ 131 0032 97F84B30 		ldrb	r3, [r7, #75]	@ zero_extendqisi2
+ 132 0036 002B     		cmp	r3, #0
+ 133 0038 4DD1     		bne	.L2
+ 118:main.c        ****         OWWriteByte(0xCC);                                                  // Skip ROM command.
+ 134              		.loc 1 118 0
+ 135 003a CC20     		movs	r0, #204
+ 136 003c FFF7FEFF 		bl	OWWriteByte
+ 119:main.c        ****         OWWriteByte(0x4E);                                                  // Write Scratchpad com
+ 137              		.loc 1 119 0
+ 138 0040 4E20     		movs	r0, #78
+ 139 0042 FFF7FEFF 		bl	OWWriteByte
+ 120:main.c        ****         /* Write three bytes to scratchpad (TH, TL, and config). */ 
+ 121:main.c        ****         OWWriteByte(0);                                                     // TH
+ 140              		.loc 1 121 0
+ 141 0046 0020     		movs	r0, #0
+ 142 0048 FFF7FEFF 		bl	OWWriteByte
+ 122:main.c        ****         OWWriteByte(0);                                                     // TL
+ 143              		.loc 1 122 0
+ 144 004c 0020     		movs	r0, #0
+ 145 004e FFF7FEFF 		bl	OWWriteByte
+ 123:main.c        ****         OWWriteByte(0x1F);                                                  // Config
+ 146              		.loc 1 123 0
+ 147 0052 1F20     		movs	r0, #31
+ 148 0054 FFF7FEFF 		bl	OWWriteByte
+ 124:main.c        ****         
+ 125:main.c        ****         status = OWReset();
+ 149              		.loc 1 125 0
+ 150 0058 FFF7FEFF 		bl	OWReset
+ 151 005c 0346     		mov	r3, r0
+ 152 005e 87F84B30 		strb	r3, [r7, #75]
+ 126:main.c        ****         if (status == OW_RESPONSE) {
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 6
+
+
+ 153              		.loc 1 126 0
+ 154 0062 97F84B30 		ldrb	r3, [r7, #75]	@ zero_extendqisi2
+ 155 0066 002B     		cmp	r3, #0
+ 156 0068 35D1     		bne	.L2
+ 127:main.c        ****             CRC_valid = 0;
+ 157              		.loc 1 127 0
+ 158 006a 0023     		movs	r3, #0
+ 159 006c 87F85730 		strb	r3, [r7, #87]
+ 128:main.c        ****             OWWriteByte(0xCC);
+ 160              		.loc 1 128 0
+ 161 0070 CC20     		movs	r0, #204
+ 162 0072 FFF7FEFF 		bl	OWWriteByte
+ 129:main.c        ****             while (!CRC_valid) {
+ 163              		.loc 1 129 0
+ 164 0076 28E0     		b	.L3
+ 165              	.L6:
+ 166              	.LBB2:
+ 130:main.c        ****                 /* Read data */ 
+ 131:main.c        ****                 OWWriteByte(0xBE);                                          // Read Scratchpad comm
+ 167              		.loc 1 131 0
+ 168 0078 BE20     		movs	r0, #190
+ 169 007a FFF7FEFF 		bl	OWWriteByte
+ 170              	.LBB3:
+ 132:main.c        ****                 for (int i = 0; i < RETBYTE_BUFFER_SIZE; i++) {             // Read entire scratchp
+ 171              		.loc 1 132 0
+ 172 007e 0023     		movs	r3, #0
+ 173 0080 3B65     		str	r3, [r7, #80]
+ 174 0082 0BE0     		b	.L4
+ 175              	.L5:
+ 133:main.c        ****                     retByte_buffer[i] = OWReadByte();
+ 176              		.loc 1 133 0 discriminator 3
+ 177 0084 FFF7FEFF 		bl	OWReadByte
+ 178 0088 0346     		mov	r3, r0
+ 179 008a 1946     		mov	r1, r3
+ 180 008c 5E4A     		ldr	r2, .L15+12
+ 181 008e 3B6D     		ldr	r3, [r7, #80]
+ 182 0090 1344     		add	r3, r3, r2
+ 183 0092 0A46     		mov	r2, r1
+ 184 0094 1A70     		strb	r2, [r3]
+ 132:main.c        ****                 for (int i = 0; i < RETBYTE_BUFFER_SIZE; i++) {             // Read entire scratchp
+ 185              		.loc 1 132 0 discriminator 3
+ 186 0096 3B6D     		ldr	r3, [r7, #80]
+ 187 0098 0133     		adds	r3, r3, #1
+ 188 009a 3B65     		str	r3, [r7, #80]
+ 189              	.L4:
+ 132:main.c        ****                 for (int i = 0; i < RETBYTE_BUFFER_SIZE; i++) {             // Read entire scratchp
+ 190              		.loc 1 132 0 is_stmt 0 discriminator 1
+ 191 009c 3B6D     		ldr	r3, [r7, #80]
+ 192 009e 082B     		cmp	r3, #8
+ 193 00a0 F0DD     		ble	.L5
+ 194              	.LBE3:
+ 134:main.c        ****                 }
+ 135:main.c        ****                 /* CRC check */
+ 136:main.c        ****                 uint8 receivedCRC = retByte_buffer[8];
+ 195              		.loc 1 136 0 is_stmt 1
+ 196 00a2 594B     		ldr	r3, .L15+12
+ 197 00a4 1B7A     		ldrb	r3, [r3, #8]
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 7
+
+
+ 198 00a6 87F84A30 		strb	r3, [r7, #74]
+ 137:main.c        ****                 uint8 calculatedCRC = calculateCRC(retByte_buffer, 8);      // Calculate CRC for th
+ 199              		.loc 1 137 0
+ 200 00aa 0821     		movs	r1, #8
+ 201 00ac 5648     		ldr	r0, .L15+12
+ 202 00ae FFF7FEFF 		bl	calculateCRC
+ 203 00b2 0346     		mov	r3, r0
+ 204 00b4 87F84930 		strb	r3, [r7, #73]
+ 138:main.c        ****                 if (receivedCRC == calculatedCRC) {
+ 205              		.loc 1 138 0
+ 206 00b8 97F84A20 		ldrb	r2, [r7, #74]	@ zero_extendqisi2
+ 207 00bc 97F84930 		ldrb	r3, [r7, #73]	@ zero_extendqisi2
+ 208 00c0 9A42     		cmp	r2, r3
+ 209 00c2 02D1     		bne	.L3
+ 139:main.c        ****                     CRC_valid = 1;
+ 210              		.loc 1 139 0
+ 211 00c4 0123     		movs	r3, #1
+ 212 00c6 87F85730 		strb	r3, [r7, #87]
+ 213              	.L3:
+ 214              	.LBE2:
+ 129:main.c        ****                 /* Read data */ 
+ 215              		.loc 1 129 0
+ 216 00ca 97F85730 		ldrb	r3, [r7, #87]	@ zero_extendqisi2
+ 217 00ce 002B     		cmp	r3, #0
+ 218 00d0 D2D0     		beq	.L6
+ 140:main.c        ****                 }
+ 141:main.c        ****             }
+ 142:main.c        ****                 
+ 143:main.c        ****             DS18B20_tempCalc(); // Convert and read temperature
+ 219              		.loc 1 143 0
+ 220 00d2 FFF7FEFF 		bl	DS18B20_tempCalc
+ 221              	.L2:
+ 144:main.c        ****         }
+ 145:main.c        ****     }
+ 146:main.c        **** 
+ 147:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 222              		.loc 1 147 0
+ 223              		.syntax unified
+ 224              	@ 147 "main.c" 1
+ 225 00d6 62B6     		CPSIE   i
+ 226              	@ 0 "" 2
+ 227              		.thumb
+ 228              		.syntax unified
+ 229              	.L14:
+ 148:main.c        **** 
+ 149:main.c        ****     for(;;)
+ 150:main.c        ****     {
+ 151:main.c        ****         /* Read temperature data from DS18B20 */
+ 152:main.c        ****         if (OneWire_flag) {
+ 230              		.loc 1 152 0
+ 231 00d8 4C4B     		ldr	r3, .L15+16
+ 232 00da 1B78     		ldrb	r3, [r3]
+ 233 00dc DBB2     		uxtb	r3, r3
+ 234 00de 002B     		cmp	r3, #0
+ 235 00e0 5FD0     		beq	.L7
+ 153:main.c        ****             CyGlobalIntDisable;
+ 236              		.loc 1 153 0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 8
+
+
+ 237              		.syntax unified
+ 238              	@ 153 "main.c" 1
+ 239 00e2 72B6     		CPSID   i
+ 240              	@ 0 "" 2
+ 154:main.c        ****             OneWire_SetDriveMode(OneWire_DM_RES_UP);
+ 241              		.loc 1 154 0
+ 242              		.thumb
+ 243              		.syntax unified
+ 244 00e4 0420     		movs	r0, #4
+ 245 00e6 FFF7FEFF 		bl	OneWire_SetDriveMode
+ 155:main.c        ****             
+ 156:main.c        ****             status = OWReset();
+ 246              		.loc 1 156 0
+ 247 00ea FFF7FEFF 		bl	OWReset
+ 248 00ee 0346     		mov	r3, r0
+ 249 00f0 87F84B30 		strb	r3, [r7, #75]
+ 157:main.c        ****             if (status == OW_RESPONSE) {
+ 250              		.loc 1 157 0
+ 251 00f4 97F84B30 		ldrb	r3, [r7, #75]	@ zero_extendqisi2
+ 252 00f8 002B     		cmp	r3, #0
+ 253 00fa 4ED1     		bne	.L8
+ 158:main.c        ****                 CRC_valid = 0;
+ 254              		.loc 1 158 0
+ 255 00fc 0023     		movs	r3, #0
+ 256 00fe 87F85730 		strb	r3, [r7, #87]
+ 159:main.c        ****                 OWWriteByte(0xCC);
+ 257              		.loc 1 159 0
+ 258 0102 CC20     		movs	r0, #204
+ 259 0104 FFF7FEFF 		bl	OWWriteByte
+ 160:main.c        ****                 while (!CRC_valid) {
+ 260              		.loc 1 160 0
+ 261 0108 41E0     		b	.L9
+ 262              	.L12:
+ 263              	.LBB4:
+ 161:main.c        ****                     /* Read data */
+ 162:main.c        ****                     OWWriteByte(0xBE);
+ 264              		.loc 1 162 0
+ 265 010a BE20     		movs	r0, #190
+ 266 010c FFF7FEFF 		bl	OWWriteByte
+ 267              	.LBB5:
+ 163:main.c        ****                     for (int i = 0; i < RETBYTE_BUFFER_SIZE; i++) {
+ 268              		.loc 1 163 0
+ 269 0110 0023     		movs	r3, #0
+ 270 0112 FB64     		str	r3, [r7, #76]
+ 271 0114 0BE0     		b	.L10
+ 272              	.L11:
+ 164:main.c        ****                         retByte_buffer[i] = OWReadByte();
+ 273              		.loc 1 164 0 discriminator 3
+ 274 0116 FFF7FEFF 		bl	OWReadByte
+ 275 011a 0346     		mov	r3, r0
+ 276 011c 1946     		mov	r1, r3
+ 277 011e 3A4A     		ldr	r2, .L15+12
+ 278 0120 FB6C     		ldr	r3, [r7, #76]
+ 279 0122 1344     		add	r3, r3, r2
+ 280 0124 0A46     		mov	r2, r1
+ 281 0126 1A70     		strb	r2, [r3]
+ 163:main.c        ****                     for (int i = 0; i < RETBYTE_BUFFER_SIZE; i++) {
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 9
+
+
+ 282              		.loc 1 163 0 discriminator 3
+ 283 0128 FB6C     		ldr	r3, [r7, #76]
+ 284 012a 0133     		adds	r3, r3, #1
+ 285 012c FB64     		str	r3, [r7, #76]
+ 286              	.L10:
+ 163:main.c        ****                     for (int i = 0; i < RETBYTE_BUFFER_SIZE; i++) {
+ 287              		.loc 1 163 0 is_stmt 0 discriminator 1
+ 288 012e FB6C     		ldr	r3, [r7, #76]
+ 289 0130 082B     		cmp	r3, #8
+ 290 0132 F0DD     		ble	.L11
+ 291              	.LBE5:
+ 165:main.c        ****                     }
+ 166:main.c        ****                     /* CRC check */
+ 167:main.c        ****                     uint8 receivedCRC = retByte_buffer[8];
+ 292              		.loc 1 167 0 is_stmt 1
+ 293 0134 344B     		ldr	r3, .L15+12
+ 294 0136 1B7A     		ldrb	r3, [r3, #8]
+ 295 0138 87F84830 		strb	r3, [r7, #72]
+ 168:main.c        ****                     uint8 calculatedCRC = calculateCRC(retByte_buffer, 8); // Calculate CRC for the
+ 296              		.loc 1 168 0
+ 297 013c 0821     		movs	r1, #8
+ 298 013e 3248     		ldr	r0, .L15+12
+ 299 0140 FFF7FEFF 		bl	calculateCRC
+ 300 0144 0346     		mov	r3, r0
+ 301 0146 87F84730 		strb	r3, [r7, #71]
+ 169:main.c        ****                     if (receivedCRC == calculatedCRC) {
+ 302              		.loc 1 169 0
+ 303 014a 97F84820 		ldrb	r2, [r7, #72]	@ zero_extendqisi2
+ 304 014e 97F84730 		ldrb	r3, [r7, #71]	@ zero_extendqisi2
+ 305 0152 9A42     		cmp	r2, r3
+ 306 0154 1BD1     		bne	.L9
+ 307              	.LBB6:
+ 170:main.c        ****                         CRC_valid = 1;
+ 308              		.loc 1 170 0
+ 309 0156 0123     		movs	r3, #1
+ 310 0158 87F85730 		strb	r3, [r7, #87]
+ 171:main.c        ****                         /* Extract temperature data and convert */
+ 172:main.c        ****                         int16 tresult = (int16)retByte_buffer[1] << 8 | retByte_buffer[0];
+ 311              		.loc 1 172 0
+ 312 015c 2A4B     		ldr	r3, .L15+12
+ 313 015e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 314 0160 1B02     		lsls	r3, r3, #8
+ 315 0162 1AB2     		sxth	r2, r3
+ 316 0164 284B     		ldr	r3, .L15+12
+ 317 0166 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 318 0168 1BB2     		sxth	r3, r3
+ 319 016a 1343     		orrs	r3, r3, r2
+ 320 016c A7F84430 		strh	r3, [r7, #68]	@ movhi
+ 173:main.c        ****                         DS18B20_temp = (float32)tresult / 16;
+ 321              		.loc 1 173 0
+ 322 0170 B7F94430 		ldrsh	r3, [r7, #68]
+ 323 0174 1846     		mov	r0, r3
+ 324 0176 FFF7FEFF 		bl	__aeabi_i2f
+ 325 017a 0346     		mov	r3, r0
+ 326 017c 4FF08341 		mov	r1, #1098907648
+ 327 0180 1846     		mov	r0, r3
+ 328 0182 FFF7FEFF 		bl	__aeabi_fdiv
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 10
+
+
+ 329 0186 0346     		mov	r3, r0
+ 330 0188 1A46     		mov	r2, r3
+ 331 018a 214B     		ldr	r3, .L15+20
+ 332 018c 1A60     		str	r2, [r3]	@ float
+ 333              	.L9:
+ 334              	.LBE6:
+ 335              	.LBE4:
+ 160:main.c        ****                     /* Read data */
+ 336              		.loc 1 160 0
+ 337 018e 97F85730 		ldrb	r3, [r7, #87]	@ zero_extendqisi2
+ 338 0192 002B     		cmp	r3, #0
+ 339 0194 B9D0     		beq	.L12
+ 174:main.c        ****                     }
+ 175:main.c        ****                 }
+ 176:main.c        ****                 
+ 177:main.c        ****                 DS18B20_tempCalc(); // Convert and read temperature
+ 340              		.loc 1 177 0
+ 341 0196 FFF7FEFF 		bl	DS18B20_tempCalc
+ 342              	.L8:
+ 178:main.c        ****             }
+ 179:main.c        ****             CyGlobalIntEnable;
+ 343              		.loc 1 179 0
+ 344              		.syntax unified
+ 345              	@ 179 "main.c" 1
+ 346 019a 62B6     		CPSIE   i
+ 347              	@ 0 "" 2
+ 180:main.c        ****             OneWire_flag = 0;
+ 348              		.loc 1 180 0
+ 349              		.thumb
+ 350              		.syntax unified
+ 351 019c 1B4B     		ldr	r3, .L15+16
+ 352 019e 0022     		movs	r2, #0
+ 353 01a0 1A70     		strb	r2, [r3]
+ 354              	.L7:
+ 181:main.c        ****         }
+ 182:main.c        **** 
+ 183:main.c        ****         /* Calculate LM35 temperature and sends data to UART */
+ 184:main.c        ****         if (UART_flag) {
+ 355              		.loc 1 184 0
+ 356 01a2 1C4B     		ldr	r3, .L15+24
+ 357 01a4 1B78     		ldrb	r3, [r3]
+ 358 01a6 DBB2     		uxtb	r3, r3
+ 359 01a8 002B     		cmp	r3, #0
+ 360 01aa 95D0     		beq	.L14
+ 185:main.c        **** 
+ 186:main.c        ****             /* Calculate Vout running average */
+ 187:main.c        ****             LM35_tempCalc();
+ 361              		.loc 1 187 0
+ 362 01ac FFF7FEFF 		bl	LM35_tempCalc
+ 188:main.c        ****             
+ 189:main.c        ****             /* Format data */ 
+ 190:main.c        ****             sprintf(transmit_buffer, 
+ 363              		.loc 1 190 0
+ 364 01b0 194B     		ldr	r3, .L15+28
+ 365 01b2 1B68     		ldr	r3, [r3]	@ float
+ 366 01b4 1846     		mov	r0, r3
+ 367 01b6 FFF7FEFF 		bl	__aeabi_f2iz
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 11
+
+
+ 368 01ba 0646     		mov	r6, r0
+ 369 01bc 174B     		ldr	r3, .L15+32
+ 370 01be 1B68     		ldr	r3, [r3]	@ float
+ 371 01c0 1846     		mov	r0, r3
+ 372 01c2 FFF7FEFF 		bl	__aeabi_f2d
+ 373 01c6 0446     		mov	r4, r0
+ 374 01c8 0D46     		mov	r5, r1
+ 375 01ca 114B     		ldr	r3, .L15+20
+ 376 01cc 1B68     		ldr	r3, [r3]	@ float
+ 377 01ce 1846     		mov	r0, r3
+ 378 01d0 FFF7FEFF 		bl	__aeabi_f2d
+ 379 01d4 0246     		mov	r2, r0
+ 380 01d6 0B46     		mov	r3, r1
+ 381 01d8 381D     		adds	r0, r7, #4
+ 382 01da CDE90223 		strd	r2, [sp, #8]
+ 383 01de CDE90045 		strd	r4, [sp]
+ 384 01e2 3246     		mov	r2, r6
+ 385 01e4 0E49     		ldr	r1, .L15+36
+ 386 01e6 FFF7FEFF 		bl	sprintf
+ 191:main.c        ****                     "{ \"ADC\": %d , \"LM35\": %.1f , \"DS18B20\": %.1f }\r\n", 
+ 192:main.c        ****                     (int)Vout_average, LM35_temp, DS18B20_temp);
+ 193:main.c        ****           
+ 194:main.c        ****             /* Send data to UART */
+ 195:main.c        ****             UART_PutString(transmit_buffer);
+ 387              		.loc 1 195 0
+ 388 01ea 3B1D     		adds	r3, r7, #4
+ 389 01ec 1846     		mov	r0, r3
+ 390 01ee FFF7FEFF 		bl	UART_PutString
+ 196:main.c        ****             
+ 197:main.c        ****             UART_flag = 0;  
+ 391              		.loc 1 197 0
+ 392 01f2 084B     		ldr	r3, .L15+24
+ 393 01f4 0022     		movs	r2, #0
+ 394 01f6 1A70     		strb	r2, [r3]
+ 198:main.c        ****         }
+ 199:main.c        ****     }
+ 395              		.loc 1 199 0
+ 396 01f8 6EE7     		b	.L14
+ 397              	.L16:
+ 398 01fa 00BF     		.align	2
+ 399              	.L15:
+ 400 01fc 00000000 		.word	MyADCIsr
+ 401 0200 00000000 		.word	MyClockIsr
+ 402 0204 00000000 		.word	.LC0
+ 403 0208 00000000 		.word	retByte_buffer
+ 404 020c 00000000 		.word	OneWire_flag
+ 405 0210 00000000 		.word	DS18B20_temp
+ 406 0214 00000000 		.word	UART_flag
+ 407 0218 00000000 		.word	Vout_average
+ 408 021c 00000000 		.word	LM35_temp
+ 409 0220 10000000 		.word	.LC1
+ 410              		.cfi_endproc
+ 411              	.LFE64:
+ 412              		.size	main, .-main
+ 413              		.section	.text.calculateCRC,"ax",%progbits
+ 414              		.align	2
+ 415              		.global	calculateCRC
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 12
+
+
+ 416              		.thumb
+ 417              		.thumb_func
+ 418              		.type	calculateCRC, %function
+ 419              	calculateCRC:
+ 420              	.LFB65:
+ 200:main.c        **** }
+ 201:main.c        **** 
+ 202:main.c        **** /*******************************************************************************
+ 203:main.c        **** * Function Name: calculateCRC
+ 204:main.c        **** ********************************************************************************
+ 205:main.c        **** *
+ 206:main.c        **** * Summary:
+ 207:main.c        **** *  Calculates CRC value of received data.
+ 208:main.c        **** *
+ 209:main.c        **** * Parameters:
+ 210:main.c        **** *  uint8 *data: pointer to data
+ 211:main.c        **** *  uint8 len: length of data
+ 212:main.c        **** *
+ 213:main.c        **** * Return:
+ 214:main.c        **** *  uint8: returns CRC value
+ 215:main.c        **** *
+ 216:main.c        **** *******************************************************************************/
+ 217:main.c        **** uint8 calculateCRC(uint8 *data, uint8 len) {
+ 421              		.loc 1 217 0
+ 422              		.cfi_startproc
+ 423              		@ args = 0, pretend = 0, frame = 24
+ 424              		@ frame_needed = 1, uses_anonymous_args = 0
+ 425              		@ link register save eliminated.
+ 426 0000 80B4     		push	{r7}
+ 427              		.cfi_def_cfa_offset 4
+ 428              		.cfi_offset 7, -4
+ 429 0002 87B0     		sub	sp, sp, #28
+ 430              		.cfi_def_cfa_offset 32
+ 431 0004 00AF     		add	r7, sp, #0
+ 432              		.cfi_def_cfa_register 7
+ 433 0006 7860     		str	r0, [r7, #4]
+ 434 0008 0B46     		mov	r3, r1
+ 435 000a FB70     		strb	r3, [r7, #3]
+ 218:main.c        ****     uint8 crc = 0;
+ 436              		.loc 1 218 0
+ 437 000c 0023     		movs	r3, #0
+ 438 000e FB75     		strb	r3, [r7, #23]
+ 439              	.LBB7:
+ 219:main.c        ****     for (int i = 0; i < len; i++) {
+ 440              		.loc 1 219 0
+ 441 0010 0023     		movs	r3, #0
+ 442 0012 3B61     		str	r3, [r7, #16]
+ 443 0014 22E0     		b	.L18
+ 444              	.L23:
+ 220:main.c        ****         crc ^= data[i];
+ 445              		.loc 1 220 0
+ 446 0016 3B69     		ldr	r3, [r7, #16]
+ 447 0018 7A68     		ldr	r2, [r7, #4]
+ 448 001a 1344     		add	r3, r3, r2
+ 449 001c 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 450 001e FB7D     		ldrb	r3, [r7, #23]
+ 451 0020 5340     		eors	r3, r3, r2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 13
+
+
+ 452 0022 FB75     		strb	r3, [r7, #23]
+ 453              	.LBB8:
+ 221:main.c        ****         for (int j = 0; j < 8; j++) {
+ 454              		.loc 1 221 0
+ 455 0024 0023     		movs	r3, #0
+ 456 0026 FB60     		str	r3, [r7, #12]
+ 457 0028 12E0     		b	.L19
+ 458              	.L22:
+ 222:main.c        ****             if (crc & 0x01) {
+ 459              		.loc 1 222 0
+ 460 002a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 461 002c 03F00103 		and	r3, r3, #1
+ 462 0030 002B     		cmp	r3, #0
+ 463 0032 07D0     		beq	.L20
+ 223:main.c        ****                 crc = (crc >> 1) ^ CRC_POLYNOMIAL;
+ 464              		.loc 1 223 0
+ 465 0034 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 466 0036 5B08     		lsrs	r3, r3, #1
+ 467 0038 DBB2     		uxtb	r3, r3
+ 468 003a 83F07303 		eor	r3, r3, #115
+ 469 003e DB43     		mvns	r3, r3
+ 470 0040 FB75     		strb	r3, [r7, #23]
+ 471 0042 02E0     		b	.L21
+ 472              	.L20:
+ 224:main.c        ****             } else {
+ 225:main.c        ****                 crc >>= 1;
+ 473              		.loc 1 225 0
+ 474 0044 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 475 0046 5B08     		lsrs	r3, r3, #1
+ 476 0048 FB75     		strb	r3, [r7, #23]
+ 477              	.L21:
+ 221:main.c        ****             if (crc & 0x01) {
+ 478              		.loc 1 221 0 discriminator 2
+ 479 004a FB68     		ldr	r3, [r7, #12]
+ 480 004c 0133     		adds	r3, r3, #1
+ 481 004e FB60     		str	r3, [r7, #12]
+ 482              	.L19:
+ 221:main.c        ****             if (crc & 0x01) {
+ 483              		.loc 1 221 0 is_stmt 0 discriminator 1
+ 484 0050 FB68     		ldr	r3, [r7, #12]
+ 485 0052 072B     		cmp	r3, #7
+ 486 0054 E9DD     		ble	.L22
+ 487              	.LBE8:
+ 219:main.c        ****         crc ^= data[i];
+ 488              		.loc 1 219 0 is_stmt 1 discriminator 2
+ 489 0056 3B69     		ldr	r3, [r7, #16]
+ 490 0058 0133     		adds	r3, r3, #1
+ 491 005a 3B61     		str	r3, [r7, #16]
+ 492              	.L18:
+ 219:main.c        ****         crc ^= data[i];
+ 493              		.loc 1 219 0 is_stmt 0 discriminator 1
+ 494 005c FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 495 005e 3B69     		ldr	r3, [r7, #16]
+ 496 0060 9A42     		cmp	r2, r3
+ 497 0062 D8DC     		bgt	.L23
+ 498              	.LBE7:
+ 226:main.c        ****             }
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 14
+
+
+ 227:main.c        ****         }
+ 228:main.c        ****     }
+ 229:main.c        ****     return crc;
+ 499              		.loc 1 229 0 is_stmt 1
+ 500 0064 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 230:main.c        **** }
+ 501              		.loc 1 230 0
+ 502 0066 1846     		mov	r0, r3
+ 503 0068 1C37     		adds	r7, r7, #28
+ 504              		.cfi_def_cfa_offset 4
+ 505 006a BD46     		mov	sp, r7
+ 506              		.cfi_def_cfa_register 13
+ 507              		@ sp needed
+ 508 006c 80BC     		pop	{r7}
+ 509              		.cfi_restore 7
+ 510              		.cfi_def_cfa_offset 0
+ 511 006e 7047     		bx	lr
+ 512              		.cfi_endproc
+ 513              	.LFE65:
+ 514              		.size	calculateCRC, .-calculateCRC
+ 515              		.section	.text.OWWriteBit,"ax",%progbits
+ 516              		.align	2
+ 517              		.global	OWWriteBit
+ 518              		.thumb
+ 519              		.thumb_func
+ 520              		.type	OWWriteBit, %function
+ 521              	OWWriteBit:
+ 522              	.LFB66:
+ 231:main.c        **** 
+ 232:main.c        **** /*******************************************************************************
+ 233:main.c        **** * Function Name: OWWriteBit
+ 234:main.c        **** ********************************************************************************
+ 235:main.c        **** *
+ 236:main.c        **** * Summary:
+ 237:main.c        **** *  Function to send 1 or 0 bit. 
+ 238:main.c        **** *
+ 239:main.c        **** * Parameters:
+ 240:main.c        **** *  int bit: 0 or 1
+ 241:main.c        **** *
+ 242:main.c        **** * Return:
+ 243:main.c        **** *  None.
+ 244:main.c        **** *
+ 245:main.c        **** *******************************************************************************/
+ 246:main.c        **** void OWWriteBit(int bit) {   // Write 1 or 0
+ 523              		.loc 1 246 0
+ 524              		.cfi_startproc
+ 525              		@ args = 0, pretend = 0, frame = 8
+ 526              		@ frame_needed = 1, uses_anonymous_args = 0
+ 527 0000 80B5     		push	{r7, lr}
+ 528              		.cfi_def_cfa_offset 8
+ 529              		.cfi_offset 7, -8
+ 530              		.cfi_offset 14, -4
+ 531 0002 82B0     		sub	sp, sp, #8
+ 532              		.cfi_def_cfa_offset 16
+ 533 0004 00AF     		add	r7, sp, #0
+ 534              		.cfi_def_cfa_register 7
+ 535 0006 7860     		str	r0, [r7, #4]
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 15
+
+
+ 247:main.c        ****     OneWire_Write(0);
+ 536              		.loc 1 247 0
+ 537 0008 0020     		movs	r0, #0
+ 538 000a FFF7FEFF 		bl	OneWire_Write
+ 248:main.c        ****     if (bit) {
+ 539              		.loc 1 248 0
+ 540 000e 7B68     		ldr	r3, [r7, #4]
+ 541 0010 002B     		cmp	r3, #0
+ 542 0012 09D0     		beq	.L26
+ 249:main.c        ****         // Write '1' bit
+ 250:main.c        ****         CyDelayUs(tLOW1);
+ 543              		.loc 1 250 0
+ 544 0014 0320     		movs	r0, #3
+ 545 0016 FFF7FEFF 		bl	CyDelayUs
+ 251:main.c        ****         OneWire_Write(1);
+ 546              		.loc 1 251 0
+ 547 001a 0120     		movs	r0, #1
+ 548 001c FFF7FEFF 		bl	OneWire_Write
+ 252:main.c        ****         CyDelayUs(tSLOT - tLOW1);
+ 549              		.loc 1 252 0
+ 550 0020 4D20     		movs	r0, #77
+ 551 0022 FFF7FEFF 		bl	CyDelayUs
+ 253:main.c        ****     } else {
+ 254:main.c        ****         // Write '0' bit
+ 255:main.c        ****         CyDelayUs(rLOW0);
+ 256:main.c        ****         OneWire_Write(1);
+ 257:main.c        ****         CyDelayUs(tSLOT - rLOW0);
+ 258:main.c        ****     }
+ 259:main.c        **** }
+ 552              		.loc 1 259 0
+ 553 0026 08E0     		b	.L28
+ 554              	.L26:
+ 255:main.c        ****         OneWire_Write(1);
+ 555              		.loc 1 255 0
+ 556 0028 4620     		movs	r0, #70
+ 557 002a FFF7FEFF 		bl	CyDelayUs
+ 256:main.c        ****         CyDelayUs(tSLOT - rLOW0);
+ 558              		.loc 1 256 0
+ 559 002e 0120     		movs	r0, #1
+ 560 0030 FFF7FEFF 		bl	OneWire_Write
+ 257:main.c        ****     }
+ 561              		.loc 1 257 0
+ 562 0034 0A20     		movs	r0, #10
+ 563 0036 FFF7FEFF 		bl	CyDelayUs
+ 564              	.L28:
+ 565              		.loc 1 259 0
+ 566 003a 00BF     		nop
+ 567 003c 0837     		adds	r7, r7, #8
+ 568              		.cfi_def_cfa_offset 8
+ 569 003e BD46     		mov	sp, r7
+ 570              		.cfi_def_cfa_register 13
+ 571              		@ sp needed
+ 572 0040 80BD     		pop	{r7, pc}
+ 573              		.cfi_endproc
+ 574              	.LFE66:
+ 575              		.size	OWWriteBit, .-OWWriteBit
+ 576 0042 00BF     		.section	.text.OWWriteByte,"ax",%progbits
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 16
+
+
+ 577              		.align	2
+ 578              		.global	OWWriteByte
+ 579              		.thumb
+ 580              		.thumb_func
+ 581              		.type	OWWriteByte, %function
+ 582              	OWWriteByte:
+ 583              	.LFB67:
+ 260:main.c        **** 
+ 261:main.c        **** /*******************************************************************************
+ 262:main.c        **** * Function Name: OWWriteByte
+ 263:main.c        **** ********************************************************************************
+ 264:main.c        **** *
+ 265:main.c        **** * Summary:
+ 266:main.c        **** *  Sends one byte by calling OWWriteBit().
+ 267:main.c        **** *
+ 268:main.c        **** * Parameters:
+ 269:main.c        **** *  int data: data to be sent.
+ 270:main.c        **** *
+ 271:main.c        **** * Return:
+ 272:main.c        **** *  None.
+ 273:main.c        **** *
+ 274:main.c        **** *******************************************************************************/
+ 275:main.c        **** void OWWriteByte(int data) {
+ 584              		.loc 1 275 0
+ 585              		.cfi_startproc
+ 586              		@ args = 0, pretend = 0, frame = 16
+ 587              		@ frame_needed = 1, uses_anonymous_args = 0
+ 588 0000 80B5     		push	{r7, lr}
+ 589              		.cfi_def_cfa_offset 8
+ 590              		.cfi_offset 7, -8
+ 591              		.cfi_offset 14, -4
+ 592 0002 84B0     		sub	sp, sp, #16
+ 593              		.cfi_def_cfa_offset 24
+ 594 0004 00AF     		add	r7, sp, #0
+ 595              		.cfi_def_cfa_register 7
+ 596 0006 7860     		str	r0, [r7, #4]
+ 597              	.LBB9:
+ 276:main.c        ****     /* Loop to write each bit in the byte, LS-bit first. */
+ 277:main.c        ****     for (int loop = 0; loop < 8; loop++)
+ 598              		.loc 1 277 0
+ 599 0008 0023     		movs	r3, #0
+ 600 000a FB60     		str	r3, [r7, #12]
+ 601 000c 0BE0     		b	.L30
+ 602              	.L31:
+ 278:main.c        ****     {
+ 279:main.c        ****         OWWriteBit(data & 0x01);
+ 603              		.loc 1 279 0 discriminator 3
+ 604 000e 7B68     		ldr	r3, [r7, #4]
+ 605 0010 03F00103 		and	r3, r3, #1
+ 606 0014 1846     		mov	r0, r3
+ 607 0016 FFF7FEFF 		bl	OWWriteBit
+ 280:main.c        ****         /* Shift the data byte for the next bit. */
+ 281:main.c        ****         data >>= 1;
+ 608              		.loc 1 281 0 discriminator 3
+ 609 001a 7B68     		ldr	r3, [r7, #4]
+ 610 001c 5B10     		asrs	r3, r3, #1
+ 611 001e 7B60     		str	r3, [r7, #4]
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 17
+
+
+ 277:main.c        ****     {
+ 612              		.loc 1 277 0 discriminator 3
+ 613 0020 FB68     		ldr	r3, [r7, #12]
+ 614 0022 0133     		adds	r3, r3, #1
+ 615 0024 FB60     		str	r3, [r7, #12]
+ 616              	.L30:
+ 277:main.c        ****     {
+ 617              		.loc 1 277 0 is_stmt 0 discriminator 1
+ 618 0026 FB68     		ldr	r3, [r7, #12]
+ 619 0028 072B     		cmp	r3, #7
+ 620 002a F0DD     		ble	.L31
+ 621              	.LBE9:
+ 282:main.c        ****     }
+ 283:main.c        **** }
+ 622              		.loc 1 283 0 is_stmt 1
+ 623 002c 00BF     		nop
+ 624 002e 1037     		adds	r7, r7, #16
+ 625              		.cfi_def_cfa_offset 8
+ 626 0030 BD46     		mov	sp, r7
+ 627              		.cfi_def_cfa_register 13
+ 628              		@ sp needed
+ 629 0032 80BD     		pop	{r7, pc}
+ 630              		.cfi_endproc
+ 631              	.LFE67:
+ 632              		.size	OWWriteByte, .-OWWriteByte
+ 633              		.section	.text.OWReset,"ax",%progbits
+ 634              		.align	2
+ 635              		.global	OWReset
+ 636              		.thumb
+ 637              		.thumb_func
+ 638              		.type	OWReset, %function
+ 639              	OWReset:
+ 640              	.LFB68:
+ 284:main.c        **** 
+ 285:main.c        **** /*******************************************************************************
+ 286:main.c        **** * Function Name: OWReset
+ 287:main.c        **** ********************************************************************************
+ 288:main.c        **** *
+ 289:main.c        **** * Summary:
+ 290:main.c        **** *  Resets line. 
+ 291:main.c        **** *
+ 292:main.c        **** * Parameters:
+ 293:main.c        **** *  None.
+ 294:main.c        **** *
+ 295:main.c        **** * Return:
+ 296:main.c        **** *  None.
+ 297:main.c        **** *
+ 298:main.c        **** *******************************************************************************/
+ 299:main.c        **** uint8 OWReset() {
+ 641              		.loc 1 299 0
+ 642              		.cfi_startproc
+ 643              		@ args = 0, pretend = 0, frame = 8
+ 644              		@ frame_needed = 1, uses_anonymous_args = 0
+ 645 0000 80B5     		push	{r7, lr}
+ 646              		.cfi_def_cfa_offset 8
+ 647              		.cfi_offset 7, -8
+ 648              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 18
+
+
+ 649 0002 82B0     		sub	sp, sp, #8
+ 650              		.cfi_def_cfa_offset 16
+ 651 0004 00AF     		add	r7, sp, #0
+ 652              		.cfi_def_cfa_register 7
+ 300:main.c        ****     uint8 retval;
+ 301:main.c        ****     
+ 302:main.c        ****     OneWire_Write(1);
+ 653              		.loc 1 302 0
+ 654 0006 0120     		movs	r0, #1
+ 655 0008 FFF7FEFF 		bl	OneWire_Write
+ 303:main.c        ****     CyDelayUs(100);             // Make sure it idled for a while.
+ 656              		.loc 1 303 0
+ 657 000c 6420     		movs	r0, #100
+ 658 000e FFF7FEFF 		bl	CyDelayUs
+ 304:main.c        ****     OneWire_Write(0);   
+ 659              		.loc 1 304 0
+ 660 0012 0020     		movs	r0, #0
+ 661 0014 FFF7FEFF 		bl	OneWire_Write
+ 305:main.c        ****     CyDelayUs(tRSTL);           // tRSTL: 1000
+ 662              		.loc 1 305 0
+ 663 0018 4FF47A70 		mov	r0, #1000
+ 664 001c FFF7FEFF 		bl	CyDelayUs
+ 306:main.c        ****     OneWire_Write(1);
+ 665              		.loc 1 306 0
+ 666 0020 0120     		movs	r0, #1
+ 667 0022 FFF7FEFF 		bl	OneWire_Write
+ 307:main.c        ****     CyDelayUs(tPDLOW);          // tPDLOW: 70
+ 668              		.loc 1 307 0
+ 669 0026 4620     		movs	r0, #70
+ 670 0028 FFF7FEFF 		bl	CyDelayUs
+ 308:main.c        ****     retval = OWCheckBit();
+ 671              		.loc 1 308 0
+ 672 002c FFF7FEFF 		bl	OWCheckBit
+ 673 0030 0346     		mov	r3, r0
+ 674 0032 FB71     		strb	r3, [r7, #7]
+ 309:main.c        ****     CyDelayUs(500 - tPDLOW);    // Make sure we are out of tPDLOW: 500 - tPDLOW
+ 675              		.loc 1 309 0
+ 676 0034 4FF4D770 		mov	r0, #430
+ 677 0038 FFF7FEFF 		bl	CyDelayUs
+ 310:main.c        **** 
+ 311:main.c        ****     return retval;
+ 678              		.loc 1 311 0
+ 679 003c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 312:main.c        **** }
+ 680              		.loc 1 312 0
+ 681 003e 1846     		mov	r0, r3
+ 682 0040 0837     		adds	r7, r7, #8
+ 683              		.cfi_def_cfa_offset 8
+ 684 0042 BD46     		mov	sp, r7
+ 685              		.cfi_def_cfa_register 13
+ 686              		@ sp needed
+ 687 0044 80BD     		pop	{r7, pc}
+ 688              		.cfi_endproc
+ 689              	.LFE68:
+ 690              		.size	OWReset, .-OWReset
+ 691 0046 00BF     		.section	.text.OWCheckBit,"ax",%progbits
+ 692              		.align	2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 19
+
+
+ 693              		.global	OWCheckBit
+ 694              		.thumb
+ 695              		.thumb_func
+ 696              		.type	OWCheckBit, %function
+ 697              	OWCheckBit:
+ 698              	.LFB69:
+ 313:main.c        **** /*******************************************************************************
+ 314:main.c        **** * Function Name: OWCheckBit
+ 315:main.c        **** ********************************************************************************
+ 316:main.c        **** *
+ 317:main.c        **** * Summary:
+ 318:main.c        **** *  Checks bit by calling OneWire_Read().
+ 319:main.c        **** *
+ 320:main.c        **** * Parameters:
+ 321:main.c        **** *  None.
+ 322:main.c        **** *
+ 323:main.c        **** * Return:
+ 324:main.c        **** *  None.
+ 325:main.c        **** *
+ 326:main.c        **** *******************************************************************************/
+ 327:main.c        **** uint8 OWCheckBit() {
+ 699              		.loc 1 327 0
+ 700              		.cfi_startproc
+ 701              		@ args = 0, pretend = 0, frame = 0
+ 702              		@ frame_needed = 1, uses_anonymous_args = 0
+ 703 0000 80B5     		push	{r7, lr}
+ 704              		.cfi_def_cfa_offset 8
+ 705              		.cfi_offset 7, -8
+ 706              		.cfi_offset 14, -4
+ 707 0002 00AF     		add	r7, sp, #0
+ 708              		.cfi_def_cfa_register 7
+ 328:main.c        ****     return OneWire_Read();
+ 709              		.loc 1 328 0
+ 710 0004 FFF7FEFF 		bl	OneWire_Read
+ 711 0008 0346     		mov	r3, r0
+ 329:main.c        **** }
+ 712              		.loc 1 329 0
+ 713 000a 1846     		mov	r0, r3
+ 714 000c 80BD     		pop	{r7, pc}
+ 715              		.cfi_endproc
+ 716              	.LFE69:
+ 717              		.size	OWCheckBit, .-OWCheckBit
+ 718 000e 00BF     		.section	.text.OWReadBit,"ax",%progbits
+ 719              		.align	2
+ 720              		.global	OWReadBit
+ 721              		.thumb
+ 722              		.thumb_func
+ 723              		.type	OWReadBit, %function
+ 724              	OWReadBit:
+ 725              	.LFB70:
+ 330:main.c        **** 
+ 331:main.c        **** /*******************************************************************************
+ 332:main.c        **** * Function Name: OWReadBit
+ 333:main.c        **** ********************************************************************************
+ 334:main.c        **** *
+ 335:main.c        **** * Summary:
+ 336:main.c        **** *  Reads one bit. 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 20
+
+
+ 337:main.c        **** *
+ 338:main.c        **** * Parameters:
+ 339:main.c        **** *  None.
+ 340:main.c        **** *
+ 341:main.c        **** * Return:
+ 342:main.c        **** *  uint8: return value of OneWire_Read().
+ 343:main.c        **** *
+ 344:main.c        **** *******************************************************************************/
+ 345:main.c        **** uint8 OWReadBit() {
+ 726              		.loc 1 345 0
+ 727              		.cfi_startproc
+ 728              		@ args = 0, pretend = 0, frame = 8
+ 729              		@ frame_needed = 1, uses_anonymous_args = 0
+ 730 0000 80B5     		push	{r7, lr}
+ 731              		.cfi_def_cfa_offset 8
+ 732              		.cfi_offset 7, -8
+ 733              		.cfi_offset 14, -4
+ 734 0002 82B0     		sub	sp, sp, #8
+ 735              		.cfi_def_cfa_offset 16
+ 736 0004 00AF     		add	r7, sp, #0
+ 737              		.cfi_def_cfa_register 7
+ 346:main.c        ****     uint8 retval;
+ 347:main.c        **** 
+ 348:main.c        ****     OneWire_Write(0);
+ 738              		.loc 1 348 0
+ 739 0006 0020     		movs	r0, #0
+ 740 0008 FFF7FEFF 		bl	OneWire_Write
+ 349:main.c        ****     CyDelayUs(tRDV);                    // tRDV: 3
+ 741              		.loc 1 349 0
+ 742 000c 0320     		movs	r0, #3
+ 743 000e FFF7FEFF 		bl	CyDelayUs
+ 350:main.c        ****     OneWire_Write(1);
+ 744              		.loc 1 350 0
+ 745 0012 0120     		movs	r0, #1
+ 746 0014 FFF7FEFF 		bl	OneWire_Write
+ 351:main.c        ****     CyDelayUs(12);                      // Extra time: 12
+ 747              		.loc 1 351 0
+ 748 0018 0C20     		movs	r0, #12
+ 749 001a FFF7FEFF 		bl	CyDelayUs
+ 352:main.c        ****     retval = OWCheckBit();
+ 750              		.loc 1 352 0
+ 751 001e FFF7FEFF 		bl	OWCheckBit
+ 752 0022 0346     		mov	r3, r0
+ 753 0024 FB71     		strb	r3, [r7, #7]
+ 353:main.c        ****     CyDelayUs(tSLOT - tRDV - 12);       // Remainder of tSLOT: 80 - 3 - 12
+ 754              		.loc 1 353 0
+ 755 0026 4120     		movs	r0, #65
+ 756 0028 FFF7FEFF 		bl	CyDelayUs
+ 354:main.c        **** 
+ 355:main.c        ****     return retval;
+ 757              		.loc 1 355 0
+ 758 002c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 356:main.c        **** }
+ 759              		.loc 1 356 0
+ 760 002e 1846     		mov	r0, r3
+ 761 0030 0837     		adds	r7, r7, #8
+ 762              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 21
+
+
+ 763 0032 BD46     		mov	sp, r7
+ 764              		.cfi_def_cfa_register 13
+ 765              		@ sp needed
+ 766 0034 80BD     		pop	{r7, pc}
+ 767              		.cfi_endproc
+ 768              	.LFE70:
+ 769              		.size	OWReadBit, .-OWReadBit
+ 770 0036 00BF     		.section	.text.OWReadByte,"ax",%progbits
+ 771              		.align	2
+ 772              		.global	OWReadByte
+ 773              		.thumb
+ 774              		.thumb_func
+ 775              		.type	OWReadByte, %function
+ 776              	OWReadByte:
+ 777              	.LFB71:
+ 357:main.c        **** 
+ 358:main.c        **** /*******************************************************************************
+ 359:main.c        **** * Function Name: OWReadByte
+ 360:main.c        **** ********************************************************************************
+ 361:main.c        **** *
+ 362:main.c        **** * Summary:
+ 363:main.c        **** *  Reads a byte by calling OWReadBit() 8 times.
+ 364:main.c        **** *
+ 365:main.c        **** * Parameters:
+ 366:main.c        **** *  None.
+ 367:main.c        **** *
+ 368:main.c        **** * Return:
+ 369:main.c        **** *  int: returns the read byte.
+ 370:main.c        **** *
+ 371:main.c        **** *******************************************************************************/
+ 372:main.c        **** uint8 OWReadByte() {
+ 778              		.loc 1 372 0
+ 779              		.cfi_startproc
+ 780              		@ args = 0, pretend = 0, frame = 8
+ 781              		@ frame_needed = 1, uses_anonymous_args = 0
+ 782 0000 80B5     		push	{r7, lr}
+ 783              		.cfi_def_cfa_offset 8
+ 784              		.cfi_offset 7, -8
+ 785              		.cfi_offset 14, -4
+ 786 0002 82B0     		sub	sp, sp, #8
+ 787              		.cfi_def_cfa_offset 16
+ 788 0004 00AF     		add	r7, sp, #0
+ 789              		.cfi_def_cfa_register 7
+ 373:main.c        ****     int result = 0;
+ 790              		.loc 1 373 0
+ 791 0006 0023     		movs	r3, #0
+ 792 0008 7B60     		str	r3, [r7, #4]
+ 793              	.LBB10:
+ 374:main.c        **** 
+ 375:main.c        ****     for (int loop = 0; loop < 8; loop++)
+ 794              		.loc 1 375 0
+ 795 000a 0023     		movs	r3, #0
+ 796 000c 3B60     		str	r3, [r7]
+ 797 000e 0EE0     		b	.L39
+ 798              	.L41:
+ 376:main.c        ****     {
+ 377:main.c        ****         /* Shift the result to get it ready for the next bit. */
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 22
+
+
+ 378:main.c        ****         result >>= 1;
+ 799              		.loc 1 378 0
+ 800 0010 7B68     		ldr	r3, [r7, #4]
+ 801 0012 5B10     		asrs	r3, r3, #1
+ 802 0014 7B60     		str	r3, [r7, #4]
+ 379:main.c        **** 
+ 380:main.c        ****         /* If result is one, then set MS bit. */
+ 381:main.c        ****         if (OWReadBit()) {
+ 803              		.loc 1 381 0
+ 804 0016 FFF7FEFF 		bl	OWReadBit
+ 805 001a 0346     		mov	r3, r0
+ 806 001c 002B     		cmp	r3, #0
+ 807 001e 03D0     		beq	.L40
+ 382:main.c        ****             result |= 0x80;
+ 808              		.loc 1 382 0
+ 809 0020 7B68     		ldr	r3, [r7, #4]
+ 810 0022 43F08003 		orr	r3, r3, #128
+ 811 0026 7B60     		str	r3, [r7, #4]
+ 812              	.L40:
+ 375:main.c        ****     {
+ 813              		.loc 1 375 0 discriminator 2
+ 814 0028 3B68     		ldr	r3, [r7]
+ 815 002a 0133     		adds	r3, r3, #1
+ 816 002c 3B60     		str	r3, [r7]
+ 817              	.L39:
+ 375:main.c        ****     {
+ 818              		.loc 1 375 0 is_stmt 0 discriminator 1
+ 819 002e 3B68     		ldr	r3, [r7]
+ 820 0030 072B     		cmp	r3, #7
+ 821 0032 EDDD     		ble	.L41
+ 822              	.LBE10:
+ 383:main.c        ****         }    
+ 384:main.c        ****     }
+ 385:main.c        ****     return result;
+ 823              		.loc 1 385 0 is_stmt 1
+ 824 0034 7B68     		ldr	r3, [r7, #4]
+ 825 0036 DBB2     		uxtb	r3, r3
+ 386:main.c        **** }
+ 826              		.loc 1 386 0
+ 827 0038 1846     		mov	r0, r3
+ 828 003a 0837     		adds	r7, r7, #8
+ 829              		.cfi_def_cfa_offset 8
+ 830 003c BD46     		mov	sp, r7
+ 831              		.cfi_def_cfa_register 13
+ 832              		@ sp needed
+ 833 003e 80BD     		pop	{r7, pc}
+ 834              		.cfi_endproc
+ 835              	.LFE71:
+ 836              		.size	OWReadByte, .-OWReadByte
+ 837              		.section	.text.DS18B20_tempCalc,"ax",%progbits
+ 838              		.align	2
+ 839              		.global	DS18B20_tempCalc
+ 840              		.thumb
+ 841              		.thumb_func
+ 842              		.type	DS18B20_tempCalc, %function
+ 843              	DS18B20_tempCalc:
+ 844              	.LFB72:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 23
+
+
+ 387:main.c        **** 
+ 388:main.c        **** /*******************************************************************************
+ 389:main.c        **** * Function Name: LM35_tempCalc
+ 390:main.c        **** ********************************************************************************
+ 391:main.c        **** *
+ 392:main.c        **** * Summary:
+ 393:main.c        **** *  Bus Master initiates temperature conversion, then reads temperature (parasite power assumed).
+ 394:main.c        **** *
+ 395:main.c        **** * Parameters:
+ 396:main.c        **** *  None.
+ 397:main.c        **** *
+ 398:main.c        **** * Return:
+ 399:main.c        **** *  None.
+ 400:main.c        **** *
+ 401:main.c        **** *******************************************************************************/
+ 402:main.c        **** void DS18B20_tempCalc() {
+ 845              		.loc 1 402 0
+ 846              		.cfi_startproc
+ 847              		@ args = 0, pretend = 0, frame = 16
+ 848              		@ frame_needed = 1, uses_anonymous_args = 0
+ 849 0000 80B5     		push	{r7, lr}
+ 850              		.cfi_def_cfa_offset 8
+ 851              		.cfi_offset 7, -8
+ 852              		.cfi_offset 14, -4
+ 853 0002 84B0     		sub	sp, sp, #16
+ 854              		.cfi_def_cfa_offset 24
+ 855 0004 00AF     		add	r7, sp, #0
+ 856              		.cfi_def_cfa_register 7
+ 403:main.c        ****     uint8 status = OWReset();
+ 857              		.loc 1 403 0
+ 858 0006 FFF7FEFF 		bl	OWReset
+ 859 000a 0346     		mov	r3, r0
+ 860 000c FB71     		strb	r3, [r7, #7]
+ 404:main.c        ****     if (status == OW_RESPONSE) {
+ 861              		.loc 1 404 0
+ 862 000e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 863 0010 002B     		cmp	r3, #0
+ 864 0012 49D1     		bne	.L52
+ 865              	.LBB11:
+ 405:main.c        ****         OWWriteByte(0xCC);
+ 866              		.loc 1 405 0
+ 867 0014 CC20     		movs	r0, #204
+ 868 0016 FFF7FEFF 		bl	OWWriteByte
+ 406:main.c        ****         uint8 senddata = 0x44;                                  // Issue “ Convert T” command.
+ 869              		.loc 1 406 0
+ 870 001a 4423     		movs	r3, #68
+ 871 001c FB73     		strb	r3, [r7, #15]
+ 872              	.LBB12:
+ 407:main.c        ****         /* Send first 7 bits */
+ 408:main.c        ****         for (int loop = 0; loop < 7; loop++) {
+ 873              		.loc 1 408 0
+ 874 001e 0023     		movs	r3, #0
+ 875 0020 BB60     		str	r3, [r7, #8]
+ 876 0022 22E0     		b	.L45
+ 877              	.L48:
+ 878              	.LBB13:
+ 409:main.c        ****             uint8 bit = senddata & 0x01;
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 24
+
+
+ 879              		.loc 1 409 0
+ 880 0024 FB7B     		ldrb	r3, [r7, #15]
+ 881 0026 03F00103 		and	r3, r3, #1
+ 882 002a BB71     		strb	r3, [r7, #6]
+ 410:main.c        ****             OneWire_Write(0);
+ 883              		.loc 1 410 0
+ 884 002c 0020     		movs	r0, #0
+ 885 002e FFF7FEFF 		bl	OneWire_Write
+ 411:main.c        ****             if (bit) {
+ 886              		.loc 1 411 0
+ 887 0032 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 888 0034 002B     		cmp	r3, #0
+ 889 0036 09D0     		beq	.L46
+ 412:main.c        ****                 CyDelayUs(tLOW1);                               // tLOW1: 3
+ 890              		.loc 1 412 0
+ 891 0038 0320     		movs	r0, #3
+ 892 003a FFF7FEFF 		bl	CyDelayUs
+ 413:main.c        ****                 OneWire_Write(1);
+ 893              		.loc 1 413 0
+ 894 003e 0120     		movs	r0, #1
+ 895 0040 FFF7FEFF 		bl	OneWire_Write
+ 414:main.c        ****                 CyDelayUs(tSLOT - tLOW1);                       // Remainder of tSLOT: 80 - 3
+ 896              		.loc 1 414 0
+ 897 0044 4D20     		movs	r0, #77
+ 898 0046 FFF7FEFF 		bl	CyDelayUs
+ 899 004a 08E0     		b	.L47
+ 900              	.L46:
+ 415:main.c        ****             } else {
+ 416:main.c        ****                 CyDelayUs(rLOW0);                               // rLOW0: 70
+ 901              		.loc 1 416 0
+ 902 004c 4620     		movs	r0, #70
+ 903 004e FFF7FEFF 		bl	CyDelayUs
+ 417:main.c        ****                 OneWire_Write(1);
+ 904              		.loc 1 417 0
+ 905 0052 0120     		movs	r0, #1
+ 906 0054 FFF7FEFF 		bl	OneWire_Write
+ 418:main.c        ****                 CyDelayUs(tSLOT - rLOW0);                       // Remainder of tSLOT: 80 - 70
+ 907              		.loc 1 418 0
+ 908 0058 0A20     		movs	r0, #10
+ 909 005a FFF7FEFF 		bl	CyDelayUs
+ 910              	.L47:
+ 419:main.c        ****             }
+ 420:main.c        ****             senddata >>= 1;
+ 911              		.loc 1 420 0 discriminator 2
+ 912 005e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 913 0060 5B08     		lsrs	r3, r3, #1
+ 914 0062 FB73     		strb	r3, [r7, #15]
+ 915              	.LBE13:
+ 408:main.c        ****             uint8 bit = senddata & 0x01;
+ 916              		.loc 1 408 0 discriminator 2
+ 917 0064 BB68     		ldr	r3, [r7, #8]
+ 918 0066 0133     		adds	r3, r3, #1
+ 919 0068 BB60     		str	r3, [r7, #8]
+ 920              	.L45:
+ 408:main.c        ****             uint8 bit = senddata & 0x01;
+ 921              		.loc 1 408 0 is_stmt 0 discriminator 1
+ 922 006a BB68     		ldr	r3, [r7, #8]
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 25
+
+
+ 923 006c 062B     		cmp	r3, #6
+ 924 006e D9DD     		ble	.L48
+ 925              	.LBE12:
+ 421:main.c        ****         }
+ 422:main.c        ****         /* Send last bit */
+ 423:main.c        ****         OneWire_Write(0);
+ 926              		.loc 1 423 0 is_stmt 1
+ 927 0070 0020     		movs	r0, #0
+ 928 0072 FFF7FEFF 		bl	OneWire_Write
+ 424:main.c        ****         if (senddata & 0x01) {
+ 929              		.loc 1 424 0
+ 930 0076 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 931 0078 03F00103 		and	r3, r3, #1
+ 932 007c 002B     		cmp	r3, #0
+ 933 007e 03D0     		beq	.L49
+ 425:main.c        ****             CyDelayUs(tLOW1);       
+ 934              		.loc 1 425 0
+ 935 0080 0320     		movs	r0, #3
+ 936 0082 FFF7FEFF 		bl	CyDelayUs
+ 937 0086 02E0     		b	.L50
+ 938              	.L49:
+ 426:main.c        ****         } else {
+ 427:main.c        ****             CyDelayUs(rLOW0);      
+ 939              		.loc 1 427 0
+ 940 0088 4620     		movs	r0, #70
+ 941 008a FFF7FEFF 		bl	CyDelayUs
+ 942              	.L50:
+ 428:main.c        ****         }
+ 429:main.c        ****          OneWire_Write(1);
+ 943              		.loc 1 429 0
+ 944 008e 0120     		movs	r0, #1
+ 945 0090 FFF7FEFF 		bl	OneWire_Write
+ 430:main.c        **** 
+ 431:main.c        ****         OneWire_SetDriveMode(OneWire_DM_STRONG);
+ 946              		.loc 1 431 0
+ 947 0094 0C20     		movs	r0, #12
+ 948 0096 FFF7FEFF 		bl	OneWire_SetDriveMode
+ 432:main.c        ****         CyDelay(tCONV);                                         // tCONV: 94
+ 949              		.loc 1 432 0
+ 950 009a 5E20     		movs	r0, #94
+ 951 009c FFF7FEFF 		bl	CyDelay
+ 433:main.c        ****         OneWire_SetDriveMode(OneWire_DM_RES_UP);
+ 952              		.loc 1 433 0
+ 953 00a0 0420     		movs	r0, #4
+ 954 00a2 FFF7FEFF 		bl	OneWire_SetDriveMode
+ 955              	.LBE11:
+ 434:main.c        ****     }
+ 435:main.c        ****     return;
+ 956              		.loc 1 435 0
+ 957 00a6 00BF     		nop
+ 958              	.L52:
+ 959 00a8 00BF     		nop
+ 436:main.c        **** }
+ 960              		.loc 1 436 0
+ 961 00aa 1037     		adds	r7, r7, #16
+ 962              		.cfi_def_cfa_offset 8
+ 963 00ac BD46     		mov	sp, r7
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 26
+
+
+ 964              		.cfi_def_cfa_register 13
+ 965              		@ sp needed
+ 966 00ae 80BD     		pop	{r7, pc}
+ 967              		.cfi_endproc
+ 968              	.LFE72:
+ 969              		.size	DS18B20_tempCalc, .-DS18B20_tempCalc
+ 970              		.global	__aeabi_ui2f
+ 971              		.section	.text.LM35_tempCalc,"ax",%progbits
+ 972              		.align	2
+ 973              		.global	LM35_tempCalc
+ 974              		.thumb
+ 975              		.thumb_func
+ 976              		.type	LM35_tempCalc, %function
+ 977              	LM35_tempCalc:
+ 978              	.LFB73:
+ 437:main.c        **** 
+ 438:main.c        **** /*******************************************************************************
+ 439:main.c        **** * Function Name: LM35_tempCalc
+ 440:main.c        **** ********************************************************************************
+ 441:main.c        **** *
+ 442:main.c        **** * Summary:
+ 443:main.c        **** *  Calculates the average of Vout and the temperature. 
+ 444:main.c        **** *
+ 445:main.c        **** * Parameters:
+ 446:main.c        **** *  None.
+ 447:main.c        **** *
+ 448:main.c        **** * Return:
+ 449:main.c        **** *  None.
+ 450:main.c        **** *
+ 451:main.c        **** *******************************************************************************/
+ 452:main.c        **** void LM35_tempCalc() {
+ 979              		.loc 1 452 0
+ 980              		.cfi_startproc
+ 981              		@ args = 0, pretend = 0, frame = 0
+ 982              		@ frame_needed = 1, uses_anonymous_args = 0
+ 983 0000 80B5     		push	{r7, lr}
+ 984              		.cfi_def_cfa_offset 8
+ 985              		.cfi_offset 7, -8
+ 986              		.cfi_offset 14, -4
+ 987 0002 00AF     		add	r7, sp, #0
+ 988              		.cfi_def_cfa_register 7
+ 453:main.c        ****     Vout_average = Vout_sum_isr / n_isr; 
+ 989              		.loc 1 453 0
+ 990 0004 0B4B     		ldr	r3, .L55
+ 991 0006 1A68     		ldr	r2, [r3]
+ 992 0008 0B4B     		ldr	r3, .L55+4
+ 993 000a 1B68     		ldr	r3, [r3]
+ 994 000c B2FBF3F3 		udiv	r3, r2, r3
+ 995 0010 1846     		mov	r0, r3
+ 996 0012 FFF7FEFF 		bl	__aeabi_ui2f
+ 997 0016 0246     		mov	r2, r0
+ 998 0018 084B     		ldr	r3, .L55+8
+ 999 001a 1A60     		str	r2, [r3]	@ float
+ 454:main.c        ****     /* Converts to temperature: Vout = 10 mV/C * T from LM35 datasheet */
+ 455:main.c        ****     LM35_temp = Vout_average / 10;             
+ 1000              		.loc 1 455 0
+ 1001 001c 074B     		ldr	r3, .L55+8
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 27
+
+
+ 1002 001e 1B68     		ldr	r3, [r3]	@ float
+ 1003 0020 0749     		ldr	r1, .L55+12
+ 1004 0022 1846     		mov	r0, r3
+ 1005 0024 FFF7FEFF 		bl	__aeabi_fdiv
+ 1006 0028 0346     		mov	r3, r0
+ 1007 002a 1A46     		mov	r2, r3
+ 1008 002c 054B     		ldr	r3, .L55+16
+ 1009 002e 1A60     		str	r2, [r3]	@ float
+ 456:main.c        ****     return;
+ 1010              		.loc 1 456 0
+ 1011 0030 00BF     		nop
+ 457:main.c        **** }
+ 1012              		.loc 1 457 0
+ 1013 0032 80BD     		pop	{r7, pc}
+ 1014              	.L56:
+ 1015              		.align	2
+ 1016              	.L55:
+ 1017 0034 00000000 		.word	Vout_sum_isr
+ 1018 0038 00000000 		.word	n_isr
+ 1019 003c 00000000 		.word	Vout_average
+ 1020 0040 00002041 		.word	1092616192
+ 1021 0044 00000000 		.word	LM35_temp
+ 1022              		.cfi_endproc
+ 1023              	.LFE73:
+ 1024              		.size	LM35_tempCalc, .-LM35_tempCalc
+ 1025              		.section	.text.MyADCIsr,"ax",%progbits
+ 1026              		.align	2
+ 1027              		.global	MyADCIsr
+ 1028              		.thumb
+ 1029              		.thumb_func
+ 1030              		.type	MyADCIsr, %function
+ 1031              	MyADCIsr:
+ 1032              	.LFB74:
+ 458:main.c        **** 
+ 459:main.c        **** /*******************************************************************************
+ 460:main.c        **** * Function Name: MyADCIsr         ADC Interrupt Service Routine
+ 461:main.c        **** ********************************************************************************
+ 462:main.c        **** *
+ 463:main.c        **** * Summary:
+ 464:main.c        **** *  Reads Vout data from sensor, adds to running average aand increment sampling
+ 465:main.c        **** *  counter by one.
+ 466:main.c        **** *
+ 467:main.c        **** * Parameters:  
+ 468:main.c        **** *   None.
+ 469:main.c        **** *
+ 470:main.c        **** * Return:
+ 471:main.c        **** *   None
+ 472:main.c        **** *
+ 473:main.c        **** *******************************************************************************/
+ 474:main.c        **** CY_ISR(MyADCIsr) {
+ 1033              		.loc 1 474 0
+ 1034              		.cfi_startproc
+ 1035              		@ args = 0, pretend = 0, frame = 8
+ 1036              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1037 0000 80B5     		push	{r7, lr}
+ 1038              		.cfi_def_cfa_offset 8
+ 1039              		.cfi_offset 7, -8
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 28
+
+
+ 1040              		.cfi_offset 14, -4
+ 1041 0002 82B0     		sub	sp, sp, #8
+ 1042              		.cfi_def_cfa_offset 16
+ 1043 0004 00AF     		add	r7, sp, #0
+ 1044              		.cfi_def_cfa_register 7
+ 475:main.c        ****     uint32 output = ADC_DelSig_CountsTo_mVolts(ADC_DelSig_GetResult16());
+ 1045              		.loc 1 475 0
+ 1046 0006 FFF7FEFF 		bl	ADC_DelSig_GetResult16
+ 1047 000a 0346     		mov	r3, r0
+ 1048 000c 1846     		mov	r0, r3
+ 1049 000e FFF7FEFF 		bl	ADC_DelSig_CountsTo_mVolts
+ 1050 0012 0346     		mov	r3, r0
+ 1051 0014 7B60     		str	r3, [r7, #4]
+ 476:main.c        ****     Vout_sum += output;
+ 1052              		.loc 1 476 0
+ 1053 0016 074B     		ldr	r3, .L58
+ 1054 0018 1A68     		ldr	r2, [r3]
+ 1055 001a 7B68     		ldr	r3, [r7, #4]
+ 1056 001c 1344     		add	r3, r3, r2
+ 1057 001e 054A     		ldr	r2, .L58
+ 1058 0020 1360     		str	r3, [r2]
+ 477:main.c        ****     n++;
+ 1059              		.loc 1 477 0
+ 1060 0022 054B     		ldr	r3, .L58+4
+ 1061 0024 1B68     		ldr	r3, [r3]
+ 1062 0026 0133     		adds	r3, r3, #1
+ 1063 0028 034A     		ldr	r2, .L58+4
+ 1064 002a 1360     		str	r3, [r2]
+ 478:main.c        **** }
+ 1065              		.loc 1 478 0
+ 1066 002c 00BF     		nop
+ 1067 002e 0837     		adds	r7, r7, #8
+ 1068              		.cfi_def_cfa_offset 8
+ 1069 0030 BD46     		mov	sp, r7
+ 1070              		.cfi_def_cfa_register 13
+ 1071              		@ sp needed
+ 1072 0032 80BD     		pop	{r7, pc}
+ 1073              	.L59:
+ 1074              		.align	2
+ 1075              	.L58:
+ 1076 0034 00000000 		.word	Vout_sum
+ 1077 0038 00000000 		.word	n
+ 1078              		.cfi_endproc
+ 1079              	.LFE74:
+ 1080              		.size	MyADCIsr, .-MyADCIsr
+ 1081              		.section	.text.MyClockIsr,"ax",%progbits
+ 1082              		.align	2
+ 1083              		.global	MyClockIsr
+ 1084              		.thumb
+ 1085              		.thumb_func
+ 1086              		.type	MyClockIsr, %function
+ 1087              	MyClockIsr:
+ 1088              	.LFB75:
+ 479:main.c        **** 
+ 480:main.c        **** /*******************************************************************************
+ 481:main.c        **** * Function Name: MyClockIsr         Timer Interrupt Service Routine
+ 482:main.c        **** ********************************************************************************
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 29
+
+
+ 483:main.c        **** *
+ 484:main.c        **** * Summary:
+ 485:main.c        **** *  Reads the control register and returns it's value.
+ 486:main.c        **** *  Copies and resets respective parameters while ADC interrupt is disabled.
+ 487:main.c        **** *  Every second time when function is called, samples DS18B20 sensor.
+ 488:main.c        **** *  Sets flags.
+ 489:main.c        **** *
+ 490:main.c        **** * Parameters:  
+ 491:main.c        **** *   None.
+ 492:main.c        **** *
+ 493:main.c        **** * Return:
+ 494:main.c        **** *   None
+ 495:main.c        **** *
+ 496:main.c        **** *******************************************************************************/
+ 497:main.c        **** CY_ISR(MyClockIsr) {                      // LM35 sampled every half minute.
+ 1089              		.loc 1 497 0
+ 1090              		.cfi_startproc
+ 1091              		@ args = 0, pretend = 0, frame = 0
+ 1092              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1093 0000 80B5     		push	{r7, lr}
+ 1094              		.cfi_def_cfa_offset 8
+ 1095              		.cfi_offset 7, -8
+ 1096              		.cfi_offset 14, -4
+ 1097 0002 00AF     		add	r7, sp, #0
+ 1098              		.cfi_def_cfa_register 7
+ 498:main.c        ****     ADC_Timer_ReadStatusRegister();       // Clears the pending interrupt.
+ 1099              		.loc 1 498 0
+ 1100 0004 FFF7FEFF 		bl	ADC_Timer_ReadStatusRegister
+ 499:main.c        ****     
+ 500:main.c        ****     /* Disables ADC_Isr temporarily for copying and resetting. */
+ 501:main.c        ****     ADC_Isr_Disable();               
+ 1101              		.loc 1 501 0
+ 1102 0008 FFF7FEFF 		bl	ADC_Isr_Disable
+ 502:main.c        ****     Vout_sum_isr = Vout_sum;       
+ 1103              		.loc 1 502 0
+ 1104 000c 114B     		ldr	r3, .L62
+ 1105 000e 1B68     		ldr	r3, [r3]
+ 1106 0010 114A     		ldr	r2, .L62+4
+ 1107 0012 1360     		str	r3, [r2]
+ 503:main.c        ****     n_isr = n;
+ 1108              		.loc 1 503 0
+ 1109 0014 114B     		ldr	r3, .L62+8
+ 1110 0016 1B68     		ldr	r3, [r3]
+ 1111 0018 114A     		ldr	r2, .L62+12
+ 1112 001a 1360     		str	r3, [r2]
+ 504:main.c        ****     Vout_sum = 0;
+ 1113              		.loc 1 504 0
+ 1114 001c 0D4B     		ldr	r3, .L62
+ 1115 001e 0022     		movs	r2, #0
+ 1116 0020 1A60     		str	r2, [r3]
+ 505:main.c        ****     n = 0;
+ 1117              		.loc 1 505 0
+ 1118 0022 0E4B     		ldr	r3, .L62+8
+ 1119 0024 0022     		movs	r2, #0
+ 1120 0026 1A60     		str	r2, [r3]
+ 506:main.c        ****     ADC_Isr_Enable();
+ 1121              		.loc 1 506 0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 30
+
+
+ 1122 0028 FFF7FEFF 		bl	ADC_Isr_Enable
+ 507:main.c        ****   
+ 508:main.c        ****     if(counter++ % 2) {                   // DS18B20 sampled once a minute.
+ 1123              		.loc 1 508 0
+ 1124 002c 0D4B     		ldr	r3, .L62+16
+ 1125 002e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1126 0030 5A1C     		adds	r2, r3, #1
+ 1127 0032 D1B2     		uxtb	r1, r2
+ 1128 0034 0B4A     		ldr	r2, .L62+16
+ 1129 0036 1170     		strb	r1, [r2]
+ 1130 0038 03F00103 		and	r3, r3, #1
+ 1131 003c DBB2     		uxtb	r3, r3
+ 1132 003e 002B     		cmp	r3, #0
+ 1133 0040 02D0     		beq	.L61
+ 509:main.c        ****         OneWire_flag = 1;
+ 1134              		.loc 1 509 0
+ 1135 0042 094B     		ldr	r3, .L62+20
+ 1136 0044 0122     		movs	r2, #1
+ 1137 0046 1A70     		strb	r2, [r3]
+ 1138              	.L61:
+ 510:main.c        ****     }
+ 511:main.c        ****     
+ 512:main.c        ****     UART_flag = 1; 
+ 1139              		.loc 1 512 0
+ 1140 0048 084B     		ldr	r3, .L62+24
+ 1141 004a 0122     		movs	r2, #1
+ 1142 004c 1A70     		strb	r2, [r3]
+ 513:main.c        **** }
+ 1143              		.loc 1 513 0
+ 1144 004e 00BF     		nop
+ 1145 0050 80BD     		pop	{r7, pc}
+ 1146              	.L63:
+ 1147 0052 00BF     		.align	2
+ 1148              	.L62:
+ 1149 0054 00000000 		.word	Vout_sum
+ 1150 0058 00000000 		.word	Vout_sum_isr
+ 1151 005c 00000000 		.word	n
+ 1152 0060 00000000 		.word	n_isr
+ 1153 0064 00000000 		.word	counter
+ 1154 0068 00000000 		.word	OneWire_flag
+ 1155 006c 00000000 		.word	UART_flag
+ 1156              		.cfi_endproc
+ 1157              	.LFE75:
+ 1158              		.size	MyClockIsr, .-MyClockIsr
+ 1159              		.text
+ 1160              	.Letext0:
+ 1161              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1162              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1163              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 1164              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 1165              		.section	.debug_info,"",%progbits
+ 1166              	.Ldebug_info0:
+ 1167 0000 DE040000 		.4byte	0x4de
+ 1168 0004 0400     		.2byte	0x4
+ 1169 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1170 000a 04       		.byte	0x4
+ 1171 000b 01       		.uleb128 0x1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 31
+
+
+ 1172 000c A0000000 		.4byte	.LASF53
+ 1173 0010 0C       		.byte	0xc
+ 1174 0011 74020000 		.4byte	.LASF54
+ 1175 0015 2B000000 		.4byte	.LASF55
+ 1176 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1177 001d 00000000 		.4byte	0
+ 1178 0021 00000000 		.4byte	.Ldebug_line0
+ 1179 0025 02       		.uleb128 0x2
+ 1180 0026 01       		.byte	0x1
+ 1181 0027 06       		.byte	0x6
+ 1182 0028 D3010000 		.4byte	.LASF0
+ 1183 002c 02       		.uleb128 0x2
+ 1184 002d 01       		.byte	0x1
+ 1185 002e 08       		.byte	0x8
+ 1186 002f A5010000 		.4byte	.LASF1
+ 1187 0033 02       		.uleb128 0x2
+ 1188 0034 02       		.byte	0x2
+ 1189 0035 05       		.byte	0x5
+ 1190 0036 8D000000 		.4byte	.LASF2
+ 1191 003a 02       		.uleb128 0x2
+ 1192 003b 02       		.byte	0x2
+ 1193 003c 07       		.byte	0x7
+ 1194 003d 23020000 		.4byte	.LASF3
+ 1195 0041 03       		.uleb128 0x3
+ 1196 0042 A9020000 		.4byte	.LASF9
+ 1197 0046 02       		.byte	0x2
+ 1198 0047 3F       		.byte	0x3f
+ 1199 0048 4C000000 		.4byte	0x4c
+ 1200 004c 02       		.uleb128 0x2
+ 1201 004d 04       		.byte	0x4
+ 1202 004e 05       		.byte	0x5
+ 1203 004f 57020000 		.4byte	.LASF4
+ 1204 0053 02       		.uleb128 0x2
+ 1205 0054 04       		.byte	0x4
+ 1206 0055 07       		.byte	0x7
+ 1207 0056 03020000 		.4byte	.LASF5
+ 1208 005a 02       		.uleb128 0x2
+ 1209 005b 08       		.byte	0x8
+ 1210 005c 05       		.byte	0x5
+ 1211 005d 6B010000 		.4byte	.LASF6
+ 1212 0061 02       		.uleb128 0x2
+ 1213 0062 08       		.byte	0x8
+ 1214 0063 07       		.byte	0x7
+ 1215 0064 DF010000 		.4byte	.LASF7
+ 1216 0068 04       		.uleb128 0x4
+ 1217 0069 04       		.byte	0x4
+ 1218 006a 05       		.byte	0x5
+ 1219 006b 696E7400 		.ascii	"int\000"
+ 1220 006f 02       		.uleb128 0x2
+ 1221 0070 04       		.byte	0x4
+ 1222 0071 07       		.byte	0x7
+ 1223 0072 F6010000 		.4byte	.LASF8
+ 1224 0076 03       		.uleb128 0x3
+ 1225 0077 60020000 		.4byte	.LASF10
+ 1226 007b 03       		.byte	0x3
+ 1227 007c 2C       		.byte	0x2c
+ 1228 007d 41000000 		.4byte	0x41
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 32
+
+
+ 1229 0081 05       		.uleb128 0x5
+ 1230 0082 56010000 		.4byte	.LASF11
+ 1231 0086 04       		.byte	0x4
+ 1232 0087 E401     		.2byte	0x1e4
+ 1233 0089 2C000000 		.4byte	0x2c
+ 1234 008d 05       		.uleb128 0x5
+ 1235 008e 6D020000 		.4byte	.LASF12
+ 1236 0092 04       		.byte	0x4
+ 1237 0093 E601     		.2byte	0x1e6
+ 1238 0095 53000000 		.4byte	0x53
+ 1239 0099 05       		.uleb128 0x5
+ 1240 009a 50010000 		.4byte	.LASF13
+ 1241 009e 04       		.byte	0x4
+ 1242 009f E801     		.2byte	0x1e8
+ 1243 00a1 33000000 		.4byte	0x33
+ 1244 00a5 05       		.uleb128 0x5
+ 1245 00a6 12000000 		.4byte	.LASF14
+ 1246 00aa 04       		.byte	0x4
+ 1247 00ab EA01     		.2byte	0x1ea
+ 1248 00ad B1000000 		.4byte	0xb1
+ 1249 00b1 02       		.uleb128 0x2
+ 1250 00b2 04       		.byte	0x4
+ 1251 00b3 04       		.byte	0x4
+ 1252 00b4 65010000 		.4byte	.LASF15
+ 1253 00b8 02       		.uleb128 0x2
+ 1254 00b9 08       		.byte	0x8
+ 1255 00ba 04       		.byte	0x4
+ 1256 00bb E9020000 		.4byte	.LASF16
+ 1257 00bf 02       		.uleb128 0x2
+ 1258 00c0 01       		.byte	0x1
+ 1259 00c1 08       		.byte	0x8
+ 1260 00c2 4A020000 		.4byte	.LASF17
+ 1261 00c6 06       		.uleb128 0x6
+ 1262 00c7 81000000 		.4byte	0x81
+ 1263 00cb 02       		.uleb128 0x2
+ 1264 00cc 08       		.byte	0x8
+ 1265 00cd 04       		.byte	0x4
+ 1266 00ce 99010000 		.4byte	.LASF18
+ 1267 00d2 02       		.uleb128 0x2
+ 1268 00d3 04       		.byte	0x4
+ 1269 00d4 07       		.byte	0x7
+ 1270 00d5 97000000 		.4byte	.LASF19
+ 1271 00d9 07       		.uleb128 0x7
+ 1272 00da 2E010000 		.4byte	.LASF27
+ 1273 00de 01       		.byte	0x1
+ 1274 00df 5C       		.byte	0x5c
+ 1275 00e0 68000000 		.4byte	0x68
+ 1276 00e4 00000000 		.4byte	.LFB64
+ 1277 00e8 24020000 		.4byte	.LFE64-.LFB64
+ 1278 00ec 01       		.uleb128 0x1
+ 1279 00ed 9C       		.byte	0x9c
+ 1280 00ee B6010000 		.4byte	0x1b6
+ 1281 00f2 08       		.uleb128 0x8
+ 1282 00f3 33010000 		.4byte	.LASF20
+ 1283 00f7 01       		.byte	0x1
+ 1284 00f8 60       		.byte	0x60
+ 1285 00f9 B6010000 		.4byte	0x1b6
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 33
+
+
+ 1286 00fd 03       		.uleb128 0x3
+ 1287 00fe 91       		.byte	0x91
+ 1288 00ff 947F     		.sleb128 -108
+ 1289 0101 08       		.uleb128 0x8
+ 1290 0102 36020000 		.4byte	.LASF21
+ 1291 0106 01       		.byte	0x1
+ 1292 0107 62       		.byte	0x62
+ 1293 0108 81000000 		.4byte	0x81
+ 1294 010c 02       		.uleb128 0x2
+ 1295 010d 91       		.byte	0x91
+ 1296 010e 5B       		.sleb128 -37
+ 1297 010f 08       		.uleb128 0x8
+ 1298 0110 8F010000 		.4byte	.LASF22
+ 1299 0114 01       		.byte	0x1
+ 1300 0115 63       		.byte	0x63
+ 1301 0116 81000000 		.4byte	0x81
+ 1302 011a 02       		.uleb128 0x2
+ 1303 011b 91       		.byte	0x91
+ 1304 011c 67       		.sleb128 -25
+ 1305 011d 09       		.uleb128 0x9
+ 1306 011e 78000000 		.4byte	.LBB2
+ 1307 0122 52000000 		.4byte	.LBE2-.LBB2
+ 1308 0126 5D010000 		.4byte	0x15d
+ 1309 012a 08       		.uleb128 0x8
+ 1310 012b D1020000 		.4byte	.LASF23
+ 1311 012f 01       		.byte	0x1
+ 1312 0130 88       		.byte	0x88
+ 1313 0131 81000000 		.4byte	0x81
+ 1314 0135 02       		.uleb128 0x2
+ 1315 0136 91       		.byte	0x91
+ 1316 0137 5A       		.sleb128 -38
+ 1317 0138 08       		.uleb128 0x8
+ 1318 0139 15020000 		.4byte	.LASF24
+ 1319 013d 01       		.byte	0x1
+ 1320 013e 89       		.byte	0x89
+ 1321 013f 81000000 		.4byte	0x81
+ 1322 0143 02       		.uleb128 0x2
+ 1323 0144 91       		.byte	0x91
+ 1324 0145 59       		.sleb128 -39
+ 1325 0146 0A       		.uleb128 0xa
+ 1326 0147 7E000000 		.4byte	.LBB3
+ 1327 014b 24000000 		.4byte	.LBE3-.LBB3
+ 1328 014f 0B       		.uleb128 0xb
+ 1329 0150 6900     		.ascii	"i\000"
+ 1330 0152 01       		.byte	0x1
+ 1331 0153 84       		.byte	0x84
+ 1332 0154 68000000 		.4byte	0x68
+ 1333 0158 02       		.uleb128 0x2
+ 1334 0159 91       		.byte	0x91
+ 1335 015a 60       		.sleb128 -32
+ 1336 015b 00       		.byte	0
+ 1337 015c 00       		.byte	0
+ 1338 015d 0A       		.uleb128 0xa
+ 1339 015e 0A010000 		.4byte	.LBB4
+ 1340 0162 84000000 		.4byte	.LBE4-.LBB4
+ 1341 0166 08       		.uleb128 0x8
+ 1342 0167 D1020000 		.4byte	.LASF23
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 34
+
+
+ 1343 016b 01       		.byte	0x1
+ 1344 016c A7       		.byte	0xa7
+ 1345 016d 81000000 		.4byte	0x81
+ 1346 0171 02       		.uleb128 0x2
+ 1347 0172 91       		.byte	0x91
+ 1348 0173 58       		.sleb128 -40
+ 1349 0174 08       		.uleb128 0x8
+ 1350 0175 15020000 		.4byte	.LASF24
+ 1351 0179 01       		.byte	0x1
+ 1352 017a A8       		.byte	0xa8
+ 1353 017b 81000000 		.4byte	0x81
+ 1354 017f 02       		.uleb128 0x2
+ 1355 0180 91       		.byte	0x91
+ 1356 0181 57       		.sleb128 -41
+ 1357 0182 09       		.uleb128 0x9
+ 1358 0183 10010000 		.4byte	.LBB5
+ 1359 0187 24000000 		.4byte	.LBE5-.LBB5
+ 1360 018b 9C010000 		.4byte	0x19c
+ 1361 018f 0B       		.uleb128 0xb
+ 1362 0190 6900     		.ascii	"i\000"
+ 1363 0192 01       		.byte	0x1
+ 1364 0193 A3       		.byte	0xa3
+ 1365 0194 68000000 		.4byte	0x68
+ 1366 0198 02       		.uleb128 0x2
+ 1367 0199 91       		.byte	0x91
+ 1368 019a 5C       		.sleb128 -36
+ 1369 019b 00       		.byte	0
+ 1370 019c 0A       		.uleb128 0xa
+ 1371 019d 56010000 		.4byte	.LBB6
+ 1372 01a1 38000000 		.4byte	.LBE6-.LBB6
+ 1373 01a5 08       		.uleb128 0x8
+ 1374 01a6 4F020000 		.4byte	.LASF25
+ 1375 01aa 01       		.byte	0x1
+ 1376 01ab AC       		.byte	0xac
+ 1377 01ac 99000000 		.4byte	0x99
+ 1378 01b0 02       		.uleb128 0x2
+ 1379 01b1 91       		.byte	0x91
+ 1380 01b2 54       		.sleb128 -44
+ 1381 01b3 00       		.byte	0
+ 1382 01b4 00       		.byte	0
+ 1383 01b5 00       		.byte	0
+ 1384 01b6 0C       		.uleb128 0xc
+ 1385 01b7 BF000000 		.4byte	0xbf
+ 1386 01bb C6010000 		.4byte	0x1c6
+ 1387 01bf 0D       		.uleb128 0xd
+ 1388 01c0 D2000000 		.4byte	0xd2
+ 1389 01c4 3F       		.byte	0x3f
+ 1390 01c5 00       		.byte	0
+ 1391 01c6 0E       		.uleb128 0xe
+ 1392 01c7 3D020000 		.4byte	.LASF34
+ 1393 01cb 01       		.byte	0x1
+ 1394 01cc D9       		.byte	0xd9
+ 1395 01cd 81000000 		.4byte	0x81
+ 1396 01d1 00000000 		.4byte	.LFB65
+ 1397 01d5 70000000 		.4byte	.LFE65-.LFB65
+ 1398 01d9 01       		.uleb128 0x1
+ 1399 01da 9C       		.byte	0x9c
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 35
+
+
+ 1400 01db 36020000 		.4byte	0x236
+ 1401 01df 0F       		.uleb128 0xf
+ 1402 01e0 68020000 		.4byte	.LASF26
+ 1403 01e4 01       		.byte	0x1
+ 1404 01e5 D9       		.byte	0xd9
+ 1405 01e6 36020000 		.4byte	0x236
+ 1406 01ea 02       		.uleb128 0x2
+ 1407 01eb 91       		.byte	0x91
+ 1408 01ec 64       		.sleb128 -28
+ 1409 01ed 10       		.uleb128 0x10
+ 1410 01ee 6C656E00 		.ascii	"len\000"
+ 1411 01f2 01       		.byte	0x1
+ 1412 01f3 D9       		.byte	0xd9
+ 1413 01f4 81000000 		.4byte	0x81
+ 1414 01f8 02       		.uleb128 0x2
+ 1415 01f9 91       		.byte	0x91
+ 1416 01fa 63       		.sleb128 -29
+ 1417 01fb 0B       		.uleb128 0xb
+ 1418 01fc 63726300 		.ascii	"crc\000"
+ 1419 0200 01       		.byte	0x1
+ 1420 0201 DA       		.byte	0xda
+ 1421 0202 81000000 		.4byte	0x81
+ 1422 0206 02       		.uleb128 0x2
+ 1423 0207 91       		.byte	0x91
+ 1424 0208 77       		.sleb128 -9
+ 1425 0209 0A       		.uleb128 0xa
+ 1426 020a 10000000 		.4byte	.LBB7
+ 1427 020e 54000000 		.4byte	.LBE7-.LBB7
+ 1428 0212 0B       		.uleb128 0xb
+ 1429 0213 6900     		.ascii	"i\000"
+ 1430 0215 01       		.byte	0x1
+ 1431 0216 DB       		.byte	0xdb
+ 1432 0217 68000000 		.4byte	0x68
+ 1433 021b 02       		.uleb128 0x2
+ 1434 021c 91       		.byte	0x91
+ 1435 021d 70       		.sleb128 -16
+ 1436 021e 0A       		.uleb128 0xa
+ 1437 021f 24000000 		.4byte	.LBB8
+ 1438 0223 32000000 		.4byte	.LBE8-.LBB8
+ 1439 0227 0B       		.uleb128 0xb
+ 1440 0228 6A00     		.ascii	"j\000"
+ 1441 022a 01       		.byte	0x1
+ 1442 022b DD       		.byte	0xdd
+ 1443 022c 68000000 		.4byte	0x68
+ 1444 0230 02       		.uleb128 0x2
+ 1445 0231 91       		.byte	0x91
+ 1446 0232 6C       		.sleb128 -20
+ 1447 0233 00       		.byte	0
+ 1448 0234 00       		.byte	0
+ 1449 0235 00       		.byte	0
+ 1450 0236 11       		.uleb128 0x11
+ 1451 0237 04       		.byte	0x4
+ 1452 0238 81000000 		.4byte	0x81
+ 1453 023c 12       		.uleb128 0x12
+ 1454 023d 9E020000 		.4byte	.LASF28
+ 1455 0241 01       		.byte	0x1
+ 1456 0242 F6       		.byte	0xf6
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 36
+
+
+ 1457 0243 00000000 		.4byte	.LFB66
+ 1458 0247 42000000 		.4byte	.LFE66-.LFB66
+ 1459 024b 01       		.uleb128 0x1
+ 1460 024c 9C       		.byte	0x9c
+ 1461 024d 60020000 		.4byte	0x260
+ 1462 0251 10       		.uleb128 0x10
+ 1463 0252 62697400 		.ascii	"bit\000"
+ 1464 0256 01       		.byte	0x1
+ 1465 0257 F6       		.byte	0xf6
+ 1466 0258 68000000 		.4byte	0x68
+ 1467 025c 02       		.uleb128 0x2
+ 1468 025d 91       		.byte	0x91
+ 1469 025e 74       		.sleb128 -12
+ 1470 025f 00       		.byte	0
+ 1471 0260 13       		.uleb128 0x13
+ 1472 0261 BB020000 		.4byte	.LASF29
+ 1473 0265 01       		.byte	0x1
+ 1474 0266 1301     		.2byte	0x113
+ 1475 0268 00000000 		.4byte	.LFB67
+ 1476 026c 34000000 		.4byte	.LFE67-.LFB67
+ 1477 0270 01       		.uleb128 0x1
+ 1478 0271 9C       		.byte	0x9c
+ 1479 0272 9F020000 		.4byte	0x29f
+ 1480 0276 14       		.uleb128 0x14
+ 1481 0277 68020000 		.4byte	.LASF26
+ 1482 027b 01       		.byte	0x1
+ 1483 027c 1301     		.2byte	0x113
+ 1484 027e 68000000 		.4byte	0x68
+ 1485 0282 02       		.uleb128 0x2
+ 1486 0283 91       		.byte	0x91
+ 1487 0284 6C       		.sleb128 -20
+ 1488 0285 0A       		.uleb128 0xa
+ 1489 0286 08000000 		.4byte	.LBB9
+ 1490 028a 24000000 		.4byte	.LBE9-.LBB9
+ 1491 028e 15       		.uleb128 0x15
+ 1492 028f E4020000 		.4byte	.LASF30
+ 1493 0293 01       		.byte	0x1
+ 1494 0294 1501     		.2byte	0x115
+ 1495 0296 68000000 		.4byte	0x68
+ 1496 029a 02       		.uleb128 0x2
+ 1497 029b 91       		.byte	0x91
+ 1498 029c 74       		.sleb128 -12
+ 1499 029d 00       		.byte	0
+ 1500 029e 00       		.byte	0
+ 1501 029f 16       		.uleb128 0x16
+ 1502 02a0 B3020000 		.4byte	.LASF31
+ 1503 02a4 01       		.byte	0x1
+ 1504 02a5 2B01     		.2byte	0x12b
+ 1505 02a7 81000000 		.4byte	0x81
+ 1506 02ab 00000000 		.4byte	.LFB68
+ 1507 02af 46000000 		.4byte	.LFE68-.LFB68
+ 1508 02b3 01       		.uleb128 0x1
+ 1509 02b4 9C       		.byte	0x9c
+ 1510 02b5 C9020000 		.4byte	0x2c9
+ 1511 02b9 15       		.uleb128 0x15
+ 1512 02ba 43010000 		.4byte	.LASF32
+ 1513 02be 01       		.byte	0x1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 37
+
+
+ 1514 02bf 2C01     		.2byte	0x12c
+ 1515 02c1 81000000 		.4byte	0x81
+ 1516 02c5 02       		.uleb128 0x2
+ 1517 02c6 91       		.byte	0x91
+ 1518 02c7 77       		.sleb128 -9
+ 1519 02c8 00       		.byte	0
+ 1520 02c9 17       		.uleb128 0x17
+ 1521 02ca BB010000 		.4byte	.LASF40
+ 1522 02ce 01       		.byte	0x1
+ 1523 02cf 4701     		.2byte	0x147
+ 1524 02d1 81000000 		.4byte	0x81
+ 1525 02d5 00000000 		.4byte	.LFB69
+ 1526 02d9 0E000000 		.4byte	.LFE69-.LFB69
+ 1527 02dd 01       		.uleb128 0x1
+ 1528 02de 9C       		.byte	0x9c
+ 1529 02df 16       		.uleb128 0x16
+ 1530 02e0 0B030000 		.4byte	.LASF33
+ 1531 02e4 01       		.byte	0x1
+ 1532 02e5 5901     		.2byte	0x159
+ 1533 02e7 81000000 		.4byte	0x81
+ 1534 02eb 00000000 		.4byte	.LFB70
+ 1535 02ef 36000000 		.4byte	.LFE70-.LFB70
+ 1536 02f3 01       		.uleb128 0x1
+ 1537 02f4 9C       		.byte	0x9c
+ 1538 02f5 09030000 		.4byte	0x309
+ 1539 02f9 15       		.uleb128 0x15
+ 1540 02fa 43010000 		.4byte	.LASF32
+ 1541 02fe 01       		.byte	0x1
+ 1542 02ff 5A01     		.2byte	0x15a
+ 1543 0301 81000000 		.4byte	0x81
+ 1544 0305 02       		.uleb128 0x2
+ 1545 0306 91       		.byte	0x91
+ 1546 0307 77       		.sleb128 -9
+ 1547 0308 00       		.byte	0
+ 1548 0309 18       		.uleb128 0x18
+ 1549 030a 24030000 		.4byte	.LASF35
+ 1550 030e 01       		.byte	0x1
+ 1551 030f 7401     		.2byte	0x174
+ 1552 0311 81000000 		.4byte	0x81
+ 1553 0315 00000000 		.4byte	.LFB71
+ 1554 0319 40000000 		.4byte	.LFE71-.LFB71
+ 1555 031d 01       		.uleb128 0x1
+ 1556 031e 9C       		.byte	0x9c
+ 1557 031f 4C030000 		.4byte	0x34c
+ 1558 0323 15       		.uleb128 0x15
+ 1559 0324 0B000000 		.4byte	.LASF36
+ 1560 0328 01       		.byte	0x1
+ 1561 0329 7501     		.2byte	0x175
+ 1562 032b 68000000 		.4byte	0x68
+ 1563 032f 02       		.uleb128 0x2
+ 1564 0330 91       		.byte	0x91
+ 1565 0331 74       		.sleb128 -12
+ 1566 0332 0A       		.uleb128 0xa
+ 1567 0333 0A000000 		.4byte	.LBB10
+ 1568 0337 2A000000 		.4byte	.LBE10-.LBB10
+ 1569 033b 15       		.uleb128 0x15
+ 1570 033c E4020000 		.4byte	.LASF30
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 38
+
+
+ 1571 0340 01       		.byte	0x1
+ 1572 0341 7701     		.2byte	0x177
+ 1573 0343 68000000 		.4byte	0x68
+ 1574 0347 02       		.uleb128 0x2
+ 1575 0348 91       		.byte	0x91
+ 1576 0349 70       		.sleb128 -16
+ 1577 034a 00       		.byte	0
+ 1578 034b 00       		.byte	0
+ 1579 034c 19       		.uleb128 0x19
+ 1580 034d 1A000000 		.4byte	.LASF56
+ 1581 0351 01       		.byte	0x1
+ 1582 0352 9201     		.2byte	0x192
+ 1583 0354 00000000 		.4byte	.LFB72
+ 1584 0358 B0000000 		.4byte	.LFE72-.LFB72
+ 1585 035c 01       		.uleb128 0x1
+ 1586 035d 9C       		.byte	0x9c
+ 1587 035e BD030000 		.4byte	0x3bd
+ 1588 0362 15       		.uleb128 0x15
+ 1589 0363 36020000 		.4byte	.LASF21
+ 1590 0367 01       		.byte	0x1
+ 1591 0368 9301     		.2byte	0x193
+ 1592 036a 81000000 		.4byte	0x81
+ 1593 036e 02       		.uleb128 0x2
+ 1594 036f 91       		.byte	0x91
+ 1595 0370 6F       		.sleb128 -17
+ 1596 0371 0A       		.uleb128 0xa
+ 1597 0372 14000000 		.4byte	.LBB11
+ 1598 0376 92000000 		.4byte	.LBE11-.LBB11
+ 1599 037a 15       		.uleb128 0x15
+ 1600 037b 79010000 		.4byte	.LASF37
+ 1601 037f 01       		.byte	0x1
+ 1602 0380 9601     		.2byte	0x196
+ 1603 0382 81000000 		.4byte	0x81
+ 1604 0386 02       		.uleb128 0x2
+ 1605 0387 91       		.byte	0x91
+ 1606 0388 77       		.sleb128 -9
+ 1607 0389 0A       		.uleb128 0xa
+ 1608 038a 1E000000 		.4byte	.LBB12
+ 1609 038e 52000000 		.4byte	.LBE12-.LBB12
+ 1610 0392 15       		.uleb128 0x15
+ 1611 0393 E4020000 		.4byte	.LASF30
+ 1612 0397 01       		.byte	0x1
+ 1613 0398 9801     		.2byte	0x198
+ 1614 039a 68000000 		.4byte	0x68
+ 1615 039e 02       		.uleb128 0x2
+ 1616 039f 91       		.byte	0x91
+ 1617 03a0 70       		.sleb128 -16
+ 1618 03a1 0A       		.uleb128 0xa
+ 1619 03a2 24000000 		.4byte	.LBB13
+ 1620 03a6 40000000 		.4byte	.LBE13-.LBB13
+ 1621 03aa 1A       		.uleb128 0x1a
+ 1622 03ab 62697400 		.ascii	"bit\000"
+ 1623 03af 01       		.byte	0x1
+ 1624 03b0 9901     		.2byte	0x199
+ 1625 03b2 81000000 		.4byte	0x81
+ 1626 03b6 02       		.uleb128 0x2
+ 1627 03b7 91       		.byte	0x91
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 39
+
+
+ 1628 03b8 6E       		.sleb128 -18
+ 1629 03b9 00       		.byte	0
+ 1630 03ba 00       		.byte	0
+ 1631 03bb 00       		.byte	0
+ 1632 03bc 00       		.byte	0
+ 1633 03bd 1B       		.uleb128 0x1b
+ 1634 03be F0020000 		.4byte	.LASF57
+ 1635 03c2 01       		.byte	0x1
+ 1636 03c3 C401     		.2byte	0x1c4
+ 1637 03c5 00000000 		.4byte	.LFB73
+ 1638 03c9 48000000 		.4byte	.LFE73-.LFB73
+ 1639 03cd 01       		.uleb128 0x1
+ 1640 03ce 9C       		.byte	0x9c
+ 1641 03cf 13       		.uleb128 0x13
+ 1642 03d0 7B020000 		.4byte	.LASF38
+ 1643 03d4 01       		.byte	0x1
+ 1644 03d5 DA01     		.2byte	0x1da
+ 1645 03d7 00000000 		.4byte	.LFB74
+ 1646 03db 3C000000 		.4byte	.LFE74-.LFB74
+ 1647 03df 01       		.uleb128 0x1
+ 1648 03e0 9C       		.byte	0x9c
+ 1649 03e1 F5030000 		.4byte	0x3f5
+ 1650 03e5 15       		.uleb128 0x15
+ 1651 03e6 DD020000 		.4byte	.LASF39
+ 1652 03ea 01       		.byte	0x1
+ 1653 03eb DB01     		.2byte	0x1db
+ 1654 03ed 8D000000 		.4byte	0x8d
+ 1655 03f1 02       		.uleb128 0x2
+ 1656 03f2 91       		.byte	0x91
+ 1657 03f3 74       		.sleb128 -12
+ 1658 03f4 00       		.byte	0
+ 1659 03f5 1C       		.uleb128 0x1c
+ 1660 03f6 00000000 		.4byte	.LASF41
+ 1661 03fa 01       		.byte	0x1
+ 1662 03fb F101     		.2byte	0x1f1
+ 1663 03fd 00000000 		.4byte	.LFB75
+ 1664 0401 70000000 		.4byte	.LFE75-.LFB75
+ 1665 0405 01       		.uleb128 0x1
+ 1666 0406 9C       		.byte	0x9c
+ 1667 0407 1D       		.uleb128 0x1d
+ 1668 0408 FE020000 		.4byte	.LASF42
+ 1669 040c 05       		.byte	0x5
+ 1670 040d 1207     		.2byte	0x712
+ 1671 040f 13040000 		.4byte	0x413
+ 1672 0413 06       		.uleb128 0x6
+ 1673 0414 76000000 		.4byte	0x76
+ 1674 0418 1E       		.uleb128 0x1e
+ 1675 0419 2F030000 		.4byte	.LASF43
+ 1676 041d 01       		.byte	0x1
+ 1677 041e 20       		.byte	0x20
+ 1678 041f C6000000 		.4byte	0xc6
+ 1679 0423 05       		.uleb128 0x5
+ 1680 0424 03       		.byte	0x3
+ 1681 0425 00000000 		.4byte	UART_flag
+ 1682 0429 1E       		.uleb128 0x1e
+ 1683 042a 82010000 		.4byte	.LASF44
+ 1684 042e 01       		.byte	0x1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 40
+
+
+ 1685 042f 21       		.byte	0x21
+ 1686 0430 C6000000 		.4byte	0xc6
+ 1687 0434 05       		.uleb128 0x5
+ 1688 0435 03       		.byte	0x3
+ 1689 0436 00000000 		.4byte	OneWire_flag
+ 1690 043a 1E       		.uleb128 0x1e
+ 1691 043b B3010000 		.4byte	.LASF45
+ 1692 043f 01       		.byte	0x1
+ 1693 0440 24       		.byte	0x24
+ 1694 0441 81000000 		.4byte	0x81
+ 1695 0445 05       		.uleb128 0x5
+ 1696 0446 03       		.byte	0x3
+ 1697 0447 00000000 		.4byte	counter
+ 1698 044b 0C       		.uleb128 0xc
+ 1699 044c 81000000 		.4byte	0x81
+ 1700 0450 5B040000 		.4byte	0x45b
+ 1701 0454 0D       		.uleb128 0xd
+ 1702 0455 D2000000 		.4byte	0xd2
+ 1703 0459 08       		.byte	0x8
+ 1704 045a 00       		.byte	0
+ 1705 045b 1E       		.uleb128 0x1e
+ 1706 045c 15030000 		.4byte	.LASF46
+ 1707 0460 01       		.byte	0x1
+ 1708 0461 25       		.byte	0x25
+ 1709 0462 4B040000 		.4byte	0x44b
+ 1710 0466 05       		.uleb128 0x5
+ 1711 0467 03       		.byte	0x3
+ 1712 0468 00000000 		.4byte	retByte_buffer
+ 1713 046c 1E       		.uleb128 0x1e
+ 1714 046d 5C010000 		.4byte	.LASF47
+ 1715 0471 01       		.byte	0x1
+ 1716 0472 28       		.byte	0x28
+ 1717 0473 8D000000 		.4byte	0x8d
+ 1718 0477 05       		.uleb128 0x5
+ 1719 0478 03       		.byte	0x3
+ 1720 0479 00000000 		.4byte	Vout_sum
+ 1721 047d 1F       		.uleb128 0x1f
+ 1722 047e 6E00     		.ascii	"n\000"
+ 1723 0480 01       		.byte	0x1
+ 1724 0481 29       		.byte	0x29
+ 1725 0482 8D000000 		.4byte	0x8d
+ 1726 0486 05       		.uleb128 0x5
+ 1727 0487 03       		.byte	0x3
+ 1728 0488 00000000 		.4byte	n
+ 1729 048c 1E       		.uleb128 0x1e
+ 1730 048d 84020000 		.4byte	.LASF48
+ 1731 0491 01       		.byte	0x1
+ 1732 0492 2A       		.byte	0x2a
+ 1733 0493 8D000000 		.4byte	0x8d
+ 1734 0497 05       		.uleb128 0x5
+ 1735 0498 03       		.byte	0x3
+ 1736 0499 00000000 		.4byte	Vout_sum_isr
+ 1737 049d 1E       		.uleb128 0x1e
+ 1738 049e 4A010000 		.4byte	.LASF49
+ 1739 04a2 01       		.byte	0x1
+ 1740 04a3 2B       		.byte	0x2b
+ 1741 04a4 8D000000 		.4byte	0x8d
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 41
+
+
+ 1742 04a8 05       		.uleb128 0x5
+ 1743 04a9 03       		.byte	0x3
+ 1744 04aa 00000000 		.4byte	n_isr
+ 1745 04ae 1E       		.uleb128 0x1e
+ 1746 04af C7020000 		.4byte	.LASF50
+ 1747 04b3 01       		.byte	0x1
+ 1748 04b4 2E       		.byte	0x2e
+ 1749 04b5 A5000000 		.4byte	0xa5
+ 1750 04b9 05       		.uleb128 0x5
+ 1751 04ba 03       		.byte	0x3
+ 1752 04bb 00000000 		.4byte	LM35_temp
+ 1753 04bf 1E       		.uleb128 0x1e
+ 1754 04c0 91020000 		.4byte	.LASF51
+ 1755 04c4 01       		.byte	0x1
+ 1756 04c5 2F       		.byte	0x2f
+ 1757 04c6 A5000000 		.4byte	0xa5
+ 1758 04ca 05       		.uleb128 0x5
+ 1759 04cb 03       		.byte	0x3
+ 1760 04cc 00000000 		.4byte	Vout_average
+ 1761 04d0 1E       		.uleb128 0x1e
+ 1762 04d1 C6010000 		.4byte	.LASF52
+ 1763 04d5 01       		.byte	0x1
+ 1764 04d6 30       		.byte	0x30
+ 1765 04d7 A5000000 		.4byte	0xa5
+ 1766 04db 05       		.uleb128 0x5
+ 1767 04dc 03       		.byte	0x3
+ 1768 04dd 00000000 		.4byte	DS18B20_temp
+ 1769 04e1 00       		.byte	0
+ 1770              		.section	.debug_abbrev,"",%progbits
+ 1771              	.Ldebug_abbrev0:
+ 1772 0000 01       		.uleb128 0x1
+ 1773 0001 11       		.uleb128 0x11
+ 1774 0002 01       		.byte	0x1
+ 1775 0003 25       		.uleb128 0x25
+ 1776 0004 0E       		.uleb128 0xe
+ 1777 0005 13       		.uleb128 0x13
+ 1778 0006 0B       		.uleb128 0xb
+ 1779 0007 03       		.uleb128 0x3
+ 1780 0008 0E       		.uleb128 0xe
+ 1781 0009 1B       		.uleb128 0x1b
+ 1782 000a 0E       		.uleb128 0xe
+ 1783 000b 55       		.uleb128 0x55
+ 1784 000c 17       		.uleb128 0x17
+ 1785 000d 11       		.uleb128 0x11
+ 1786 000e 01       		.uleb128 0x1
+ 1787 000f 10       		.uleb128 0x10
+ 1788 0010 17       		.uleb128 0x17
+ 1789 0011 00       		.byte	0
+ 1790 0012 00       		.byte	0
+ 1791 0013 02       		.uleb128 0x2
+ 1792 0014 24       		.uleb128 0x24
+ 1793 0015 00       		.byte	0
+ 1794 0016 0B       		.uleb128 0xb
+ 1795 0017 0B       		.uleb128 0xb
+ 1796 0018 3E       		.uleb128 0x3e
+ 1797 0019 0B       		.uleb128 0xb
+ 1798 001a 03       		.uleb128 0x3
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 42
+
+
+ 1799 001b 0E       		.uleb128 0xe
+ 1800 001c 00       		.byte	0
+ 1801 001d 00       		.byte	0
+ 1802 001e 03       		.uleb128 0x3
+ 1803 001f 16       		.uleb128 0x16
+ 1804 0020 00       		.byte	0
+ 1805 0021 03       		.uleb128 0x3
+ 1806 0022 0E       		.uleb128 0xe
+ 1807 0023 3A       		.uleb128 0x3a
+ 1808 0024 0B       		.uleb128 0xb
+ 1809 0025 3B       		.uleb128 0x3b
+ 1810 0026 0B       		.uleb128 0xb
+ 1811 0027 49       		.uleb128 0x49
+ 1812 0028 13       		.uleb128 0x13
+ 1813 0029 00       		.byte	0
+ 1814 002a 00       		.byte	0
+ 1815 002b 04       		.uleb128 0x4
+ 1816 002c 24       		.uleb128 0x24
+ 1817 002d 00       		.byte	0
+ 1818 002e 0B       		.uleb128 0xb
+ 1819 002f 0B       		.uleb128 0xb
+ 1820 0030 3E       		.uleb128 0x3e
+ 1821 0031 0B       		.uleb128 0xb
+ 1822 0032 03       		.uleb128 0x3
+ 1823 0033 08       		.uleb128 0x8
+ 1824 0034 00       		.byte	0
+ 1825 0035 00       		.byte	0
+ 1826 0036 05       		.uleb128 0x5
+ 1827 0037 16       		.uleb128 0x16
+ 1828 0038 00       		.byte	0
+ 1829 0039 03       		.uleb128 0x3
+ 1830 003a 0E       		.uleb128 0xe
+ 1831 003b 3A       		.uleb128 0x3a
+ 1832 003c 0B       		.uleb128 0xb
+ 1833 003d 3B       		.uleb128 0x3b
+ 1834 003e 05       		.uleb128 0x5
+ 1835 003f 49       		.uleb128 0x49
+ 1836 0040 13       		.uleb128 0x13
+ 1837 0041 00       		.byte	0
+ 1838 0042 00       		.byte	0
+ 1839 0043 06       		.uleb128 0x6
+ 1840 0044 35       		.uleb128 0x35
+ 1841 0045 00       		.byte	0
+ 1842 0046 49       		.uleb128 0x49
+ 1843 0047 13       		.uleb128 0x13
+ 1844 0048 00       		.byte	0
+ 1845 0049 00       		.byte	0
+ 1846 004a 07       		.uleb128 0x7
+ 1847 004b 2E       		.uleb128 0x2e
+ 1848 004c 01       		.byte	0x1
+ 1849 004d 3F       		.uleb128 0x3f
+ 1850 004e 19       		.uleb128 0x19
+ 1851 004f 03       		.uleb128 0x3
+ 1852 0050 0E       		.uleb128 0xe
+ 1853 0051 3A       		.uleb128 0x3a
+ 1854 0052 0B       		.uleb128 0xb
+ 1855 0053 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 43
+
+
+ 1856 0054 0B       		.uleb128 0xb
+ 1857 0055 49       		.uleb128 0x49
+ 1858 0056 13       		.uleb128 0x13
+ 1859 0057 11       		.uleb128 0x11
+ 1860 0058 01       		.uleb128 0x1
+ 1861 0059 12       		.uleb128 0x12
+ 1862 005a 06       		.uleb128 0x6
+ 1863 005b 40       		.uleb128 0x40
+ 1864 005c 18       		.uleb128 0x18
+ 1865 005d 9642     		.uleb128 0x2116
+ 1866 005f 19       		.uleb128 0x19
+ 1867 0060 01       		.uleb128 0x1
+ 1868 0061 13       		.uleb128 0x13
+ 1869 0062 00       		.byte	0
+ 1870 0063 00       		.byte	0
+ 1871 0064 08       		.uleb128 0x8
+ 1872 0065 34       		.uleb128 0x34
+ 1873 0066 00       		.byte	0
+ 1874 0067 03       		.uleb128 0x3
+ 1875 0068 0E       		.uleb128 0xe
+ 1876 0069 3A       		.uleb128 0x3a
+ 1877 006a 0B       		.uleb128 0xb
+ 1878 006b 3B       		.uleb128 0x3b
+ 1879 006c 0B       		.uleb128 0xb
+ 1880 006d 49       		.uleb128 0x49
+ 1881 006e 13       		.uleb128 0x13
+ 1882 006f 02       		.uleb128 0x2
+ 1883 0070 18       		.uleb128 0x18
+ 1884 0071 00       		.byte	0
+ 1885 0072 00       		.byte	0
+ 1886 0073 09       		.uleb128 0x9
+ 1887 0074 0B       		.uleb128 0xb
+ 1888 0075 01       		.byte	0x1
+ 1889 0076 11       		.uleb128 0x11
+ 1890 0077 01       		.uleb128 0x1
+ 1891 0078 12       		.uleb128 0x12
+ 1892 0079 06       		.uleb128 0x6
+ 1893 007a 01       		.uleb128 0x1
+ 1894 007b 13       		.uleb128 0x13
+ 1895 007c 00       		.byte	0
+ 1896 007d 00       		.byte	0
+ 1897 007e 0A       		.uleb128 0xa
+ 1898 007f 0B       		.uleb128 0xb
+ 1899 0080 01       		.byte	0x1
+ 1900 0081 11       		.uleb128 0x11
+ 1901 0082 01       		.uleb128 0x1
+ 1902 0083 12       		.uleb128 0x12
+ 1903 0084 06       		.uleb128 0x6
+ 1904 0085 00       		.byte	0
+ 1905 0086 00       		.byte	0
+ 1906 0087 0B       		.uleb128 0xb
+ 1907 0088 34       		.uleb128 0x34
+ 1908 0089 00       		.byte	0
+ 1909 008a 03       		.uleb128 0x3
+ 1910 008b 08       		.uleb128 0x8
+ 1911 008c 3A       		.uleb128 0x3a
+ 1912 008d 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 44
+
+
+ 1913 008e 3B       		.uleb128 0x3b
+ 1914 008f 0B       		.uleb128 0xb
+ 1915 0090 49       		.uleb128 0x49
+ 1916 0091 13       		.uleb128 0x13
+ 1917 0092 02       		.uleb128 0x2
+ 1918 0093 18       		.uleb128 0x18
+ 1919 0094 00       		.byte	0
+ 1920 0095 00       		.byte	0
+ 1921 0096 0C       		.uleb128 0xc
+ 1922 0097 01       		.uleb128 0x1
+ 1923 0098 01       		.byte	0x1
+ 1924 0099 49       		.uleb128 0x49
+ 1925 009a 13       		.uleb128 0x13
+ 1926 009b 01       		.uleb128 0x1
+ 1927 009c 13       		.uleb128 0x13
+ 1928 009d 00       		.byte	0
+ 1929 009e 00       		.byte	0
+ 1930 009f 0D       		.uleb128 0xd
+ 1931 00a0 21       		.uleb128 0x21
+ 1932 00a1 00       		.byte	0
+ 1933 00a2 49       		.uleb128 0x49
+ 1934 00a3 13       		.uleb128 0x13
+ 1935 00a4 2F       		.uleb128 0x2f
+ 1936 00a5 0B       		.uleb128 0xb
+ 1937 00a6 00       		.byte	0
+ 1938 00a7 00       		.byte	0
+ 1939 00a8 0E       		.uleb128 0xe
+ 1940 00a9 2E       		.uleb128 0x2e
+ 1941 00aa 01       		.byte	0x1
+ 1942 00ab 3F       		.uleb128 0x3f
+ 1943 00ac 19       		.uleb128 0x19
+ 1944 00ad 03       		.uleb128 0x3
+ 1945 00ae 0E       		.uleb128 0xe
+ 1946 00af 3A       		.uleb128 0x3a
+ 1947 00b0 0B       		.uleb128 0xb
+ 1948 00b1 3B       		.uleb128 0x3b
+ 1949 00b2 0B       		.uleb128 0xb
+ 1950 00b3 27       		.uleb128 0x27
+ 1951 00b4 19       		.uleb128 0x19
+ 1952 00b5 49       		.uleb128 0x49
+ 1953 00b6 13       		.uleb128 0x13
+ 1954 00b7 11       		.uleb128 0x11
+ 1955 00b8 01       		.uleb128 0x1
+ 1956 00b9 12       		.uleb128 0x12
+ 1957 00ba 06       		.uleb128 0x6
+ 1958 00bb 40       		.uleb128 0x40
+ 1959 00bc 18       		.uleb128 0x18
+ 1960 00bd 9742     		.uleb128 0x2117
+ 1961 00bf 19       		.uleb128 0x19
+ 1962 00c0 01       		.uleb128 0x1
+ 1963 00c1 13       		.uleb128 0x13
+ 1964 00c2 00       		.byte	0
+ 1965 00c3 00       		.byte	0
+ 1966 00c4 0F       		.uleb128 0xf
+ 1967 00c5 05       		.uleb128 0x5
+ 1968 00c6 00       		.byte	0
+ 1969 00c7 03       		.uleb128 0x3
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 45
+
+
+ 1970 00c8 0E       		.uleb128 0xe
+ 1971 00c9 3A       		.uleb128 0x3a
+ 1972 00ca 0B       		.uleb128 0xb
+ 1973 00cb 3B       		.uleb128 0x3b
+ 1974 00cc 0B       		.uleb128 0xb
+ 1975 00cd 49       		.uleb128 0x49
+ 1976 00ce 13       		.uleb128 0x13
+ 1977 00cf 02       		.uleb128 0x2
+ 1978 00d0 18       		.uleb128 0x18
+ 1979 00d1 00       		.byte	0
+ 1980 00d2 00       		.byte	0
+ 1981 00d3 10       		.uleb128 0x10
+ 1982 00d4 05       		.uleb128 0x5
+ 1983 00d5 00       		.byte	0
+ 1984 00d6 03       		.uleb128 0x3
+ 1985 00d7 08       		.uleb128 0x8
+ 1986 00d8 3A       		.uleb128 0x3a
+ 1987 00d9 0B       		.uleb128 0xb
+ 1988 00da 3B       		.uleb128 0x3b
+ 1989 00db 0B       		.uleb128 0xb
+ 1990 00dc 49       		.uleb128 0x49
+ 1991 00dd 13       		.uleb128 0x13
+ 1992 00de 02       		.uleb128 0x2
+ 1993 00df 18       		.uleb128 0x18
+ 1994 00e0 00       		.byte	0
+ 1995 00e1 00       		.byte	0
+ 1996 00e2 11       		.uleb128 0x11
+ 1997 00e3 0F       		.uleb128 0xf
+ 1998 00e4 00       		.byte	0
+ 1999 00e5 0B       		.uleb128 0xb
+ 2000 00e6 0B       		.uleb128 0xb
+ 2001 00e7 49       		.uleb128 0x49
+ 2002 00e8 13       		.uleb128 0x13
+ 2003 00e9 00       		.byte	0
+ 2004 00ea 00       		.byte	0
+ 2005 00eb 12       		.uleb128 0x12
+ 2006 00ec 2E       		.uleb128 0x2e
+ 2007 00ed 01       		.byte	0x1
+ 2008 00ee 3F       		.uleb128 0x3f
+ 2009 00ef 19       		.uleb128 0x19
+ 2010 00f0 03       		.uleb128 0x3
+ 2011 00f1 0E       		.uleb128 0xe
+ 2012 00f2 3A       		.uleb128 0x3a
+ 2013 00f3 0B       		.uleb128 0xb
+ 2014 00f4 3B       		.uleb128 0x3b
+ 2015 00f5 0B       		.uleb128 0xb
+ 2016 00f6 27       		.uleb128 0x27
+ 2017 00f7 19       		.uleb128 0x19
+ 2018 00f8 11       		.uleb128 0x11
+ 2019 00f9 01       		.uleb128 0x1
+ 2020 00fa 12       		.uleb128 0x12
+ 2021 00fb 06       		.uleb128 0x6
+ 2022 00fc 40       		.uleb128 0x40
+ 2023 00fd 18       		.uleb128 0x18
+ 2024 00fe 9642     		.uleb128 0x2116
+ 2025 0100 19       		.uleb128 0x19
+ 2026 0101 01       		.uleb128 0x1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 46
+
+
+ 2027 0102 13       		.uleb128 0x13
+ 2028 0103 00       		.byte	0
+ 2029 0104 00       		.byte	0
+ 2030 0105 13       		.uleb128 0x13
+ 2031 0106 2E       		.uleb128 0x2e
+ 2032 0107 01       		.byte	0x1
+ 2033 0108 3F       		.uleb128 0x3f
+ 2034 0109 19       		.uleb128 0x19
+ 2035 010a 03       		.uleb128 0x3
+ 2036 010b 0E       		.uleb128 0xe
+ 2037 010c 3A       		.uleb128 0x3a
+ 2038 010d 0B       		.uleb128 0xb
+ 2039 010e 3B       		.uleb128 0x3b
+ 2040 010f 05       		.uleb128 0x5
+ 2041 0110 27       		.uleb128 0x27
+ 2042 0111 19       		.uleb128 0x19
+ 2043 0112 11       		.uleb128 0x11
+ 2044 0113 01       		.uleb128 0x1
+ 2045 0114 12       		.uleb128 0x12
+ 2046 0115 06       		.uleb128 0x6
+ 2047 0116 40       		.uleb128 0x40
+ 2048 0117 18       		.uleb128 0x18
+ 2049 0118 9642     		.uleb128 0x2116
+ 2050 011a 19       		.uleb128 0x19
+ 2051 011b 01       		.uleb128 0x1
+ 2052 011c 13       		.uleb128 0x13
+ 2053 011d 00       		.byte	0
+ 2054 011e 00       		.byte	0
+ 2055 011f 14       		.uleb128 0x14
+ 2056 0120 05       		.uleb128 0x5
+ 2057 0121 00       		.byte	0
+ 2058 0122 03       		.uleb128 0x3
+ 2059 0123 0E       		.uleb128 0xe
+ 2060 0124 3A       		.uleb128 0x3a
+ 2061 0125 0B       		.uleb128 0xb
+ 2062 0126 3B       		.uleb128 0x3b
+ 2063 0127 05       		.uleb128 0x5
+ 2064 0128 49       		.uleb128 0x49
+ 2065 0129 13       		.uleb128 0x13
+ 2066 012a 02       		.uleb128 0x2
+ 2067 012b 18       		.uleb128 0x18
+ 2068 012c 00       		.byte	0
+ 2069 012d 00       		.byte	0
+ 2070 012e 15       		.uleb128 0x15
+ 2071 012f 34       		.uleb128 0x34
+ 2072 0130 00       		.byte	0
+ 2073 0131 03       		.uleb128 0x3
+ 2074 0132 0E       		.uleb128 0xe
+ 2075 0133 3A       		.uleb128 0x3a
+ 2076 0134 0B       		.uleb128 0xb
+ 2077 0135 3B       		.uleb128 0x3b
+ 2078 0136 05       		.uleb128 0x5
+ 2079 0137 49       		.uleb128 0x49
+ 2080 0138 13       		.uleb128 0x13
+ 2081 0139 02       		.uleb128 0x2
+ 2082 013a 18       		.uleb128 0x18
+ 2083 013b 00       		.byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 47
+
+
+ 2084 013c 00       		.byte	0
+ 2085 013d 16       		.uleb128 0x16
+ 2086 013e 2E       		.uleb128 0x2e
+ 2087 013f 01       		.byte	0x1
+ 2088 0140 3F       		.uleb128 0x3f
+ 2089 0141 19       		.uleb128 0x19
+ 2090 0142 03       		.uleb128 0x3
+ 2091 0143 0E       		.uleb128 0xe
+ 2092 0144 3A       		.uleb128 0x3a
+ 2093 0145 0B       		.uleb128 0xb
+ 2094 0146 3B       		.uleb128 0x3b
+ 2095 0147 05       		.uleb128 0x5
+ 2096 0148 49       		.uleb128 0x49
+ 2097 0149 13       		.uleb128 0x13
+ 2098 014a 11       		.uleb128 0x11
+ 2099 014b 01       		.uleb128 0x1
+ 2100 014c 12       		.uleb128 0x12
+ 2101 014d 06       		.uleb128 0x6
+ 2102 014e 40       		.uleb128 0x40
+ 2103 014f 18       		.uleb128 0x18
+ 2104 0150 9642     		.uleb128 0x2116
+ 2105 0152 19       		.uleb128 0x19
+ 2106 0153 01       		.uleb128 0x1
+ 2107 0154 13       		.uleb128 0x13
+ 2108 0155 00       		.byte	0
+ 2109 0156 00       		.byte	0
+ 2110 0157 17       		.uleb128 0x17
+ 2111 0158 2E       		.uleb128 0x2e
+ 2112 0159 00       		.byte	0
+ 2113 015a 3F       		.uleb128 0x3f
+ 2114 015b 19       		.uleb128 0x19
+ 2115 015c 03       		.uleb128 0x3
+ 2116 015d 0E       		.uleb128 0xe
+ 2117 015e 3A       		.uleb128 0x3a
+ 2118 015f 0B       		.uleb128 0xb
+ 2119 0160 3B       		.uleb128 0x3b
+ 2120 0161 05       		.uleb128 0x5
+ 2121 0162 49       		.uleb128 0x49
+ 2122 0163 13       		.uleb128 0x13
+ 2123 0164 11       		.uleb128 0x11
+ 2124 0165 01       		.uleb128 0x1
+ 2125 0166 12       		.uleb128 0x12
+ 2126 0167 06       		.uleb128 0x6
+ 2127 0168 40       		.uleb128 0x40
+ 2128 0169 18       		.uleb128 0x18
+ 2129 016a 9642     		.uleb128 0x2116
+ 2130 016c 19       		.uleb128 0x19
+ 2131 016d 00       		.byte	0
+ 2132 016e 00       		.byte	0
+ 2133 016f 18       		.uleb128 0x18
+ 2134 0170 2E       		.uleb128 0x2e
+ 2135 0171 01       		.byte	0x1
+ 2136 0172 3F       		.uleb128 0x3f
+ 2137 0173 19       		.uleb128 0x19
+ 2138 0174 03       		.uleb128 0x3
+ 2139 0175 0E       		.uleb128 0xe
+ 2140 0176 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 48
+
+
+ 2141 0177 0B       		.uleb128 0xb
+ 2142 0178 3B       		.uleb128 0x3b
+ 2143 0179 05       		.uleb128 0x5
+ 2144 017a 27       		.uleb128 0x27
+ 2145 017b 19       		.uleb128 0x19
+ 2146 017c 49       		.uleb128 0x49
+ 2147 017d 13       		.uleb128 0x13
+ 2148 017e 11       		.uleb128 0x11
+ 2149 017f 01       		.uleb128 0x1
+ 2150 0180 12       		.uleb128 0x12
+ 2151 0181 06       		.uleb128 0x6
+ 2152 0182 40       		.uleb128 0x40
+ 2153 0183 18       		.uleb128 0x18
+ 2154 0184 9642     		.uleb128 0x2116
+ 2155 0186 19       		.uleb128 0x19
+ 2156 0187 01       		.uleb128 0x1
+ 2157 0188 13       		.uleb128 0x13
+ 2158 0189 00       		.byte	0
+ 2159 018a 00       		.byte	0
+ 2160 018b 19       		.uleb128 0x19
+ 2161 018c 2E       		.uleb128 0x2e
+ 2162 018d 01       		.byte	0x1
+ 2163 018e 3F       		.uleb128 0x3f
+ 2164 018f 19       		.uleb128 0x19
+ 2165 0190 03       		.uleb128 0x3
+ 2166 0191 0E       		.uleb128 0xe
+ 2167 0192 3A       		.uleb128 0x3a
+ 2168 0193 0B       		.uleb128 0xb
+ 2169 0194 3B       		.uleb128 0x3b
+ 2170 0195 05       		.uleb128 0x5
+ 2171 0196 11       		.uleb128 0x11
+ 2172 0197 01       		.uleb128 0x1
+ 2173 0198 12       		.uleb128 0x12
+ 2174 0199 06       		.uleb128 0x6
+ 2175 019a 40       		.uleb128 0x40
+ 2176 019b 18       		.uleb128 0x18
+ 2177 019c 9642     		.uleb128 0x2116
+ 2178 019e 19       		.uleb128 0x19
+ 2179 019f 01       		.uleb128 0x1
+ 2180 01a0 13       		.uleb128 0x13
+ 2181 01a1 00       		.byte	0
+ 2182 01a2 00       		.byte	0
+ 2183 01a3 1A       		.uleb128 0x1a
+ 2184 01a4 34       		.uleb128 0x34
+ 2185 01a5 00       		.byte	0
+ 2186 01a6 03       		.uleb128 0x3
+ 2187 01a7 08       		.uleb128 0x8
+ 2188 01a8 3A       		.uleb128 0x3a
+ 2189 01a9 0B       		.uleb128 0xb
+ 2190 01aa 3B       		.uleb128 0x3b
+ 2191 01ab 05       		.uleb128 0x5
+ 2192 01ac 49       		.uleb128 0x49
+ 2193 01ad 13       		.uleb128 0x13
+ 2194 01ae 02       		.uleb128 0x2
+ 2195 01af 18       		.uleb128 0x18
+ 2196 01b0 00       		.byte	0
+ 2197 01b1 00       		.byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 49
+
+
+ 2198 01b2 1B       		.uleb128 0x1b
+ 2199 01b3 2E       		.uleb128 0x2e
+ 2200 01b4 00       		.byte	0
+ 2201 01b5 3F       		.uleb128 0x3f
+ 2202 01b6 19       		.uleb128 0x19
+ 2203 01b7 03       		.uleb128 0x3
+ 2204 01b8 0E       		.uleb128 0xe
+ 2205 01b9 3A       		.uleb128 0x3a
+ 2206 01ba 0B       		.uleb128 0xb
+ 2207 01bb 3B       		.uleb128 0x3b
+ 2208 01bc 05       		.uleb128 0x5
+ 2209 01bd 11       		.uleb128 0x11
+ 2210 01be 01       		.uleb128 0x1
+ 2211 01bf 12       		.uleb128 0x12
+ 2212 01c0 06       		.uleb128 0x6
+ 2213 01c1 40       		.uleb128 0x40
+ 2214 01c2 18       		.uleb128 0x18
+ 2215 01c3 9642     		.uleb128 0x2116
+ 2216 01c5 19       		.uleb128 0x19
+ 2217 01c6 00       		.byte	0
+ 2218 01c7 00       		.byte	0
+ 2219 01c8 1C       		.uleb128 0x1c
+ 2220 01c9 2E       		.uleb128 0x2e
+ 2221 01ca 00       		.byte	0
+ 2222 01cb 3F       		.uleb128 0x3f
+ 2223 01cc 19       		.uleb128 0x19
+ 2224 01cd 03       		.uleb128 0x3
+ 2225 01ce 0E       		.uleb128 0xe
+ 2226 01cf 3A       		.uleb128 0x3a
+ 2227 01d0 0B       		.uleb128 0xb
+ 2228 01d1 3B       		.uleb128 0x3b
+ 2229 01d2 05       		.uleb128 0x5
+ 2230 01d3 27       		.uleb128 0x27
+ 2231 01d4 19       		.uleb128 0x19
+ 2232 01d5 11       		.uleb128 0x11
+ 2233 01d6 01       		.uleb128 0x1
+ 2234 01d7 12       		.uleb128 0x12
+ 2235 01d8 06       		.uleb128 0x6
+ 2236 01d9 40       		.uleb128 0x40
+ 2237 01da 18       		.uleb128 0x18
+ 2238 01db 9642     		.uleb128 0x2116
+ 2239 01dd 19       		.uleb128 0x19
+ 2240 01de 00       		.byte	0
+ 2241 01df 00       		.byte	0
+ 2242 01e0 1D       		.uleb128 0x1d
+ 2243 01e1 34       		.uleb128 0x34
+ 2244 01e2 00       		.byte	0
+ 2245 01e3 03       		.uleb128 0x3
+ 2246 01e4 0E       		.uleb128 0xe
+ 2247 01e5 3A       		.uleb128 0x3a
+ 2248 01e6 0B       		.uleb128 0xb
+ 2249 01e7 3B       		.uleb128 0x3b
+ 2250 01e8 05       		.uleb128 0x5
+ 2251 01e9 49       		.uleb128 0x49
+ 2252 01ea 13       		.uleb128 0x13
+ 2253 01eb 3F       		.uleb128 0x3f
+ 2254 01ec 19       		.uleb128 0x19
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 50
+
+
+ 2255 01ed 3C       		.uleb128 0x3c
+ 2256 01ee 19       		.uleb128 0x19
+ 2257 01ef 00       		.byte	0
+ 2258 01f0 00       		.byte	0
+ 2259 01f1 1E       		.uleb128 0x1e
+ 2260 01f2 34       		.uleb128 0x34
+ 2261 01f3 00       		.byte	0
+ 2262 01f4 03       		.uleb128 0x3
+ 2263 01f5 0E       		.uleb128 0xe
+ 2264 01f6 3A       		.uleb128 0x3a
+ 2265 01f7 0B       		.uleb128 0xb
+ 2266 01f8 3B       		.uleb128 0x3b
+ 2267 01f9 0B       		.uleb128 0xb
+ 2268 01fa 49       		.uleb128 0x49
+ 2269 01fb 13       		.uleb128 0x13
+ 2270 01fc 3F       		.uleb128 0x3f
+ 2271 01fd 19       		.uleb128 0x19
+ 2272 01fe 02       		.uleb128 0x2
+ 2273 01ff 18       		.uleb128 0x18
+ 2274 0200 00       		.byte	0
+ 2275 0201 00       		.byte	0
+ 2276 0202 1F       		.uleb128 0x1f
+ 2277 0203 34       		.uleb128 0x34
+ 2278 0204 00       		.byte	0
+ 2279 0205 03       		.uleb128 0x3
+ 2280 0206 08       		.uleb128 0x8
+ 2281 0207 3A       		.uleb128 0x3a
+ 2282 0208 0B       		.uleb128 0xb
+ 2283 0209 3B       		.uleb128 0x3b
+ 2284 020a 0B       		.uleb128 0xb
+ 2285 020b 49       		.uleb128 0x49
+ 2286 020c 13       		.uleb128 0x13
+ 2287 020d 3F       		.uleb128 0x3f
+ 2288 020e 19       		.uleb128 0x19
+ 2289 020f 02       		.uleb128 0x2
+ 2290 0210 18       		.uleb128 0x18
+ 2291 0211 00       		.byte	0
+ 2292 0212 00       		.byte	0
+ 2293 0213 00       		.byte	0
+ 2294              		.section	.debug_aranges,"",%progbits
+ 2295 0000 74000000 		.4byte	0x74
+ 2296 0004 0200     		.2byte	0x2
+ 2297 0006 00000000 		.4byte	.Ldebug_info0
+ 2298 000a 04       		.byte	0x4
+ 2299 000b 00       		.byte	0
+ 2300 000c 0000     		.2byte	0
+ 2301 000e 0000     		.2byte	0
+ 2302 0010 00000000 		.4byte	.LFB64
+ 2303 0014 24020000 		.4byte	.LFE64-.LFB64
+ 2304 0018 00000000 		.4byte	.LFB65
+ 2305 001c 70000000 		.4byte	.LFE65-.LFB65
+ 2306 0020 00000000 		.4byte	.LFB66
+ 2307 0024 42000000 		.4byte	.LFE66-.LFB66
+ 2308 0028 00000000 		.4byte	.LFB67
+ 2309 002c 34000000 		.4byte	.LFE67-.LFB67
+ 2310 0030 00000000 		.4byte	.LFB68
+ 2311 0034 46000000 		.4byte	.LFE68-.LFB68
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 51
+
+
+ 2312 0038 00000000 		.4byte	.LFB69
+ 2313 003c 0E000000 		.4byte	.LFE69-.LFB69
+ 2314 0040 00000000 		.4byte	.LFB70
+ 2315 0044 36000000 		.4byte	.LFE70-.LFB70
+ 2316 0048 00000000 		.4byte	.LFB71
+ 2317 004c 40000000 		.4byte	.LFE71-.LFB71
+ 2318 0050 00000000 		.4byte	.LFB72
+ 2319 0054 B0000000 		.4byte	.LFE72-.LFB72
+ 2320 0058 00000000 		.4byte	.LFB73
+ 2321 005c 48000000 		.4byte	.LFE73-.LFB73
+ 2322 0060 00000000 		.4byte	.LFB74
+ 2323 0064 3C000000 		.4byte	.LFE74-.LFB74
+ 2324 0068 00000000 		.4byte	.LFB75
+ 2325 006c 70000000 		.4byte	.LFE75-.LFB75
+ 2326 0070 00000000 		.4byte	0
+ 2327 0074 00000000 		.4byte	0
+ 2328              		.section	.debug_ranges,"",%progbits
+ 2329              	.Ldebug_ranges0:
+ 2330 0000 00000000 		.4byte	.LFB64
+ 2331 0004 24020000 		.4byte	.LFE64
+ 2332 0008 00000000 		.4byte	.LFB65
+ 2333 000c 70000000 		.4byte	.LFE65
+ 2334 0010 00000000 		.4byte	.LFB66
+ 2335 0014 42000000 		.4byte	.LFE66
+ 2336 0018 00000000 		.4byte	.LFB67
+ 2337 001c 34000000 		.4byte	.LFE67
+ 2338 0020 00000000 		.4byte	.LFB68
+ 2339 0024 46000000 		.4byte	.LFE68
+ 2340 0028 00000000 		.4byte	.LFB69
+ 2341 002c 0E000000 		.4byte	.LFE69
+ 2342 0030 00000000 		.4byte	.LFB70
+ 2343 0034 36000000 		.4byte	.LFE70
+ 2344 0038 00000000 		.4byte	.LFB71
+ 2345 003c 40000000 		.4byte	.LFE71
+ 2346 0040 00000000 		.4byte	.LFB72
+ 2347 0044 B0000000 		.4byte	.LFE72
+ 2348 0048 00000000 		.4byte	.LFB73
+ 2349 004c 48000000 		.4byte	.LFE73
+ 2350 0050 00000000 		.4byte	.LFB74
+ 2351 0054 3C000000 		.4byte	.LFE74
+ 2352 0058 00000000 		.4byte	.LFB75
+ 2353 005c 70000000 		.4byte	.LFE75
+ 2354 0060 00000000 		.4byte	0
+ 2355 0064 00000000 		.4byte	0
+ 2356              		.section	.debug_line,"",%progbits
+ 2357              	.Ldebug_line0:
+ 2358 0000 24030000 		.section	.debug_str,"MS",%progbits,1
+ 2358      02004C01 
+ 2358      00000201 
+ 2358      FB0E0D00 
+ 2358      01010101 
+ 2359              	.LASF41:
+ 2360 0000 4D79436C 		.ascii	"MyClockIsr\000"
+ 2360      6F636B49 
+ 2360      737200
+ 2361              	.LASF36:
+ 2362 000b 72657375 		.ascii	"result\000"
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 52
+
+
+ 2362      6C7400
+ 2363              	.LASF14:
+ 2364 0012 666C6F61 		.ascii	"float32\000"
+ 2364      74333200 
+ 2365              	.LASF56:
+ 2366 001a 44533138 		.ascii	"DS18B20_tempCalc\000"
+ 2366      4232305F 
+ 2366      74656D70 
+ 2366      43616C63 
+ 2366      00
+ 2367              	.LASF55:
+ 2368 002b 433A5C55 		.ascii	"C:\\Users\\Gemma\\Desktop\\PSoC\\GemmaQ_Assignment5"
+ 2368      73657273 
+ 2368      5C47656D 
+ 2368      6D615C44 
+ 2368      65736B74 
+ 2369 0059 5F50536F 		.ascii	"_PSoC5OneWire\\GemmaQ_Assignment5_PSoC5OneWire.cyds"
+ 2369      43354F6E 
+ 2369      65576972 
+ 2369      655C4765 
+ 2369      6D6D6151 
+ 2370 008b 6E00     		.ascii	"n\000"
+ 2371              	.LASF2:
+ 2372 008d 73686F72 		.ascii	"short int\000"
+ 2372      7420696E 
+ 2372      7400
+ 2373              	.LASF19:
+ 2374 0097 73697A65 		.ascii	"sizetype\000"
+ 2374      74797065 
+ 2374      00
+ 2375              	.LASF53:
+ 2376 00a0 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2376      43313120 
+ 2376      352E342E 
+ 2376      31203230 
+ 2376      31363036 
+ 2377 00d3 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2377      20726576 
+ 2377      6973696F 
+ 2377      6E203233 
+ 2377      37373135 
+ 2378 0106 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2378      66756E63 
+ 2378      74696F6E 
+ 2378      2D736563 
+ 2378      74696F6E 
+ 2379              	.LASF27:
+ 2380 012e 6D61696E 		.ascii	"main\000"
+ 2380      00
+ 2381              	.LASF20:
+ 2382 0133 7472616E 		.ascii	"transmit_buffer\000"
+ 2382      736D6974 
+ 2382      5F627566 
+ 2382      66657200 
+ 2383              	.LASF32:
+ 2384 0143 72657476 		.ascii	"retval\000"
+ 2384      616C00
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 53
+
+
+ 2385              	.LASF49:
+ 2386 014a 6E5F6973 		.ascii	"n_isr\000"
+ 2386      7200
+ 2387              	.LASF13:
+ 2388 0150 696E7431 		.ascii	"int16\000"
+ 2388      3600
+ 2389              	.LASF11:
+ 2390 0156 75696E74 		.ascii	"uint8\000"
+ 2390      3800
+ 2391              	.LASF47:
+ 2392 015c 566F7574 		.ascii	"Vout_sum\000"
+ 2392      5F73756D 
+ 2392      00
+ 2393              	.LASF15:
+ 2394 0165 666C6F61 		.ascii	"float\000"
+ 2394      7400
+ 2395              	.LASF6:
+ 2396 016b 6C6F6E67 		.ascii	"long long int\000"
+ 2396      206C6F6E 
+ 2396      6720696E 
+ 2396      7400
+ 2397              	.LASF37:
+ 2398 0179 73656E64 		.ascii	"senddata\000"
+ 2398      64617461 
+ 2398      00
+ 2399              	.LASF44:
+ 2400 0182 4F6E6557 		.ascii	"OneWire_flag\000"
+ 2400      6972655F 
+ 2400      666C6167 
+ 2400      00
+ 2401              	.LASF22:
+ 2402 018f 4352435F 		.ascii	"CRC_valid\000"
+ 2402      76616C69 
+ 2402      6400
+ 2403              	.LASF18:
+ 2404 0199 6C6F6E67 		.ascii	"long double\000"
+ 2404      20646F75 
+ 2404      626C6500 
+ 2405              	.LASF1:
+ 2406 01a5 756E7369 		.ascii	"unsigned char\000"
+ 2406      676E6564 
+ 2406      20636861 
+ 2406      7200
+ 2407              	.LASF45:
+ 2408 01b3 636F756E 		.ascii	"counter\000"
+ 2408      74657200 
+ 2409              	.LASF40:
+ 2410 01bb 4F574368 		.ascii	"OWCheckBit\000"
+ 2410      65636B42 
+ 2410      697400
+ 2411              	.LASF52:
+ 2412 01c6 44533138 		.ascii	"DS18B20_temp\000"
+ 2412      4232305F 
+ 2412      74656D70 
+ 2412      00
+ 2413              	.LASF0:
+ 2414 01d3 7369676E 		.ascii	"signed char\000"
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 54
+
+
+ 2414      65642063 
+ 2414      68617200 
+ 2415              	.LASF7:
+ 2416 01df 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2416      206C6F6E 
+ 2416      6720756E 
+ 2416      7369676E 
+ 2416      65642069 
+ 2417              	.LASF8:
+ 2418 01f6 756E7369 		.ascii	"unsigned int\000"
+ 2418      676E6564 
+ 2418      20696E74 
+ 2418      00
+ 2419              	.LASF5:
+ 2420 0203 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2420      20756E73 
+ 2420      69676E65 
+ 2420      6420696E 
+ 2420      7400
+ 2421              	.LASF24:
+ 2422 0215 63616C63 		.ascii	"calculatedCRC\000"
+ 2422      756C6174 
+ 2422      65644352 
+ 2422      4300
+ 2423              	.LASF3:
+ 2424 0223 73686F72 		.ascii	"short unsigned int\000"
+ 2424      7420756E 
+ 2424      7369676E 
+ 2424      65642069 
+ 2424      6E7400
+ 2425              	.LASF21:
+ 2426 0236 73746174 		.ascii	"status\000"
+ 2426      757300
+ 2427              	.LASF34:
+ 2428 023d 63616C63 		.ascii	"calculateCRC\000"
+ 2428      756C6174 
+ 2428      65435243 
+ 2428      00
+ 2429              	.LASF17:
+ 2430 024a 63686172 		.ascii	"char\000"
+ 2430      00
+ 2431              	.LASF25:
+ 2432 024f 74726573 		.ascii	"tresult\000"
+ 2432      756C7400 
+ 2433              	.LASF4:
+ 2434 0257 6C6F6E67 		.ascii	"long int\000"
+ 2434      20696E74 
+ 2434      00
+ 2435              	.LASF10:
+ 2436 0260 696E7433 		.ascii	"int32_t\000"
+ 2436      325F7400 
+ 2437              	.LASF26:
+ 2438 0268 64617461 		.ascii	"data\000"
+ 2438      00
+ 2439              	.LASF12:
+ 2440 026d 75696E74 		.ascii	"uint32\000"
+ 2440      333200
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 55
+
+
+ 2441              	.LASF54:
+ 2442 0274 6D61696E 		.ascii	"main.c\000"
+ 2442      2E6300
+ 2443              	.LASF38:
+ 2444 027b 4D794144 		.ascii	"MyADCIsr\000"
+ 2444      43497372 
+ 2444      00
+ 2445              	.LASF48:
+ 2446 0284 566F7574 		.ascii	"Vout_sum_isr\000"
+ 2446      5F73756D 
+ 2446      5F697372 
+ 2446      00
+ 2447              	.LASF51:
+ 2448 0291 566F7574 		.ascii	"Vout_average\000"
+ 2448      5F617665 
+ 2448      72616765 
+ 2448      00
+ 2449              	.LASF28:
+ 2450 029e 4F575772 		.ascii	"OWWriteBit\000"
+ 2450      69746542 
+ 2450      697400
+ 2451              	.LASF9:
+ 2452 02a9 5F5F696E 		.ascii	"__int32_t\000"
+ 2452      7433325F 
+ 2452      7400
+ 2453              	.LASF31:
+ 2454 02b3 4F575265 		.ascii	"OWReset\000"
+ 2454      73657400 
+ 2455              	.LASF29:
+ 2456 02bb 4F575772 		.ascii	"OWWriteByte\000"
+ 2456      69746542 
+ 2456      79746500 
+ 2457              	.LASF50:
+ 2458 02c7 4C4D3335 		.ascii	"LM35_temp\000"
+ 2458      5F74656D 
+ 2458      7000
+ 2459              	.LASF23:
+ 2460 02d1 72656365 		.ascii	"receivedCRC\000"
+ 2460      69766564 
+ 2460      43524300 
+ 2461              	.LASF39:
+ 2462 02dd 6F757470 		.ascii	"output\000"
+ 2462      757400
+ 2463              	.LASF30:
+ 2464 02e4 6C6F6F70 		.ascii	"loop\000"
+ 2464      00
+ 2465              	.LASF16:
+ 2466 02e9 646F7562 		.ascii	"double\000"
+ 2466      6C6500
+ 2467              	.LASF57:
+ 2468 02f0 4C4D3335 		.ascii	"LM35_tempCalc\000"
+ 2468      5F74656D 
+ 2468      7043616C 
+ 2468      6300
+ 2469              	.LASF42:
+ 2470 02fe 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2470      52784275 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccFDrQva.s 			page 56
+
+
+ 2470      66666572 
+ 2470      00
+ 2471              	.LASF33:
+ 2472 030b 4F575265 		.ascii	"OWReadBit\000"
+ 2472      61644269 
+ 2472      7400
+ 2473              	.LASF46:
+ 2474 0315 72657442 		.ascii	"retByte_buffer\000"
+ 2474      7974655F 
+ 2474      62756666 
+ 2474      657200
+ 2475              	.LASF35:
+ 2476 0324 4F575265 		.ascii	"OWReadByte\000"
+ 2476      61644279 
+ 2476      746500
+ 2477              	.LASF43:
+ 2478 032f 55415254 		.ascii	"UART_flag\000"
+ 2478      5F666C61 
+ 2478      6700
+ 2479              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

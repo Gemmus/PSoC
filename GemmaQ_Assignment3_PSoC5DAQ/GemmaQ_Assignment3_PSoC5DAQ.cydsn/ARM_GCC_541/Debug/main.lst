@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 1
 
 
    1              		.syntax unified
@@ -37,28 +37,28 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
   34              		.size	n, 4
   35              	n:
   36 0008 00000000 		.space	4
-  37              		.global	temp
+  37              		.global	Vout_sum_isr
   38              		.align	2
-  39              		.type	temp, %object
-  40              		.size	temp, 4
-  41              	temp:
+  39              		.type	Vout_sum_isr, %object
+  40              		.size	Vout_sum_isr, 4
+  41              	Vout_sum_isr:
   42 000c 00000000 		.space	4
-  43              		.comm	Vout_average,4,4
-  44              		.global	Vout_sum_isr
-  45              		.align	2
-  46              		.type	Vout_sum_isr, %object
-  47              		.size	Vout_sum_isr, 4
-  48              	Vout_sum_isr:
-  49 0010 00000000 		.space	4
-  50              		.global	n_isr
-  51              		.align	2
-  52              		.type	n_isr, %object
-  53              		.size	n_isr, 4
-  54              	n_isr:
-  55 0014 00000000 		.space	4
+  43              		.global	n_isr
+  44              		.align	2
+  45              		.type	n_isr, %object
+  46              		.size	n_isr, 4
+  47              	n_isr:
+  48 0010 00000000 		.space	4
+  49              		.global	temp
+  50              		.align	2
+  51              		.type	temp, %object
+  52              		.size	temp, 4
+  53              	temp:
+  54 0014 00000000 		.space	4
+  55              		.comm	Vout_average,4,4
   56              		.section	.rodata
   57              		.align	2
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 2
 
 
   58              	.LC0:
@@ -75,91 +75,66 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
   66              	main:
   67              	.LFB64:
   68              		.file 1 "main.c"
-   1:main.c        **** /******************************************************************************
-   2:main.c        **** * File Name: main.c
-   3:main.c        **** *
-   4:main.c        **** * Version: 1.10
-   5:main.c        **** *
-   6:main.c        **** * Description: This is the source code for the ADC and UART code example.
-   7:main.c        **** *
-   8:main.c        **** * Related Document: CE195277_ADC_and_UART.pdf
-   9:main.c        **** *
-  10:main.c        **** * Hardware Dependency: See CE195277_ADC_and_UART.pdf
-  11:main.c        **** *
-  12:main.c        **** *******************************************************************************
-  13:main.c        **** * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
-  14:main.c        **** *******************************************************************************
-  15:main.c        **** * This software, including source code, documentation and related materials
-  16:main.c        **** * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
-  17:main.c        **** * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
-  18:main.c        **** * protection (United States and foreign), United States copyright laws and
-  19:main.c        **** * international treaty provisions. Therefore, you may use this Software only
-  20:main.c        **** * as provided in the license agreement accompanying the software package from
-  21:main.c        **** * which you obtained this Software (“EULA”).
-  22:main.c        **** *
-  23:main.c        **** * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
-  24:main.c        **** * non-transferable license to copy, modify, and compile the Software source
-  25:main.c        **** * code solely for use in connection with Cypress’s integrated circuit products.
-  26:main.c        **** * Any reproduction, modification, translation, compilation, or representation
-  27:main.c        **** * of this Software except as specified above is prohibited without the express
-  28:main.c        **** * written permission of Cypress.
-  29:main.c        **** *
-  30:main.c        **** * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, 
-  31:main.c        **** * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED 
-  32:main.c        **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress 
-  33:main.c        **** * reserves the right to make changes to the Software without notice. Cypress 
-  34:main.c        **** * does not assume any liability arising out of the application or use of the 
-  35:main.c        **** * Software or any product or circuit described in the Software. Cypress does 
-  36:main.c        **** * not authorize its products for use in any products where a malfunction or 
-  37:main.c        **** * failure of the Cypress product may reasonably be expected to result in 
-  38:main.c        **** * significant property damage, injury or death (“High Risk Product”). By 
-  39:main.c        **** * including Cypress’s product in a High Risk Product, the manufacturer of such 
-  40:main.c        **** * system or application assumes all risk of such use and in doing so agrees to 
-  41:main.c        **** * indemnify Cypress against all liability.
-  42:main.c        **** *******************************************************************************/
-  43:main.c        **** 
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 3
+   1:main.c        **** /* ================================================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright: Gemma Qin,  Metropolia UAS, Finland, 2024
+   4:main.c        ****  *
+   5:main.c        ****  * PSoC Design Course 2024: Exercise 3, DAQ
+   6:main.c        ****  *
+   7:main.c        ****  * Collect temperature data from a sensor. 
+   8:main.c        ****  *
+   9:main.c        ****  * ================================================================
+  10:main.c        **** */
+  11:main.c        **** 
+  12:main.c        **** #include <project.h>
+  13:main.c        **** #include "stdio.h"
+  14:main.c        **** 
+  15:main.c        **** /* Project Defines */
+  16:main.c        **** #define TRANSMIT_BUFFER_SIZE  16
+  17:main.c        **** 
+  18:main.c        **** /* Global variables */
+  19:main.c        **** // Flag for data transmission:
+  20:main.c        **** volatile uint8 new_data = 0;   
+  21:main.c        **** 
+  22:main.c        **** // Running average related variables:
+  23:main.c        **** uint32 Vout_sum = 0;
+  24:main.c        **** uint32 n = 0;
+  25:main.c        **** uint32 Vout_sum_isr = 0;
+  26:main.c        **** uint32 n_isr = 0;
+  27:main.c        **** 
+  28:main.c        **** // Data to be transmitted:
+  29:main.c        **** float32 temp = 0;
+  30:main.c        **** float32 Vout_average;
+  31:main.c        **** 
+  32:main.c        **** /* Function declarations */
+  33:main.c        **** void tempCalc();
+  34:main.c        **** void sendDataAsJson();
+  35:main.c        **** 
+  36:main.c        **** /* Interrupt declarations */
+  37:main.c        **** CY_ISR_PROTO(MyADCIsr);
+  38:main.c        **** CY_ISR(MyClockIsr);
+  39:main.c        **** 
+  40:main.c        **** /*******************************************************************************
+  41:main.c        **** * Function Name: main
+  42:main.c        **** ********************************************************************************
+  43:main.c        **** *
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 3
 
 
-  44:main.c        **** #include <project.h>
-  45:main.c        **** #include "stdio.h"
-  46:main.c        **** 
-  47:main.c        **** /* Project Defines */
-  48:main.c        **** #define TRANSMIT_BUFFER_SIZE  16
-  49:main.c        **** 
-  50:main.c        **** volatile uint8 new_data = 0;
-  51:main.c        **** uint32 Vout_sum = 0;
-  52:main.c        **** uint32 n = 0;
-  53:main.c        **** float32 temp = 0;
-  54:main.c        **** float32 Vout_average;
-  55:main.c        **** uint32 Vout_sum_isr = 0;
-  56:main.c        **** uint32 n_isr = 0;
-  57:main.c        **** 
-  58:main.c        **** /* Function declarations */
-  59:main.c        **** void tempCalc();
-  60:main.c        **** void sendDataAsJson();
-  61:main.c        **** 
-  62:main.c        **** /* Interrupts */
-  63:main.c        **** CY_ISR_PROTO(MyADCIsr);
-  64:main.c        **** CY_ISR(MyClockIsr);
-  65:main.c        **** 
-  66:main.c        **** /*******************************************************************************
-  67:main.c        **** * Function Name: main
-  68:main.c        **** ********************************************************************************
-  69:main.c        **** *
-  70:main.c        **** * Summary:
-  71:main.c        **** *  
-  72:main.c        **** *
-  73:main.c        **** * Parameters:
-  74:main.c        **** *  None.
-  75:main.c        **** *
-  76:main.c        **** * Return:
-  77:main.c        **** *  None.
-  78:main.c        **** *
-  79:main.c        **** *******************************************************************************/
-  80:main.c        **** int main()
-  81:main.c        **** {
-  69              		.loc 1 81 0
+  44:main.c        **** * Summary:
+  45:main.c        **** *  Initialises components and interrupts.
+  46:main.c        **** *  If flag is set, transmit respective information to UART, then clears flag.
+  47:main.c        **** *
+  48:main.c        **** * Parameters:
+  49:main.c        **** *  None.
+  50:main.c        **** *
+  51:main.c        **** * Return:
+  52:main.c        **** *  None.
+  53:main.c        **** *
+  54:main.c        **** *******************************************************************************/
+  55:main.c        **** int main()
+  56:main.c        **** {
+  69              		.loc 1 56 0
   70              		.cfi_startproc
   71              		@ args = 0, pretend = 0, frame = 0
   72              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -169,78 +144,75 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
   76              		.cfi_offset 14, -4
   77 0002 00AF     		add	r7, sp, #0
   78              		.cfi_def_cfa_register 7
-  82:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
-  79              		.loc 1 82 0
+  57:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  79              		.loc 1 57 0
   80              		.syntax unified
-  81              	@ 82 "main.c" 1
+  81              	@ 57 "main.c" 1
   82 0004 62B6     		CPSIE   i
   83              	@ 0 "" 2
-  83:main.c        **** 
-  84:main.c        ****     /* Start the components */
-  85:main.c        ****     ADC_DelSig_1_Start();
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 4
-
-
-  84              		.loc 1 85 0
+  58:main.c        **** 
+  59:main.c        ****     /* Start the components and interrupts */
+  60:main.c        ****     ADC_DelSig_1_Start();
+  84              		.loc 1 60 0
   85              		.thumb
   86              		.syntax unified
   87 0006 FFF7FEFF 		bl	ADC_DelSig_1_Start
-  86:main.c        ****     UART_1_Start();
-  88              		.loc 1 86 0
+  61:main.c        ****     UART_1_Start();
+  88              		.loc 1 61 0
   89 000a FFF7FEFF 		bl	UART_1_Start
-  87:main.c        ****     Timer_Start();
-  90              		.loc 1 87 0
+  62:main.c        ****     Timer_Start();
+  90              		.loc 1 62 0
   91 000e FFF7FEFF 		bl	Timer_Start
-  88:main.c        **** 
-  89:main.c        ****     ADC_Isr_StartEx(MyADCIsr);
-  92              		.loc 1 89 0
+  63:main.c        **** 
+  64:main.c        ****     ADC_Isr_StartEx(MyADCIsr);
+  92              		.loc 1 64 0
   93 0012 0C48     		ldr	r0, .L4
   94 0014 FFF7FEFF 		bl	ADC_Isr_StartEx
-  90:main.c        ****     Clock_Isr_StartEx(MyClockIsr);
-  95              		.loc 1 90 0
+  65:main.c        ****     Clock_Isr_StartEx(MyClockIsr);
+  95              		.loc 1 65 0
   96 0018 0B48     		ldr	r0, .L4+4
   97 001a FFF7FEFF 		bl	Clock_Isr_StartEx
-  91:main.c        **** 
-  92:main.c        ****     /* Send message to verify COM port is connected properly */
-  93:main.c        ****     UART_1_PutString("COM Port Open\r\n");
-  98              		.loc 1 93 0
+  66:main.c        **** 
+  67:main.c        ****     /* Send message to verify COM port is connected properly */
+  68:main.c        ****     UART_1_PutString("COM Port Open\r\n");
+  98              		.loc 1 68 0
   99 001e 0B48     		ldr	r0, .L4+8
  100 0020 FFF7FEFF 		bl	UART_1_PutString
-  94:main.c        **** 
-  95:main.c        ****     /* Start the ADC conversion */
-  96:main.c        ****     ADC_DelSig_1_StartConvert();
- 101              		.loc 1 96 0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 4
+
+
+  69:main.c        **** 
+  70:main.c        ****     /* Start the ADC conversion */
+  71:main.c        ****     ADC_DelSig_1_StartConvert();
+ 101              		.loc 1 71 0
  102 0024 FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
  103              	.L3:
-  97:main.c        **** 
-  98:main.c        ****     for(;;)
-  99:main.c        ****     {   
- 100:main.c        ****         if (new_data) {
- 104              		.loc 1 100 0
+  72:main.c        **** 
+  73:main.c        ****     for(;;)
+  74:main.c        ****     {   
+  75:main.c        ****         if (new_data) {
+ 104              		.loc 1 75 0
  105 0028 094B     		ldr	r3, .L4+12
  106 002a 1B78     		ldrb	r3, [r3]
  107 002c DBB2     		uxtb	r3, r3
  108 002e 002B     		cmp	r3, #0
  109 0030 FAD0     		beq	.L3
- 101:main.c        ****             tempCalc();
- 110              		.loc 1 101 0
+  76:main.c        ****             tempCalc();
+ 110              		.loc 1 76 0
  111 0032 FFF7FEFF 		bl	tempCalc
- 102:main.c        ****             sendDataAsJson();
- 112              		.loc 1 102 0
+  77:main.c        ****             sendDataAsJson();
+ 112              		.loc 1 77 0
  113 0036 FFF7FEFF 		bl	sendDataAsJson
- 103:main.c        ****             new_data = 0;        
- 114              		.loc 1 103 0
+  78:main.c        ****             new_data = 0;        
+ 114              		.loc 1 78 0
  115 003a 054B     		ldr	r3, .L4+12
  116 003c 0022     		movs	r2, #0
  117 003e 1A70     		strb	r2, [r3]
- 104:main.c        ****         }
- 105:main.c        ****     }
- 118              		.loc 1 105 0
+  79:main.c        ****         }
+  80:main.c        ****     }
+ 118              		.loc 1 80 0
  119 0040 F2E7     		b	.L3
  120              	.L5:
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 5
-
-
  121 0042 00BF     		.align	2
  122              	.L4:
  123 0044 00000000 		.word	MyADCIsr
@@ -260,10 +232,27 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  137              		.type	tempCalc, %function
  138              	tempCalc:
  139              	.LFB65:
- 106:main.c        **** }
- 107:main.c        **** 
- 108:main.c        **** void tempCalc() {
- 140              		.loc 1 108 0
+  81:main.c        **** }
+  82:main.c        **** 
+  83:main.c        **** /*******************************************************************************
+  84:main.c        **** * Function Name: tempCalc
+  85:main.c        **** ********************************************************************************
+  86:main.c        **** *
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 5
+
+
+  87:main.c        **** * Summary:
+  88:main.c        **** *  Calculates the average of Vout and the temperature. 
+  89:main.c        **** *
+  90:main.c        **** * Parameters:
+  91:main.c        **** *  None.
+  92:main.c        **** *
+  93:main.c        **** * Return:
+  94:main.c        **** *  None.
+  95:main.c        **** *
+  96:main.c        **** *******************************************************************************/
+  97:main.c        **** void tempCalc() {
+ 140              		.loc 1 97 0
  141              		.cfi_startproc
  142              		@ args = 0, pretend = 0, frame = 0
  143              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -273,8 +262,8 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  147              		.cfi_offset 14, -4
  148 0002 00AF     		add	r7, sp, #0
  149              		.cfi_def_cfa_register 7
- 109:main.c        ****     Vout_average = Vout_sum_isr / n_isr;    // Calculates running average
- 150              		.loc 1 109 0
+  98:main.c        ****     Vout_average = Vout_sum_isr / n_isr;    // Calculates running average
+ 150              		.loc 1 98 0
  151 0004 0B4B     		ldr	r3, .L8
  152 0006 1A68     		ldr	r2, [r3]
  153 0008 0B4B     		ldr	r3, .L8+4
@@ -285,8 +274,8 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  158 0016 0246     		mov	r2, r0
  159 0018 084B     		ldr	r3, .L8+8
  160 001a 1A60     		str	r2, [r3]	@ float
- 110:main.c        ****     temp = Vout_average / 10;   // Converts to temperature: Vout = 10mV/C * T from LM35 datasheet
- 161              		.loc 1 110 0
+  99:main.c        ****     temp = Vout_average / 10;   // Converts to temperature: Vout = 10mV/C * T from LM35 datasheet
+ 161              		.loc 1 99 0
  162 001c 074B     		ldr	r3, .L8+8
  163 001e 1B68     		ldr	r3, [r3]	@ float
  164 0020 0749     		ldr	r1, .L8+12
@@ -296,14 +285,11 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  168 002a 1A46     		mov	r2, r3
  169 002c 054B     		ldr	r3, .L8+16
  170 002e 1A60     		str	r2, [r3]	@ float
- 111:main.c        ****     return;
- 171              		.loc 1 111 0
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 6
-
-
+ 100:main.c        ****     return;
+ 171              		.loc 1 100 0
  172 0030 00BF     		nop
- 112:main.c        **** }
- 173              		.loc 1 112 0
+ 101:main.c        **** }
+ 173              		.loc 1 101 0
  174 0032 80BD     		pop	{r7, pc}
  175              	.L9:
  176              		.align	2
@@ -312,6 +298,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  179 0038 00000000 		.word	n_isr
  180 003c 00000000 		.word	Vout_average
  181 0040 00002041 		.word	1092616192
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 6
+
+
  182 0044 00000000 		.word	temp
  183              		.cfi_endproc
  184              	.LFE65:
@@ -334,9 +323,23 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  197              		.type	sendDataAsJson, %function
  198              	sendDataAsJson:
  199              	.LFB66:
- 113:main.c        **** 
- 114:main.c        **** void sendDataAsJson() {
- 200              		.loc 1 114 0
+ 102:main.c        **** 
+ 103:main.c        **** /*******************************************************************************
+ 104:main.c        **** * Function Name: sendDataAsJson
+ 105:main.c        **** ********************************************************************************
+ 106:main.c        **** *
+ 107:main.c        **** * Summary:
+ 108:main.c        **** *  Parses data into JSON format, transmits to UART.
+ 109:main.c        **** *
+ 110:main.c        **** * Parameters:
+ 111:main.c        **** *  None.
+ 112:main.c        **** *
+ 113:main.c        **** * Return:
+ 114:main.c        **** *  None.
+ 115:main.c        **** *
+ 116:main.c        **** *******************************************************************************/
+ 117:main.c        **** void sendDataAsJson() {
+ 200              		.loc 1 117 0
  201              		.cfi_startproc
  202              		@ args = 0, pretend = 0, frame = 24
  203              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -350,20 +353,20 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  211              		.cfi_def_cfa_offset 48
  212 0004 02AF     		add	r7, sp, #8
  213              		.cfi_def_cfa 7, 40
- 115:main.c        ****     char transmit_buffer[TRANSMIT_BUFFER_SIZE];
- 116:main.c        ****     uint16 int_vout_ave = (int)Vout_average;
- 214              		.loc 1 116 0
+ 118:main.c        ****     char transmit_buffer[TRANSMIT_BUFFER_SIZE];
+ 119:main.c        ****     uint16 int_Vout_ave = (int)Vout_average;
+ 214              		.loc 1 119 0
  215 0006 0F4B     		ldr	r3, .L12
  216 0008 1B68     		ldr	r3, [r3]	@ float
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 7
+
+
  217 000a 1846     		mov	r0, r3
  218 000c FFF7FEFF 		bl	__aeabi_f2iz
  219 0010 0346     		mov	r3, r0
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 7
-
-
  220 0012 FB82     		strh	r3, [r7, #22]	@ movhi
- 117:main.c        ****     sprintf(transmit_buffer, "{ \"ADC\": %d , \"LM35\": %.1f }\r\n", int_vout_ave, temp);
- 221              		.loc 1 117 0
+ 120:main.c        ****     sprintf(transmit_buffer, "{ \"ADC\": %d , \"LM35\": %.1f }\r\n", int_Vout_ave, temp);
+ 221              		.loc 1 120 0
  222 0014 FD8A     		ldrh	r5, [r7, #22]
  223 0016 0C4B     		ldr	r3, .L12+4
  224 0018 1B68     		ldr	r3, [r3]	@ float
@@ -376,16 +379,16 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  231 002a 2A46     		mov	r2, r5
  232 002c 0749     		ldr	r1, .L12+8
  233 002e FFF7FEFF 		bl	sprintf
- 118:main.c        ****     UART_1_PutString(transmit_buffer);
- 234              		.loc 1 118 0
+ 121:main.c        ****     UART_1_PutString(transmit_buffer);
+ 234              		.loc 1 121 0
  235 0032 3B1D     		adds	r3, r7, #4
  236 0034 1846     		mov	r0, r3
  237 0036 FFF7FEFF 		bl	UART_1_PutString
- 119:main.c        ****     return;
- 238              		.loc 1 119 0
+ 122:main.c        ****     return;
+ 238              		.loc 1 122 0
  239 003a 00BF     		nop
- 120:main.c        **** }
- 240              		.loc 1 120 0
+ 123:main.c        **** }
+ 240              		.loc 1 123 0
  241 003c 1837     		adds	r7, r7, #24
  242              		.cfi_def_cfa_offset 16
  243 003e BD46     		mov	sp, r7
@@ -409,48 +412,62 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  261              		.type	MyADCIsr, %function
  262              	MyADCIsr:
  263              	.LFB67:
- 121:main.c        **** 
- 122:main.c        **** CY_ISR(MyADCIsr) {
- 264              		.loc 1 122 0
+ 124:main.c        **** 
+ 125:main.c        **** /*******************************************************************************
+ 126:main.c        **** * Function Name: MyADCIsr         ADC Interrupt Service Routine
+ 127:main.c        **** ********************************************************************************
+ 128:main.c        **** *
+ 129:main.c        **** * Summary:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 8
+
+
+ 130:main.c        **** *  Reads Vout data from sensor, adds to running average aand increment sampling
+ 131:main.c        **** *  counter by one.
+ 132:main.c        **** *
+ 133:main.c        **** * Parameters:  
+ 134:main.c        **** *
+ 135:main.c        **** * Return:
+ 136:main.c        **** *   None
+ 137:main.c        **** *
+ 138:main.c        **** *******************************************************************************/
+ 139:main.c        **** CY_ISR(MyADCIsr) {
+ 264              		.loc 1 139 0
  265              		.cfi_startproc
  266              		@ args = 0, pretend = 0, frame = 8
  267              		@ frame_needed = 1, uses_anonymous_args = 0
  268 0000 80B5     		push	{r7, lr}
  269              		.cfi_def_cfa_offset 8
  270              		.cfi_offset 7, -8
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 8
-
-
  271              		.cfi_offset 14, -4
  272 0002 82B0     		sub	sp, sp, #8
  273              		.cfi_def_cfa_offset 16
  274 0004 00AF     		add	r7, sp, #0
  275              		.cfi_def_cfa_register 7
- 123:main.c        ****     uint32 Output = ADC_DelSig_1_CountsTo_mVolts(ADC_DelSig_1_GetResult16());
- 276              		.loc 1 123 0
+ 140:main.c        ****     uint32 Output = ADC_DelSig_1_CountsTo_mVolts(ADC_DelSig_1_GetResult16());
+ 276              		.loc 1 140 0
  277 0006 FFF7FEFF 		bl	ADC_DelSig_1_GetResult16
  278 000a 0346     		mov	r3, r0
  279 000c 1846     		mov	r0, r3
  280 000e FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_mVolts
  281 0012 0346     		mov	r3, r0
  282 0014 7B60     		str	r3, [r7, #4]
- 124:main.c        ****     Vout_sum += Output;
- 283              		.loc 1 124 0
+ 141:main.c        ****     Vout_sum += Output;
+ 283              		.loc 1 141 0
  284 0016 074B     		ldr	r3, .L15
  285 0018 1A68     		ldr	r2, [r3]
  286 001a 7B68     		ldr	r3, [r7, #4]
  287 001c 1344     		add	r3, r3, r2
  288 001e 054A     		ldr	r2, .L15
  289 0020 1360     		str	r3, [r2]
- 125:main.c        ****     n++;
- 290              		.loc 1 125 0
+ 142:main.c        ****     n++;
+ 290              		.loc 1 142 0
  291 0022 054B     		ldr	r3, .L15+4
  292 0024 1B68     		ldr	r3, [r3]
  293 0026 0133     		adds	r3, r3, #1
  294 0028 034A     		ldr	r2, .L15+4
  295 002a 1360     		str	r3, [r2]
- 126:main.c        **** }
- 296              		.loc 1 126 0
+ 143:main.c        **** }
+ 296              		.loc 1 143 0
  297 002c 00BF     		nop
  298 002e 0837     		adds	r7, r7, #8
  299              		.cfi_def_cfa_offset 8
@@ -461,6 +478,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  304              	.L16:
  305              		.align	2
  306              	.L15:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 9
+
+
  307 0034 00000000 		.word	Vout_sum
  308 0038 00000000 		.word	n
  309              		.cfi_endproc
@@ -474,13 +494,25 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  317              		.type	MyClockIsr, %function
  318              	MyClockIsr:
  319              	.LFB68:
- 127:main.c        **** 
- 128:main.c        **** CY_ISR(MyClockIsr) {
- 320              		.loc 1 128 0
+ 144:main.c        **** 
+ 145:main.c        **** /*******************************************************************************
+ 146:main.c        **** * Function Name: MyClockIsr         Timer Interrupt Service Routine
+ 147:main.c        **** ********************************************************************************
+ 148:main.c        **** *
+ 149:main.c        **** * Summary:
+ 150:main.c        **** *  Reads the control register and returns it's value.
+ 151:main.c        **** *  Copies and resets respective parameters while ADC interrupt is disabled.
+ 152:main.c        **** *  Sets flag to transmit information to UART.
+ 153:main.c        **** *
+ 154:main.c        **** * Parameters:  
+ 155:main.c        **** *
+ 156:main.c        **** * Return:
+ 157:main.c        **** *   None
+ 158:main.c        **** *
+ 159:main.c        **** *******************************************************************************/
+ 160:main.c        **** CY_ISR(MyClockIsr) {
+ 320              		.loc 1 160 0
  321              		.cfi_startproc
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 9
-
-
  322              		@ args = 0, pretend = 0, frame = 0
  323              		@ frame_needed = 1, uses_anonymous_args = 0
  324 0000 80B5     		push	{r7, lr}
@@ -489,44 +521,47 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  327              		.cfi_offset 14, -4
  328 0002 00AF     		add	r7, sp, #0
  329              		.cfi_def_cfa_register 7
- 129:main.c        ****     Timer_ReadStatusRegister();
- 330              		.loc 1 129 0
+ 161:main.c        ****     Timer_ReadStatusRegister();
+ 330              		.loc 1 161 0
  331 0004 FFF7FEFF 		bl	Timer_ReadStatusRegister
- 130:main.c        ****     ADC_Isr_Disable();
- 332              		.loc 1 130 0
+ 162:main.c        ****     ADC_Isr_Disable();
+ 332              		.loc 1 162 0
  333 0008 FFF7FEFF 		bl	ADC_Isr_Disable
- 131:main.c        ****     Vout_sum_isr = Vout_sum;
- 334              		.loc 1 131 0
+ 163:main.c        ****     Vout_sum_isr = Vout_sum;
+ 334              		.loc 1 163 0
  335 000c 0A4B     		ldr	r3, .L18
  336 000e 1B68     		ldr	r3, [r3]
  337 0010 0A4A     		ldr	r2, .L18+4
  338 0012 1360     		str	r3, [r2]
- 132:main.c        ****     n_isr = n;
- 339              		.loc 1 132 0
+ 164:main.c        ****     n_isr = n;
+ 339              		.loc 1 164 0
  340 0014 0A4B     		ldr	r3, .L18+8
  341 0016 1B68     		ldr	r3, [r3]
  342 0018 0A4A     		ldr	r2, .L18+12
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 10
+
+
  343 001a 1360     		str	r3, [r2]
- 133:main.c        ****     Vout_sum = 0;
- 344              		.loc 1 133 0
+ 165:main.c        ****     Vout_sum = 0;
+ 344              		.loc 1 165 0
  345 001c 064B     		ldr	r3, .L18
  346 001e 0022     		movs	r2, #0
  347 0020 1A60     		str	r2, [r3]
- 134:main.c        ****     n = 0;
- 348              		.loc 1 134 0
+ 166:main.c        ****     n = 0;
+ 348              		.loc 1 166 0
  349 0022 074B     		ldr	r3, .L18+8
  350 0024 0022     		movs	r2, #0
  351 0026 1A60     		str	r2, [r3]
- 135:main.c        ****     ADC_Isr_Enable();
- 352              		.loc 1 135 0
+ 167:main.c        ****     ADC_Isr_Enable();
+ 352              		.loc 1 167 0
  353 0028 FFF7FEFF 		bl	ADC_Isr_Enable
- 136:main.c        ****     new_data = 1;
- 354              		.loc 1 136 0
+ 168:main.c        ****     new_data = 1;
+ 354              		.loc 1 168 0
  355 002c 064B     		ldr	r3, .L18+16
  356 002e 0122     		movs	r2, #1
  357 0030 1A70     		strb	r2, [r3]
- 137:main.c        **** }
- 358              		.loc 1 137 0
+ 169:main.c        **** }
+ 358              		.loc 1 169 0
  359 0032 00BF     		nop
  360 0034 80BD     		pop	{r7, pc}
  361              	.L19:
@@ -538,9 +573,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  367 0044 00000000 		.word	n_isr
  368 0048 00000000 		.word	new_data
  369              		.cfi_endproc
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 10
-
-
  370              	.LFE68:
  371              		.size	MyClockIsr, .-MyClockIsr
  372              		.text
@@ -559,18 +591,21 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  385 000c 09000000 		.4byte	.LASF32
  386 0010 0C       		.byte	0xc
  387 0011 00020000 		.4byte	.LASF33
- 388 0015 03010000 		.4byte	.LASF34
+ 388 0015 FA000000 		.4byte	.LASF34
  389 0019 00000000 		.4byte	.Ldebug_ranges0+0
  390 001d 00000000 		.4byte	0
  391 0021 00000000 		.4byte	.Ldebug_line0
  392 0025 02       		.uleb128 0x2
  393 0026 01       		.byte	0x1
  394 0027 06       		.byte	0x6
- 395 0028 DC000000 		.4byte	.LASF0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 11
+
+
+ 395 0028 D3000000 		.4byte	.LASF0
  396 002c 02       		.uleb128 0x2
  397 002d 01       		.byte	0x1
  398 002e 08       		.byte	0x8
- 399 002f E8000000 		.4byte	.LASF1
+ 399 002f DF000000 		.4byte	.LASF1
  400 0033 02       		.uleb128 0x2
  401 0034 02       		.byte	0x2
  402 0035 05       		.byte	0x5
@@ -578,29 +613,26 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  404 003a 02       		.uleb128 0x2
  405 003b 02       		.byte	0x2
  406 003c 07       		.byte	0x7
- 407 003d 74010000 		.4byte	.LASF3
+ 407 003d 6B010000 		.4byte	.LASF3
  408 0041 03       		.uleb128 0x3
- 409 0042 A4000000 		.4byte	.LASF9
+ 409 0042 97000000 		.4byte	.LASF9
  410 0046 02       		.byte	0x2
  411 0047 3F       		.byte	0x3f
  412 0048 4C000000 		.4byte	0x4c
  413 004c 02       		.uleb128 0x2
  414 004d 04       		.byte	0x4
  415 004e 05       		.byte	0x5
- 416 004f B5000000 		.4byte	.LASF4
+ 416 004f 7E010000 		.4byte	.LASF4
  417 0053 02       		.uleb128 0x2
  418 0054 04       		.byte	0x4
  419 0055 07       		.byte	0x7
- 420 0056 5D010000 		.4byte	.LASF5
+ 420 0056 54010000 		.4byte	.LASF5
  421 005a 02       		.uleb128 0x2
  422 005b 08       		.byte	0x8
  423 005c 05       		.byte	0x5
  424 005d F2010000 		.4byte	.LASF6
  425 0061 02       		.uleb128 0x2
  426 0062 08       		.byte	0x8
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 11
-
-
  427 0063 07       		.byte	0x7
  428 0064 BD010000 		.4byte	.LASF7
  429 0068 04       		.uleb128 0x4
@@ -626,6 +658,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  449 0092 04       		.byte	0x4
  450 0093 E501     		.2byte	0x1e5
  451 0095 3A000000 		.4byte	0x3a
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 12
+
+
  452 0099 05       		.uleb128 0x5
  453 009a A9010000 		.4byte	.LASF13
  454 009e 04       		.byte	0x4
@@ -639,7 +674,7 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  462 00b1 02       		.uleb128 0x2
  463 00b2 04       		.byte	0x4
  464 00b3 04       		.byte	0x4
- 465 00b4 CB000000 		.4byte	.LASF15
+ 465 00b4 C2000000 		.4byte	.LASF15
  466 00b8 02       		.uleb128 0x2
  467 00b9 08       		.byte	0x8
  468 00ba 04       		.byte	0x4
@@ -658,13 +693,10 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  481 00d3 04       		.byte	0x4
  482 00d4 07       		.byte	0x7
  483 00d5 E9010000 		.4byte	.LASF19
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 12
-
-
  484 00d9 07       		.uleb128 0x7
  485 00da 9D010000 		.4byte	.LASF23
  486 00de 01       		.byte	0x1
- 487 00df 50       		.byte	0x50
+ 487 00df 37       		.byte	0x37
  488 00e0 68000000 		.4byte	0x68
  489 00e4 00000000 		.4byte	.LFB64
  490 00e8 54000000 		.4byte	.LFE64-.LFB64
@@ -673,7 +705,7 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  493 00ee 08       		.uleb128 0x8
  494 00ef 22020000 		.4byte	.LASF35
  495 00f3 01       		.byte	0x1
- 496 00f4 6C       		.byte	0x6c
+ 496 00f4 61       		.byte	0x61
  497 00f5 00000000 		.4byte	.LFB65
  498 00f9 48000000 		.4byte	.LFE65-.LFB65
  499 00fd 01       		.uleb128 0x1
@@ -681,24 +713,27 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  501 00ff 09       		.uleb128 0x9
  502 0100 87010000 		.4byte	.LASF36
  503 0104 01       		.byte	0x1
- 504 0105 72       		.byte	0x72
+ 504 0105 75       		.byte	0x75
  505 0106 00000000 		.4byte	.LFB66
  506 010a 50000000 		.4byte	.LFE66-.LFB66
  507 010e 01       		.uleb128 0x1
  508 010f 9C       		.byte	0x9c
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 13
+
+
  509 0110 31010000 		.4byte	0x131
  510 0114 0A       		.uleb128 0xa
  511 0115 3F020000 		.4byte	.LASF20
  512 0119 01       		.byte	0x1
- 513 011a 73       		.byte	0x73
+ 513 011a 76       		.byte	0x76
  514 011b 31010000 		.4byte	0x131
  515 011f 02       		.uleb128 0x2
  516 0120 91       		.byte	0x91
  517 0121 5C       		.sleb128 -36
  518 0122 0A       		.uleb128 0xa
- 519 0123 97000000 		.4byte	.LASF21
+ 519 0123 A8000000 		.4byte	.LASF21
  520 0127 01       		.byte	0x1
- 521 0128 74       		.byte	0x74
+ 521 0128 77       		.byte	0x77
  522 0129 8D000000 		.4byte	0x8d
  523 012d 02       		.uleb128 0x2
  524 012e 91       		.byte	0x91
@@ -714,28 +749,25 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  534 0141 0D       		.uleb128 0xd
  535 0142 4F020000 		.4byte	.LASF37
  536 0146 01       		.byte	0x1
- 537 0147 7A       		.byte	0x7a
+ 537 0147 8B       		.byte	0x8b
  538 0148 00000000 		.4byte	.LFB67
  539 014c 3C000000 		.4byte	.LFE67-.LFB67
  540 0150 01       		.uleb128 0x1
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 13
-
-
  541 0151 9C       		.byte	0x9c
  542 0152 65010000 		.4byte	0x165
  543 0156 0A       		.uleb128 0xa
- 544 0157 AE000000 		.4byte	.LASF22
+ 544 0157 A1000000 		.4byte	.LASF22
  545 015b 01       		.byte	0x1
- 546 015c 7B       		.byte	0x7b
+ 546 015c 8C       		.byte	0x8c
  547 015d 99000000 		.4byte	0x99
  548 0161 02       		.uleb128 0x2
  549 0162 91       		.byte	0x91
  550 0163 74       		.sleb128 -12
  551 0164 00       		.byte	0
  552 0165 0E       		.uleb128 0xe
- 553 0166 D1000000 		.4byte	.LASF24
+ 553 0166 C8000000 		.4byte	.LASF24
  554 016a 01       		.byte	0x1
- 555 016b 80       		.byte	0x80
+ 555 016b A0       		.byte	0xa0
  556 016c 00000000 		.4byte	.LFB68
  557 0170 4C000000 		.4byte	.LFE68-.LFB68
  558 0174 01       		.uleb128 0x1
@@ -746,11 +778,14 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  563 017c 1207     		.2byte	0x712
  564 017e 82010000 		.4byte	0x182
  565 0182 06       		.uleb128 0x6
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 14
+
+
  566 0183 76000000 		.4byte	0x76
  567 0187 10       		.uleb128 0x10
  568 0188 00000000 		.4byte	.LASF26
  569 018c 01       		.byte	0x1
- 570 018d 32       		.byte	0x32
+ 570 018d 14       		.byte	0x14
  571 018e C6000000 		.4byte	0xc6
  572 0192 05       		.uleb128 0x5
  573 0193 03       		.byte	0x3
@@ -758,7 +793,7 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  575 0198 10       		.uleb128 0x10
  576 0199 58020000 		.4byte	.LASF27
  577 019d 01       		.byte	0x1
- 578 019e 33       		.byte	0x33
+ 578 019e 17       		.byte	0x17
  579 019f 99000000 		.4byte	0x99
  580 01a3 05       		.uleb128 0x5
  581 01a4 03       		.byte	0x3
@@ -766,46 +801,46 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  583 01a9 11       		.uleb128 0x11
  584 01aa 6E00     		.ascii	"n\000"
  585 01ac 01       		.byte	0x1
- 586 01ad 34       		.byte	0x34
+ 586 01ad 18       		.byte	0x18
  587 01ae 99000000 		.4byte	0x99
  588 01b2 05       		.uleb128 0x5
  589 01b3 03       		.byte	0x3
  590 01b4 00000000 		.4byte	n
  591 01b8 10       		.uleb128 0x10
- 592 01b9 6F010000 		.4byte	.LASF28
+ 592 01b9 B5000000 		.4byte	.LASF28
  593 01bd 01       		.byte	0x1
- 594 01be 35       		.byte	0x35
- 595 01bf A5000000 		.4byte	0xa5
+ 594 01be 19       		.byte	0x19
+ 595 01bf 99000000 		.4byte	0x99
  596 01c3 05       		.uleb128 0x5
  597 01c4 03       		.byte	0x3
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 14
-
-
- 598 01c5 00000000 		.4byte	temp
+ 598 01c5 00000000 		.4byte	Vout_sum_isr
  599 01c9 10       		.uleb128 0x10
- 600 01ca F6000000 		.4byte	.LASF29
+ 600 01ca 1C020000 		.4byte	.LASF29
  601 01ce 01       		.byte	0x1
- 602 01cf 36       		.byte	0x36
- 603 01d0 A5000000 		.4byte	0xa5
+ 602 01cf 1A       		.byte	0x1a
+ 603 01d0 99000000 		.4byte	0x99
  604 01d4 05       		.uleb128 0x5
  605 01d5 03       		.byte	0x3
- 606 01d6 00000000 		.4byte	Vout_average
+ 606 01d6 00000000 		.4byte	n_isr
  607 01da 10       		.uleb128 0x10
- 608 01db BE000000 		.4byte	.LASF30
+ 608 01db 66010000 		.4byte	.LASF30
  609 01df 01       		.byte	0x1
- 610 01e0 37       		.byte	0x37
- 611 01e1 99000000 		.4byte	0x99
+ 610 01e0 1D       		.byte	0x1d
+ 611 01e1 A5000000 		.4byte	0xa5
  612 01e5 05       		.uleb128 0x5
  613 01e6 03       		.byte	0x3
- 614 01e7 00000000 		.4byte	Vout_sum_isr
+ 614 01e7 00000000 		.4byte	temp
  615 01eb 10       		.uleb128 0x10
- 616 01ec 1C020000 		.4byte	.LASF31
+ 616 01ec ED000000 		.4byte	.LASF31
  617 01f0 01       		.byte	0x1
- 618 01f1 38       		.byte	0x38
- 619 01f2 99000000 		.4byte	0x99
+ 618 01f1 1E       		.byte	0x1e
+ 619 01f2 A5000000 		.4byte	0xa5
  620 01f6 05       		.uleb128 0x5
  621 01f7 03       		.byte	0x3
- 622 01f8 00000000 		.4byte	n_isr
+ 622 01f8 00000000 		.4byte	Vout_average
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 15
+
+
  623 01fc 00       		.byte	0
  624              		.section	.debug_abbrev,"",%progbits
  625              	.Ldebug_abbrev0:
@@ -838,9 +873,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  652 001a 03       		.uleb128 0x3
  653 001b 0E       		.uleb128 0xe
  654 001c 00       		.byte	0
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 15
-
-
  655 001d 00       		.byte	0
  656 001e 03       		.uleb128 0x3
  657 001f 16       		.uleb128 0x16
@@ -866,6 +898,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  677 0033 08       		.uleb128 0x8
  678 0034 00       		.byte	0
  679 0035 00       		.byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 16
+
+
  680 0036 05       		.uleb128 0x5
  681 0037 16       		.uleb128 0x16
  682 0038 00       		.byte	0
@@ -898,9 +933,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  709 0053 3B       		.uleb128 0x3b
  710 0054 0B       		.uleb128 0xb
  711 0055 49       		.uleb128 0x49
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 16
-
-
  712 0056 13       		.uleb128 0x13
  713 0057 11       		.uleb128 0x11
  714 0058 01       		.uleb128 0x1
@@ -926,6 +958,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  734 006d 11       		.uleb128 0x11
  735 006e 01       		.uleb128 0x1
  736 006f 12       		.uleb128 0x12
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 17
+
+
  737 0070 06       		.uleb128 0x6
  738 0071 40       		.uleb128 0x40
  739 0072 18       		.uleb128 0x18
@@ -958,9 +993,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  766 008f 00       		.byte	0
  767 0090 0A       		.uleb128 0xa
  768 0091 34       		.uleb128 0x34
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 17
-
-
  769 0092 00       		.byte	0
  770 0093 03       		.uleb128 0x3
  771 0094 0E       		.uleb128 0xe
@@ -986,6 +1018,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  791 00a8 0C       		.uleb128 0xc
  792 00a9 21       		.uleb128 0x21
  793 00aa 00       		.byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 18
+
+
  794 00ab 49       		.uleb128 0x49
  795 00ac 13       		.uleb128 0x13
  796 00ad 2F       		.uleb128 0x2f
@@ -1018,9 +1053,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  823 00c9 00       		.byte	0
  824 00ca 00       		.byte	0
  825 00cb 0E       		.uleb128 0xe
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 18
-
-
  826 00cc 2E       		.uleb128 0x2e
  827 00cd 00       		.byte	0
  828 00ce 3F       		.uleb128 0x3f
@@ -1046,6 +1078,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  848 00e3 0F       		.uleb128 0xf
  849 00e4 34       		.uleb128 0x34
  850 00e5 00       		.byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 19
+
+
  851 00e6 03       		.uleb128 0x3
  852 00e7 0E       		.uleb128 0xe
  853 00e8 3A       		.uleb128 0x3a
@@ -1078,9 +1113,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  880 0103 00       		.byte	0
  881 0104 00       		.byte	0
  882 0105 11       		.uleb128 0x11
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 19
-
-
  883 0106 34       		.uleb128 0x34
  884 0107 00       		.byte	0
  885 0108 03       		.uleb128 0x3
@@ -1106,6 +1138,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  905 000b 00       		.byte	0
  906 000c 0000     		.2byte	0
  907 000e 0000     		.2byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 20
+
+
  908 0010 00000000 		.4byte	.LFB64
  909 0014 54000000 		.4byte	.LFE64-.LFB64
  910 0018 00000000 		.4byte	.LFB65
@@ -1134,13 +1169,10 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  933 002c 00000000 		.4byte	0
  934              		.section	.debug_line,"",%progbits
  935              	.Ldebug_line0:
- 936 0000 C5010000 		.section	.debug_str,"MS",%progbits,1
+ 936 0000 C4010000 		.section	.debug_str,"MS",%progbits,1
  936      02004C01 
  936      00000201 
  936      FB0E0D00 
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 20
-
-
  936      01010101 
  937              	.LASF26:
  938 0000 6E65775F 		.ascii	"new_data\000"
@@ -1162,77 +1194,80 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  942      74696F6E 
  942      2D736563 
  942      74696F6E 
- 943              	.LASF21:
- 944 0097 696E745F 		.ascii	"int_vout_ave\000"
- 944      766F7574 
- 944      5F617665 
- 944      00
- 945              	.LASF9:
- 946 00a4 5F5F696E 		.ascii	"__int32_t\000"
- 946      7433325F 
- 946      7400
- 947              	.LASF22:
- 948 00ae 4F757470 		.ascii	"Output\000"
- 948      757400
- 949              	.LASF4:
- 950 00b5 6C6F6E67 		.ascii	"long int\000"
- 950      20696E74 
+ 943              	.LASF9:
+ 944 0097 5F5F696E 		.ascii	"__int32_t\000"
+ 944      7433325F 
+ 944      7400
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 21
+
+
+ 945              	.LASF22:
+ 946 00a1 4F757470 		.ascii	"Output\000"
+ 946      757400
+ 947              	.LASF21:
+ 948 00a8 696E745F 		.ascii	"int_Vout_ave\000"
+ 948      566F7574 
+ 948      5F617665 
+ 948      00
+ 949              	.LASF28:
+ 950 00b5 566F7574 		.ascii	"Vout_sum_isr\000"
+ 950      5F73756D 
+ 950      5F697372 
  950      00
- 951              	.LASF30:
- 952 00be 566F7574 		.ascii	"Vout_sum_isr\000"
- 952      5F73756D 
- 952      5F697372 
- 952      00
- 953              	.LASF15:
- 954 00cb 666C6F61 		.ascii	"float\000"
- 954      7400
- 955              	.LASF24:
- 956 00d1 4D79436C 		.ascii	"MyClockIsr\000"
- 956      6F636B49 
- 956      737200
- 957              	.LASF0:
- 958 00dc 7369676E 		.ascii	"signed char\000"
- 958      65642063 
- 958      68617200 
- 959              	.LASF1:
- 960 00e8 756E7369 		.ascii	"unsigned char\000"
- 960      676E6564 
- 960      20636861 
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 21
+ 951              	.LASF15:
+ 952 00c2 666C6F61 		.ascii	"float\000"
+ 952      7400
+ 953              	.LASF24:
+ 954 00c8 4D79436C 		.ascii	"MyClockIsr\000"
+ 954      6F636B49 
+ 954      737200
+ 955              	.LASF0:
+ 956 00d3 7369676E 		.ascii	"signed char\000"
+ 956      65642063 
+ 956      68617200 
+ 957              	.LASF1:
+ 958 00df 756E7369 		.ascii	"unsigned char\000"
+ 958      676E6564 
+ 958      20636861 
+ 958      7200
+ 959              	.LASF31:
+ 960 00ed 566F7574 		.ascii	"Vout_average\000"
+ 960      5F617665 
+ 960      72616765 
+ 960      00
+ 961              	.LASF34:
+ 962 00fa 433A5C55 		.ascii	"C:\\Users\\Gemma\\Desktop\\PSoC\\GemmaQ_Assignment3"
+ 962      73657273 
+ 962      5C47656D 
+ 962      6D615C44 
+ 962      65736B74 
+ 963 0128 5F50536F 		.ascii	"_PSoC5DAQ\\GemmaQ_Assignment3_PSoC5DAQ.cydsn\000"
+ 963      43354441 
+ 963      515C4765 
+ 963      6D6D6151 
+ 963      5F417373 
+ 964              	.LASF5:
+ 965 0154 6C6F6E67 		.ascii	"long unsigned int\000"
+ 965      20756E73 
+ 965      69676E65 
+ 965      6420696E 
+ 965      7400
+ 966              	.LASF30:
+ 967 0166 74656D70 		.ascii	"temp\000"
+ 967      00
+ 968              	.LASF3:
+ 969 016b 73686F72 		.ascii	"short unsigned int\000"
+ 969      7420756E 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 22
 
 
- 960      7200
- 961              	.LASF29:
- 962 00f6 566F7574 		.ascii	"Vout_average\000"
- 962      5F617665 
- 962      72616765 
- 962      00
- 963              	.LASF34:
- 964 0103 433A5C55 		.ascii	"C:\\Users\\Gemma\\Desktop\\PSoC\\GemmaQ_Assignment3"
- 964      73657273 
- 964      5C47656D 
- 964      6D615C44 
- 964      65736B74 
- 965 0131 5F50536F 		.ascii	"_PSoC5DAQ\\GemmaQ_Assignment3_PSoC5DAQ.cydsn\000"
- 965      43354441 
- 965      515C4765 
- 965      6D6D6151 
- 965      5F417373 
- 966              	.LASF5:
- 967 015d 6C6F6E67 		.ascii	"long unsigned int\000"
- 967      20756E73 
- 967      69676E65 
- 967      6420696E 
- 967      7400
- 968              	.LASF28:
- 969 016f 74656D70 		.ascii	"temp\000"
- 969      00
- 970              	.LASF3:
- 971 0174 73686F72 		.ascii	"short unsigned int\000"
- 971      7420756E 
- 971      7369676E 
- 971      65642069 
- 971      6E7400
+ 969      7369676E 
+ 969      65642069 
+ 969      6E7400
+ 970              	.LASF4:
+ 971 017e 6C6F6E67 		.ascii	"long int\000"
+ 971      20696E74 
+ 971      00
  972              	.LASF36:
  973 0187 73656E64 		.ascii	"sendDataAsJson\000"
  973      44617461 
@@ -1258,9 +1293,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  984              	.LASF7:
  985 01bd 6C6F6E67 		.ascii	"long long unsigned int\000"
  985      206C6F6E 
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 22
-
-
  985      6720756E 
  985      7369676E 
  985      65642069 
@@ -1286,6 +1318,9 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  995      2E6300
  996              	.LASF17:
  997 0207 63686172 		.ascii	"char\000"
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cckZpjkg.s 			page 23
+
+
  997      00
  998              	.LASF2:
  999 020c 73686F72 		.ascii	"short int\000"
@@ -1294,7 +1329,7 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  1000              	.LASF11:
  1001 0216 75696E74 		.ascii	"uint8\000"
  1001      3800
- 1002              	.LASF31:
+ 1002              	.LASF29:
  1003 021c 6E5F6973 		.ascii	"n_isr\000"
  1003      7200
  1004              	.LASF35:
@@ -1318,9 +1353,6 @@ ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 1
  1013      43497372 
  1013      00
  1014              	.LASF27:
-ARM GAS  C:\Users\Gemma\AppData\Local\Temp\cc230Lgl.s 			page 23
-
-
  1015 0258 566F7574 		.ascii	"Vout_sum\000"
  1015      5F73756D 
  1015      00

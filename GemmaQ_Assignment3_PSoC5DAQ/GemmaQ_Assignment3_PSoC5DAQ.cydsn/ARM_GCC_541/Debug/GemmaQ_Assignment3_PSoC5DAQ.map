@@ -1366,9 +1366,9 @@ END GROUP
                 0x1fff819c                new_data
                 0x1fff81a0                Vout_sum
                 0x1fff81a4                n
-                0x1fff81a8                temp
-                0x1fff81ac                Vout_sum_isr
-                0x1fff81b0                n_isr
+                0x1fff81a8                Vout_sum_isr
+                0x1fff81ac                n_isr
+                0x1fff81b0                temp
  .bss           0x1fff81b4        0xc .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1.o)
                 0x1fff81b4                ADC_DelSig_1_convDone
                 0x1fff81b5                ADC_DelSig_1_stopConversion
@@ -1567,28 +1567,28 @@ END GROUP
  .debug_abbrev  0x0000150c      0x16c .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CySpc.o)
  .debug_abbrev  0x00001678       0x7f .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(cyutils.o)
 
-.debug_line     0x00000000     0x291c
+.debug_line     0x00000000     0x291b
  *(.debug_line)
- .debug_line    0x00000000      0x1c9 .\ARM_GCC_541\Debug\main.o
- .debug_line    0x000001c9      0x220 .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_line    0x000003e9      0x141 .\ARM_GCC_541\Debug\cymetadata.o
- .debug_line    0x0000052a      0x1dc .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_line    0x00000706      0x368 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1.o)
- .debug_line    0x00000a6e       0x95 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_INT.o)
- .debug_line    0x00000b03      0x2e4 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(UART_1.o)
- .debug_line    0x00000de7       0xa6 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_AMux.o)
- .debug_line    0x00000e8d      0x1b6 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_line    0x00001043      0x1d7 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_theACLK.o)
- .debug_line    0x0000121a      0x1ae .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(UART_1_IntClock.o)
- .debug_line    0x000013c8      0x883 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CyLib.o)
- .debug_line    0x00001c4b      0x38e .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(cyPm.o)
- .debug_line    0x00001fd9      0x152 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_Isr.o)
- .debug_line    0x0000212b      0x144 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(Clock_Isr.o)
- .debug_line    0x0000226f      0x16e .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(Timer.o)
- .debug_line    0x000023dd       0x7d .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CyBootAsmGnu.o)
- .debug_line    0x0000245a      0x22f .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CyFlash.o)
- .debug_line    0x00002689      0x231 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CySpc.o)
- .debug_line    0x000028ba       0x62 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(cyutils.o)
+ .debug_line    0x00000000      0x1c8 .\ARM_GCC_541\Debug\main.o
+ .debug_line    0x000001c8      0x220 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_line    0x000003e8      0x141 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_line    0x00000529      0x1dc .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_line    0x00000705      0x368 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1.o)
+ .debug_line    0x00000a6d       0x95 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_INT.o)
+ .debug_line    0x00000b02      0x2e4 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(UART_1.o)
+ .debug_line    0x00000de6       0xa6 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_AMux.o)
+ .debug_line    0x00000e8c      0x1b6 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_line    0x00001042      0x1d7 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_DelSig_1_theACLK.o)
+ .debug_line    0x00001219      0x1ae .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(UART_1_IntClock.o)
+ .debug_line    0x000013c7      0x883 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CyLib.o)
+ .debug_line    0x00001c4a      0x38e .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(cyPm.o)
+ .debug_line    0x00001fd8      0x152 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(ADC_Isr.o)
+ .debug_line    0x0000212a      0x144 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(Clock_Isr.o)
+ .debug_line    0x0000226e      0x16e .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(Timer.o)
+ .debug_line    0x000023dc       0x7d .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CyBootAsmGnu.o)
+ .debug_line    0x00002459      0x22f .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CyFlash.o)
+ .debug_line    0x00002688      0x231 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(CySpc.o)
+ .debug_line    0x000028b9       0x62 .\ARM_GCC_541\Debug\GemmaQ_Assignment3_PSoC5DAQ.a(cyutils.o)
 
 .debug_frame    0x00000000     0x3310
  *(.debug_frame)
