@@ -56,7 +56,6 @@
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Source Files\main.c</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\BlueLED</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\BTN_Isr</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\Button</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\cy_boot</v>
@@ -68,8 +67,6 @@
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\PWM_Clock</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\PWM_Isr</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\PWMOut</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\UART</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\UART_IntClock</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\cycodeshareexport.ld</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\cycodeshareimport.ld</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\Generated_Source\PSoC5\cycodeshareimport.scat</v>
@@ -114,7 +111,6 @@
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\BlueLED.lst</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\BTN_Isr.lst</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\Button.lst</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
@@ -134,11 +130,6 @@
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\PWM_Isr.lst</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\PWM_PM.lst</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\PWMOut.lst</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\UART.lst</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_BOOT.lst</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_INT.lst</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_IntClock.lst</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PM.lst</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment2_PSoC5Servo.elf</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment2_PSoC5Servo.hex</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\CortexM3\ARM_GCC_541\Debug\GemmaQ_Assignment2_PSoC5Servo.map</v>
@@ -172,7 +163,6 @@
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\cy_pins_v2_20</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\PWM_v3_30.pdf</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\UART_v2_50.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>GemmaQ_Assignment2_PSoC5Servo</v>
@@ -187,7 +177,6 @@
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\cy_pins_v2_20</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\PWM_v3_30.pdf</v>
-<v>GemmaQ_Assignment2_PSoC5Servo\GemmaQ_Assignment2_PSoC5Servo\UART_v2_50.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
