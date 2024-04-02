@@ -1,5 +1,14 @@
---------------- Build Started: 04/02/2024 11:31:11 Project: GemmaQ_Assignment5_PSoC5OneWire, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 04/02/2024 12:10:55 Project: GemmaQ_Assignment5_PSoC5OneWire, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 The code generation step is up to date.
-The compile step is up to date, no work needs to be done.
-The link step is up to date, no work needs to be done.
---------------- Build Succeeded: 04/02/2024 11:31:11 ---------------
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_541\Debug/main.lst -g -ffunction-sections -ffat-lto-objects -O0 -c main.c -o .\ARM_GCC_541\Debug\main.o
+arm-none-eabi-ar.exe -rs .\ARM_GCC_541\Debug\GemmaQ_Assignment5_PSoC5OneWire.a .\ARM_GCC_541\Debug\ADC_DelSig.o .\ARM_GCC_541\Debug\ADC_DelSig_PM.o .\ARM_GCC_541\Debug\ADC_DelSig_INT.o .\ARM_GCC_541\Debug\Vin.o .\ARM_GCC_541\Debug\UART.o .\ARM_GCC_541\Debug\UART_PM.o .\ARM_GCC_541\Debug\UART_INT.o .\ARM_GCC_541\Debug\UART_BOOT.o .\ARM_GCC_541\Debug\ADC_Isr.o .\ARM_GCC_541\Debug\Clock_Isr.o .\ARM_GCC_541\Debug\ADC_DelSig_AMux.o .\ARM_GCC_541\Debug\ADC_DelSig_Ext_CP_Clk.o .\ARM_GCC_541\Debug\ADC_DelSig_IRQ.o .\ARM_GCC_541\Debug\ADC_DelSig_theACLK.o .\ARM_GCC_541\Debug\UART_IntClock.o .\ARM_GCC_541\Debug\CyDmac.o .\ARM_GCC_541\Debug\CyFlash.o .\ARM_GCC_541\Debug\CyLib.o .\ARM_GCC_541\Debug\cyPm.o .\ARM_GCC_541\Debug\CySpc.o .\ARM_GCC_541\Debug\cyutils.o .\ARM_GCC_541\Debug\cy_em_eeprom.o .\ARM_GCC_541\Debug\OneWire.o .\ARM_GCC_541\Debug\ADC_Timer.o .\ARM_GCC_541\Debug\ADC_Timer_PM.o .\ARM_GCC_541\Debug\OneWire_Timer.o .\ARM_GCC_541\Debug\OneWire_Timer_PM.o .\ARM_GCC_541\Debug\OW_Isr.o .\ARM_GCC_541\Debug\CyBootAsmGnu.o
+arm-none-eabi-ar.exe: creating .\ARM_GCC_541\Debug\GemmaQ_Assignment5_PSoC5OneWire.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment5_PSoC5OneWire\GemmaQ_Assignment5_PSoC5OneWire.cydsn\ARM_GCC_541\Debug\GemmaQ_Assignment5_PSoC5OneWire.elf .\ARM_GCC_541\Debug\main.o .\ARM_GCC_541\Debug\cyfitter_cfg.o .\ARM_GCC_541\Debug\cymetadata.o .\ARM_GCC_541\Debug\Cm3Start.o .\ARM_GCC_541\Debug\GemmaQ_Assignment5_PSoC5OneWire.a "C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -l m -L Generated_Source\PSoC5 -Wl,-Map,.\ARM_GCC_541\Debug/GemmaQ_Assignment5_PSoC5OneWire.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -u _printf_float -g -ffunction-sections -O0 -ffat-lto-objects -Wl,--end-group
+cyelftool.exe -C C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment5_PSoC5OneWire\GemmaQ_Assignment5_PSoC5OneWire.cydsn\ARM_GCC_541\Debug\GemmaQ_Assignment5_PSoC5OneWire.elf --flash_row_size 256 --flash_size 262144 --flash_offset 0x00000000
+No ELF section .cychecksum found, creating one
+Application checksum calculated and stored in ELF section .cychecksum
+Checksum calculated and stored in ELF section .cymeta
+cyelftool.exe -S C:\Users\Gemma\Desktop\PSoC\GemmaQ_Assignment5_PSoC5OneWire\GemmaQ_Assignment5_PSoC5OneWire.cydsn\ARM_GCC_541\Debug\GemmaQ_Assignment5_PSoC5OneWire.elf
+Flash used: 20148 of 262144 bytes (7.7%).
+SRAM used: 4581 of 65536 bytes (7.0%). Stack: 2048 bytes. Heap: 2048 bytes.
+--------------- Build Succeeded: 04/02/2024 12:10:56 ---------------

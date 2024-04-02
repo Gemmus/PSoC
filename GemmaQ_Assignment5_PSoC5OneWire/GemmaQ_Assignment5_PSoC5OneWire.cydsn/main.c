@@ -23,7 +23,7 @@
 #define rLOW0 70
 #define tSLOT 80
 #define tCONV 94
-#define tRSTL 1000
+#define tRSTL 500
 #define tPDLOW 70
 #define tRDV 3
 
@@ -302,7 +302,7 @@ uint8 OWReset() {
     OneWire_Write(1);
     CyDelayUs(100);             // Make sure it idled for a while.
     OneWire_Write(0);   
-    CyDelayUs(tRSTL);           // tRSTL: 1000
+    CyDelayUs(tRSTL);           // tRSTL: 500 (based on Note 13)
     OneWire_Write(1);
     CyDelayUs(tPDLOW);          // tPDLOW: 70
     retval = OWCheckBit();
