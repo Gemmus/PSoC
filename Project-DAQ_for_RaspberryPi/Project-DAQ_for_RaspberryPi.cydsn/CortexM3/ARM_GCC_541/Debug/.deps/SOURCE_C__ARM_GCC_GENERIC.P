@@ -94,7 +94,3 @@ C:/Users/Gemma/Desktop/PSoC/Project-DAQ_for_RaspberryPi/Project-DAQ_for_Raspberr
 
 C:/Users/Gemma/Desktop/PSoC/Project-DAQ_for_RaspberryPi/Project-DAQ_for_RaspberryPi.cydsn/ring_buffer.h : 
 
-C:/Users/Gemma/Desktop/PSoC/Project-DAQ_for_RaspberryPi/Project-DAQ_for_RaspberryPi.cydsn/CortexM3/ARM_GCC_541/Debug/ring_buffer.o : C:/Users/Gemma/Desktop/PSoC/Project-DAQ_for_RaspberryPi/Project-DAQ_for_RaspberryPi.cydsn/ring_buffer.c C:/Users/Gemma/Desktop/PSoC/Project-DAQ_for_RaspberryPi/Project-DAQ_for_RaspberryPi.cydsn/ring_buffer.h 
-
-C:/Users/Gemma/Desktop/PSoC/Project-DAQ_for_RaspberryPi/Project-DAQ_for_RaspberryPi.cydsn/ring_buffer.c : 
-

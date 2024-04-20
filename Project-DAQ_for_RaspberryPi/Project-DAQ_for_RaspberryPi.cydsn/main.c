@@ -17,9 +17,18 @@
 
 /* Project Defines */
 #define TRANSMIT_BUFFER_SIZE 128
+#define MAX_AVG_SAMPLES 1158
 
 /* Interrupt declarations */
 CY_ISR_PROTO(MyADCIsr);
+
+/* Globals */
+// Running average
+volatile uint8_t new_data = 0;
+uint32_t Output_sum = 0;
+uint16_t n = 0;
+uint32_t Output_sum_copy;
+uint16_t n_copy = 0;
 
 /*******************************************************************************
 * Function Name: main
@@ -52,12 +61,15 @@ int main(void)
     /* Local variables */
     // UART
     char transmit_buffer[TRANSMIT_BUFFER_SIZE];
+    // I2C
+    const uint8_t channel = 1;   // 0: potentiometer, 1: LM35, 2: Vcc, 3: GND
 
     /* Start the components and interrupts */
     DEBUG_UART_Start();
     ADC_DelSig_Start();
     AMux_Start();
     
+    AMux_Select(channel);
     ADC_ISR_StartEx(MyADCIsr);
     
     /* Send message to verify COM port is connected properly */
@@ -68,7 +80,16 @@ int main(void)
     
     for(;;)
     {
-        /* A little put put here. */
+        if (new_data) {
+            float output_avg = Output_sum_copy / n_copy;
+            if (channel == 1) {
+            float temp = output_avg / 10;
+            sprintf(transmit_buffer,"Temp: %.1f C\r\n", temp);
+        } else {
+            sprintf(transmit_buffer,"Read: %.2f\r\n", output_avg);
+        }
+        DEBUG_UART_PutString(transmit_buffer);
+        }
     }
 }
 
@@ -89,4 +110,13 @@ int main(void)
 *******************************************************************************/
 CY_ISR(MyADCIsr) {
     uint32 Output = ADC_DelSig_CountsTo_mVolts(ADC_DelSig_GetResult16());
+    Output_sum += Output;
+    n++;
+    if (n >= MAX_AVG_SAMPLES) {
+        Output_sum_copy = Output_sum;
+        n_copy = n;
+        Output_sum = 0;
+        n =  0;
+        new_data = 1;
+    }
 }
