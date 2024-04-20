@@ -109,7 +109,7 @@ int main(void)
 *
 *******************************************************************************/
 CY_ISR(MyADCIsr) {
-    uint32 Output = ADC_DelSig_CountsTo_mVolts(ADC_DelSig_GetResult16());
+    uint16_t Output = ADC_DelSig_CountsTo_mVolts(ADC_DelSig_GetResult16());
     Output_sum += Output;
     n++;
     if (n >= MAX_AVG_SAMPLES) {
