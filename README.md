@@ -33,6 +33,7 @@ Description:
 <p><em>Figure 6: Example output of assignment 4.</em></p>
 
 [TC74A2-5.0VAT Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/21462D.pdf)
+[MCP3201-CI/P Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/21290F.pdf)
 
 ## Assignment 5: OneWire
 
