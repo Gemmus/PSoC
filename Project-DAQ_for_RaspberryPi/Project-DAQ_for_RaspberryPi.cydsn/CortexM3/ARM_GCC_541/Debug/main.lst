@@ -1,0 +1,896 @@
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.MyADCIsr,"ax",%progbits
+  20              		.align	2
+  21              		.global	MyADCIsr
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	MyADCIsr, %function
+  25              	MyADCIsr:
+  26              	.LFB65:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright: Gemma Qin, Metropolia UAS, Finland, 2024
+   4:main.c        ****  * 
+   5:main.c        ****  * PSoC Design Course 2024: Project 
+   6:main.c        ****  *
+   7:main.c        ****  * Project Description: 
+   8:main.c        ****  * 
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** 
+  13:main.c        **** /*  Libraries  */
+  14:main.c        **** #include "project.h"
+  15:main.c        **** #include "stdio.h"
+  16:main.c        **** #include "ring_buffer.h"
+  17:main.c        **** 
+  18:main.c        **** /* Project Defines */
+  19:main.c        **** #define TRANSMIT_BUFFER_SIZE 128
+  20:main.c        **** 
+  21:main.c        **** /* Interrupt declarations */
+  22:main.c        **** CY_ISR_PROTO(MyADCIsr);
+  23:main.c        **** 
+  24:main.c        **** /*******************************************************************************
+  25:main.c        **** * Function Name: main
+  26:main.c        **** ********************************************************************************
+  27:main.c        **** *
+  28:main.c        **** * Summary:
+  29:main.c        **** *  
+  30:main.c        **** *
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 2
+
+
+  31:main.c        **** * Parameters:
+  32:main.c        **** *  None.
+  33:main.c        **** *
+  34:main.c        **** * Return:
+  35:main.c        **** *  None.
+  36:main.c        **** *
+  37:main.c        **** * Remarks: 
+  38:main.c        **** *  - Specification: 
+  39:main.c        **** *       - DEBUG_UART: 12[6] RX, 12[7] TX, 115200 bps
+  40:main.c        **** *       - I2C Slave: 12[0] SCL, 12[1] SDA, I2C_CLK 6 MHz
+  41:main.c        **** *       - ADC_DelSig: 
+  42:main.c        **** *               - AMux: 4 channels (2[3] Potentiometer, 2[4] LM35, 2[5] , 2[6] )
+  43:main.c        **** *               - ADC_Clock 3 MHz
+  44:main.c        **** *               - ADC_ISR
+  45:main.c        **** *  - Design works with internal pull up resistor of 5 kOhm.
+  46:main.c        **** *
+  47:main.c        **** *******************************************************************************/
+  48:main.c        **** int main(void)
+  49:main.c        **** {
+  50:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  51:main.c        **** 
+  52:main.c        ****     /* Local variables */
+  53:main.c        ****     // UART
+  54:main.c        ****     char transmit_buffer[TRANSMIT_BUFFER_SIZE];
+  55:main.c        **** 
+  56:main.c        ****     /* Start the components and interrupts */
+  57:main.c        ****     DEBUG_UART_Start();
+  58:main.c        ****     ADC_DelSig_Start();
+  59:main.c        ****     AMux_Start();
+  60:main.c        ****     
+  61:main.c        ****     ADC_ISR_StartEx(MyADCIsr);
+  62:main.c        ****     
+  63:main.c        ****     /* Send message to verify COM port is connected properly */
+  64:main.c        ****     DEBUG_UART_PutString("COM Port Open\r\n");  
+  65:main.c        ****     
+  66:main.c        ****     /* Start the ADC conversion */
+  67:main.c        ****     ADC_DelSig_StartConvert();
+  68:main.c        ****     
+  69:main.c        ****     for(;;)
+  70:main.c        ****     {
+  71:main.c        ****         /* A little put put here. */
+  72:main.c        ****     }
+  73:main.c        **** }
+  74:main.c        **** 
+  75:main.c        **** /* [] END OF FILE */
+  76:main.c        **** 
+  77:main.c        **** /*******************************************************************************
+  78:main.c        **** * Function Name: MyADCIsr         ADC Interrupt Service Routine
+  79:main.c        **** ********************************************************************************
+  80:main.c        **** *
+  81:main.c        **** * Summary:
+  82:main.c        **** *  
+  83:main.c        **** *
+  84:main.c        **** * Parameters:  
+  85:main.c        **** *
+  86:main.c        **** * Return:
+  87:main.c        **** *   None
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 3
+
+
+  88:main.c        **** *
+  89:main.c        **** *******************************************************************************/
+  90:main.c        **** CY_ISR(MyADCIsr) {
+  28              		.loc 1 90 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  91:main.c        ****     uint32 Output = ADC_DelSig_CountsTo_mVolts(ADC_DelSig_GetResult16());
+  36              		.loc 1 91 0
+  37 0002 FFF7FEFF 		bl	ADC_DelSig_GetResult16
+  38              	.LVL0:
+  39 0006 FFF7FEFF 		bl	ADC_DelSig_CountsTo_mVolts
+  40              	.LVL1:
+  41 000a 08BD     		pop	{r3, pc}
+  42              		.cfi_endproc
+  43              	.LFE65:
+  44              		.size	MyADCIsr, .-MyADCIsr
+  45              		.section	.text.main,"ax",%progbits
+  46              		.align	2
+  47              		.global	main
+  48              		.thumb
+  49              		.thumb_func
+  50              		.type	main, %function
+  51              	main:
+  52              	.LFB64:
+  49:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  53              		.loc 1 49 0
+  54              		.cfi_startproc
+  55              		@ Volatile: function does not return.
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58 0000 08B5     		push	{r3, lr}
+  59              		.cfi_def_cfa_offset 8
+  60              		.cfi_offset 3, -8
+  61              		.cfi_offset 14, -4
+  50:main.c        **** 
+  62              		.loc 1 50 0
+  63              		.syntax unified
+  64              	@ 50 "main.c" 1
+  65 0002 62B6     		CPSIE   i
+  66              	@ 0 "" 2
+  57:main.c        ****     ADC_DelSig_Start();
+  67              		.loc 1 57 0
+  68              		.thumb
+  69              		.syntax unified
+  70 0004 FFF7FEFF 		bl	DEBUG_UART_Start
+  71              	.LVL2:
+  58:main.c        ****     AMux_Start();
+  72              		.loc 1 58 0
+  73 0008 FFF7FEFF 		bl	ADC_DelSig_Start
+  74              	.LVL3:
+  59:main.c        ****     
+  75              		.loc 1 59 0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 4
+
+
+  76 000c FFF7FEFF 		bl	AMux_Start
+  77              	.LVL4:
+  61:main.c        ****     
+  78              		.loc 1 61 0
+  79 0010 0448     		ldr	r0, .L6
+  80 0012 FFF7FEFF 		bl	ADC_ISR_StartEx
+  81              	.LVL5:
+  64:main.c        ****     
+  82              		.loc 1 64 0
+  83 0016 0448     		ldr	r0, .L6+4
+  84 0018 FFF7FEFF 		bl	DEBUG_UART_PutString
+  85              	.LVL6:
+  67:main.c        ****     
+  86              		.loc 1 67 0
+  87 001c FFF7FEFF 		bl	ADC_DelSig_StartConvert
+  88              	.LVL7:
+  89              	.L4:
+  90 0020 FEE7     		b	.L4
+  91              	.L7:
+  92 0022 00BF     		.align	2
+  93              	.L6:
+  94 0024 00000000 		.word	MyADCIsr
+  95 0028 00000000 		.word	.LC0
+  96              		.cfi_endproc
+  97              	.LFE64:
+  98              		.size	main, .-main
+  99              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 100              		.align	2
+ 101              	.LC0:
+ 102 0000 434F4D20 		.ascii	"COM Port Open\015\012\000"
+ 102      506F7274 
+ 102      204F7065 
+ 102      6E0D0A00 
+ 103              		.text
+ 104              	.Letext0:
+ 105              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 106              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 107              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 108              		.file 5 "Generated_Source\\PSoC5/ADC_DelSig.h"
+ 109              		.file 6 "Generated_Source\\PSoC5/DEBUG_UART.h"
+ 110              		.file 7 "Generated_Source\\PSoC5/AMux.h"
+ 111              		.file 8 "Generated_Source\\PSoC5/ADC_ISR.h"
+ 112              		.file 9 "Generated_Source\\PSoC5/core_cm3.h"
+ 113              		.section	.debug_info,"",%progbits
+ 114              	.Ldebug_info0:
+ 115 0000 D0010000 		.4byte	0x1d0
+ 116 0004 0400     		.2byte	0x4
+ 117 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 118 000a 04       		.byte	0x4
+ 119 000b 01       		.uleb128 0x1
+ 120 000c 68000000 		.4byte	.LASF27
+ 121 0010 0C       		.byte	0xc
+ 122 0011 1C020000 		.4byte	.LASF28
+ 123 0015 4C010000 		.4byte	.LASF29
+ 124 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 125 001d 00000000 		.4byte	0
+ 126 0021 00000000 		.4byte	.Ldebug_line0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 5
+
+
+ 127 0025 02       		.uleb128 0x2
+ 128 0026 01       		.byte	0x1
+ 129 0027 06       		.byte	0x6
+ 130 0028 4E000000 		.4byte	.LASF0
+ 131 002c 02       		.uleb128 0x2
+ 132 002d 01       		.byte	0x1
+ 133 002e 08       		.byte	0x8
+ 134 002f 5A000000 		.4byte	.LASF1
+ 135 0033 02       		.uleb128 0x2
+ 136 0034 02       		.byte	0x2
+ 137 0035 05       		.byte	0x5
+ 138 0036 28020000 		.4byte	.LASF2
+ 139 003a 02       		.uleb128 0x2
+ 140 003b 02       		.byte	0x2
+ 141 003c 07       		.byte	0x7
+ 142 003d 19010000 		.4byte	.LASF3
+ 143 0041 03       		.uleb128 0x3
+ 144 0042 0B000000 		.4byte	.LASF9
+ 145 0046 02       		.byte	0x2
+ 146 0047 3F       		.byte	0x3f
+ 147 0048 4C000000 		.4byte	0x4c
+ 148 004c 02       		.uleb128 0x2
+ 149 004d 04       		.byte	0x4
+ 150 004e 05       		.byte	0x5
+ 151 004f 43020000 		.4byte	.LASF4
+ 152 0053 02       		.uleb128 0x2
+ 153 0054 04       		.byte	0x4
+ 154 0055 07       		.byte	0x7
+ 155 0056 07010000 		.4byte	.LASF5
+ 156 005a 02       		.uleb128 0x2
+ 157 005b 08       		.byte	0x8
+ 158 005c 05       		.byte	0x5
+ 159 005d 0E020000 		.4byte	.LASF6
+ 160 0061 02       		.uleb128 0x2
+ 161 0062 08       		.byte	0x8
+ 162 0063 07       		.byte	0x7
+ 163 0064 B3010000 		.4byte	.LASF7
+ 164 0068 04       		.uleb128 0x4
+ 165 0069 04       		.byte	0x4
+ 166 006a 05       		.byte	0x5
+ 167 006b 696E7400 		.ascii	"int\000"
+ 168 006f 02       		.uleb128 0x2
+ 169 0070 04       		.byte	0x4
+ 170 0071 07       		.byte	0x7
+ 171 0072 A6010000 		.4byte	.LASF8
+ 172 0076 03       		.uleb128 0x3
+ 173 0077 FD010000 		.4byte	.LASF10
+ 174 007b 03       		.byte	0x3
+ 175 007c 2C       		.byte	0x2c
+ 176 007d 41000000 		.4byte	0x41
+ 177 0081 05       		.uleb128 0x5
+ 178 0082 45010000 		.4byte	.LASF11
+ 179 0086 04       		.byte	0x4
+ 180 0087 E601     		.2byte	0x1e6
+ 181 0089 53000000 		.4byte	0x53
+ 182 008d 02       		.uleb128 0x2
+ 183 008e 04       		.byte	0x4
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 6
+
+
+ 184 008f 04       		.byte	0x4
+ 185 0090 48000000 		.4byte	.LASF12
+ 186 0094 02       		.uleb128 0x2
+ 187 0095 08       		.byte	0x8
+ 188 0096 04       		.byte	0x4
+ 189 0097 39010000 		.4byte	.LASF13
+ 190 009b 02       		.uleb128 0x2
+ 191 009c 01       		.byte	0x1
+ 192 009d 08       		.byte	0x8
+ 193 009e 23020000 		.4byte	.LASF14
+ 194 00a2 02       		.uleb128 0x2
+ 195 00a3 08       		.byte	0x8
+ 196 00a4 04       		.byte	0x4
+ 197 00a5 4C020000 		.4byte	.LASF15
+ 198 00a9 02       		.uleb128 0x2
+ 199 00aa 04       		.byte	0x4
+ 200 00ab 07       		.byte	0x7
+ 201 00ac 05020000 		.4byte	.LASF16
+ 202 00b0 06       		.uleb128 0x6
+ 203 00b1 78020000 		.4byte	.LASF30
+ 204 00b5 01       		.byte	0x1
+ 205 00b6 5A       		.byte	0x5a
+ 206 00b7 00000000 		.4byte	.LFB65
+ 207 00bb 0C000000 		.4byte	.LFE65-.LFB65
+ 208 00bf 01       		.uleb128 0x1
+ 209 00c0 9C       		.byte	0x9c
+ 210 00c1 E3000000 		.4byte	0xe3
+ 211 00c5 07       		.uleb128 0x7
+ 212 00c6 15000000 		.4byte	.LASF17
+ 213 00ca 01       		.byte	0x1
+ 214 00cb 5B       		.byte	0x5b
+ 215 00cc 81000000 		.4byte	0x81
+ 216 00d0 08       		.uleb128 0x8
+ 217 00d1 06000000 		.4byte	.LVL0
+ 218 00d5 7B010000 		.4byte	0x17b
+ 219 00d9 08       		.uleb128 0x8
+ 220 00da 0A000000 		.4byte	.LVL1
+ 221 00de 86010000 		.4byte	0x186
+ 222 00e2 00       		.byte	0
+ 223 00e3 09       		.uleb128 0x9
+ 224 00e4 40010000 		.4byte	.LASF31
+ 225 00e8 01       		.byte	0x1
+ 226 00e9 30       		.byte	0x30
+ 227 00ea 68000000 		.4byte	0x68
+ 228 00ee 00000000 		.4byte	.LFB64
+ 229 00f2 2C000000 		.4byte	.LFE64-.LFB64
+ 230 00f6 01       		.uleb128 0x1
+ 231 00f7 9C       		.byte	0x9c
+ 232 00f8 5A010000 		.4byte	0x15a
+ 233 00fc 07       		.uleb128 0x7
+ 234 00fd 58020000 		.4byte	.LASF18
+ 235 0101 01       		.byte	0x1
+ 236 0102 36       		.byte	0x36
+ 237 0103 5A010000 		.4byte	0x15a
+ 238 0107 08       		.uleb128 0x8
+ 239 0108 08000000 		.4byte	.LVL2
+ 240 010c 91010000 		.4byte	0x191
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 7
+
+
+ 241 0110 08       		.uleb128 0x8
+ 242 0111 0C000000 		.4byte	.LVL3
+ 243 0115 9C010000 		.4byte	0x19c
+ 244 0119 08       		.uleb128 0x8
+ 245 011a 10000000 		.4byte	.LVL4
+ 246 011e A7010000 		.4byte	0x1a7
+ 247 0122 0A       		.uleb128 0xa
+ 248 0123 16000000 		.4byte	.LVL5
+ 249 0127 B2010000 		.4byte	0x1b2
+ 250 012b 39010000 		.4byte	0x139
+ 251 012f 0B       		.uleb128 0xb
+ 252 0130 01       		.uleb128 0x1
+ 253 0131 50       		.byte	0x50
+ 254 0132 05       		.uleb128 0x5
+ 255 0133 03       		.byte	0x3
+ 256 0134 00000000 		.4byte	MyADCIsr
+ 257 0138 00       		.byte	0
+ 258 0139 0A       		.uleb128 0xa
+ 259 013a 1C000000 		.4byte	.LVL6
+ 260 013e BD010000 		.4byte	0x1bd
+ 261 0142 50010000 		.4byte	0x150
+ 262 0146 0B       		.uleb128 0xb
+ 263 0147 01       		.uleb128 0x1
+ 264 0148 50       		.byte	0x50
+ 265 0149 05       		.uleb128 0x5
+ 266 014a 03       		.byte	0x3
+ 267 014b 00000000 		.4byte	.LC0
+ 268 014f 00       		.byte	0
+ 269 0150 08       		.uleb128 0x8
+ 270 0151 20000000 		.4byte	.LVL7
+ 271 0155 C8010000 		.4byte	0x1c8
+ 272 0159 00       		.byte	0
+ 273 015a 0C       		.uleb128 0xc
+ 274 015b 9B000000 		.4byte	0x9b
+ 275 015f 6A010000 		.4byte	0x16a
+ 276 0163 0D       		.uleb128 0xd
+ 277 0164 A9000000 		.4byte	0xa9
+ 278 0168 7F       		.byte	0x7f
+ 279 0169 00       		.byte	0
+ 280 016a 0E       		.uleb128 0xe
+ 281 016b 2C010000 		.4byte	.LASF32
+ 282 016f 09       		.byte	0x9
+ 283 0170 1207     		.2byte	0x712
+ 284 0172 76010000 		.4byte	0x176
+ 285 0176 0F       		.uleb128 0xf
+ 286 0177 76000000 		.4byte	0x76
+ 287 017b 10       		.uleb128 0x10
+ 288 017c 31000000 		.4byte	.LASF19
+ 289 0180 31000000 		.4byte	.LASF19
+ 290 0184 05       		.byte	0x5
+ 291 0185 41       		.byte	0x41
+ 292 0186 10       		.uleb128 0x10
+ 293 0187 CA010000 		.4byte	.LASF20
+ 294 018b CA010000 		.4byte	.LASF20
+ 295 018f 05       		.byte	0x5
+ 296 0190 47       		.byte	0x47
+ 297 0191 10       		.uleb128 0x10
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 8
+
+
+ 298 0192 F6000000 		.4byte	.LASF21
+ 299 0196 F6000000 		.4byte	.LASF21
+ 300 019a 06       		.byte	0x6
+ 301 019b 54       		.byte	0x54
+ 302 019c 10       		.uleb128 0x10
+ 303 019d 32020000 		.4byte	.LASF22
+ 304 01a1 32020000 		.4byte	.LASF22
+ 305 01a5 05       		.byte	0x5
+ 306 01a6 3A       		.byte	0x3a
+ 307 01a7 10       		.uleb128 0x10
+ 308 01a8 00000000 		.4byte	.LASF23
+ 309 01ac 00000000 		.4byte	.LASF23
+ 310 01b0 07       		.byte	0x7
+ 311 01b1 25       		.byte	0x25
+ 312 01b2 10       		.uleb128 0x10
+ 313 01b3 68020000 		.4byte	.LASF24
+ 314 01b7 68020000 		.4byte	.LASF24
+ 315 01bb 08       		.byte	0x8
+ 316 01bc 18       		.byte	0x18
+ 317 01bd 10       		.uleb128 0x10
+ 318 01be 1C000000 		.4byte	.LASF25
+ 319 01c2 1C000000 		.4byte	.LASF25
+ 320 01c6 06       		.byte	0x6
+ 321 01c7 8B       		.byte	0x8b
+ 322 01c8 10       		.uleb128 0x10
+ 323 01c9 E5010000 		.4byte	.LASF26
+ 324 01cd E5010000 		.4byte	.LASF26
+ 325 01d1 05       		.byte	0x5
+ 326 01d2 3D       		.byte	0x3d
+ 327 01d3 00       		.byte	0
+ 328              		.section	.debug_abbrev,"",%progbits
+ 329              	.Ldebug_abbrev0:
+ 330 0000 01       		.uleb128 0x1
+ 331 0001 11       		.uleb128 0x11
+ 332 0002 01       		.byte	0x1
+ 333 0003 25       		.uleb128 0x25
+ 334 0004 0E       		.uleb128 0xe
+ 335 0005 13       		.uleb128 0x13
+ 336 0006 0B       		.uleb128 0xb
+ 337 0007 03       		.uleb128 0x3
+ 338 0008 0E       		.uleb128 0xe
+ 339 0009 1B       		.uleb128 0x1b
+ 340 000a 0E       		.uleb128 0xe
+ 341 000b 55       		.uleb128 0x55
+ 342 000c 17       		.uleb128 0x17
+ 343 000d 11       		.uleb128 0x11
+ 344 000e 01       		.uleb128 0x1
+ 345 000f 10       		.uleb128 0x10
+ 346 0010 17       		.uleb128 0x17
+ 347 0011 00       		.byte	0
+ 348 0012 00       		.byte	0
+ 349 0013 02       		.uleb128 0x2
+ 350 0014 24       		.uleb128 0x24
+ 351 0015 00       		.byte	0
+ 352 0016 0B       		.uleb128 0xb
+ 353 0017 0B       		.uleb128 0xb
+ 354 0018 3E       		.uleb128 0x3e
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 9
+
+
+ 355 0019 0B       		.uleb128 0xb
+ 356 001a 03       		.uleb128 0x3
+ 357 001b 0E       		.uleb128 0xe
+ 358 001c 00       		.byte	0
+ 359 001d 00       		.byte	0
+ 360 001e 03       		.uleb128 0x3
+ 361 001f 16       		.uleb128 0x16
+ 362 0020 00       		.byte	0
+ 363 0021 03       		.uleb128 0x3
+ 364 0022 0E       		.uleb128 0xe
+ 365 0023 3A       		.uleb128 0x3a
+ 366 0024 0B       		.uleb128 0xb
+ 367 0025 3B       		.uleb128 0x3b
+ 368 0026 0B       		.uleb128 0xb
+ 369 0027 49       		.uleb128 0x49
+ 370 0028 13       		.uleb128 0x13
+ 371 0029 00       		.byte	0
+ 372 002a 00       		.byte	0
+ 373 002b 04       		.uleb128 0x4
+ 374 002c 24       		.uleb128 0x24
+ 375 002d 00       		.byte	0
+ 376 002e 0B       		.uleb128 0xb
+ 377 002f 0B       		.uleb128 0xb
+ 378 0030 3E       		.uleb128 0x3e
+ 379 0031 0B       		.uleb128 0xb
+ 380 0032 03       		.uleb128 0x3
+ 381 0033 08       		.uleb128 0x8
+ 382 0034 00       		.byte	0
+ 383 0035 00       		.byte	0
+ 384 0036 05       		.uleb128 0x5
+ 385 0037 16       		.uleb128 0x16
+ 386 0038 00       		.byte	0
+ 387 0039 03       		.uleb128 0x3
+ 388 003a 0E       		.uleb128 0xe
+ 389 003b 3A       		.uleb128 0x3a
+ 390 003c 0B       		.uleb128 0xb
+ 391 003d 3B       		.uleb128 0x3b
+ 392 003e 05       		.uleb128 0x5
+ 393 003f 49       		.uleb128 0x49
+ 394 0040 13       		.uleb128 0x13
+ 395 0041 00       		.byte	0
+ 396 0042 00       		.byte	0
+ 397 0043 06       		.uleb128 0x6
+ 398 0044 2E       		.uleb128 0x2e
+ 399 0045 01       		.byte	0x1
+ 400 0046 3F       		.uleb128 0x3f
+ 401 0047 19       		.uleb128 0x19
+ 402 0048 03       		.uleb128 0x3
+ 403 0049 0E       		.uleb128 0xe
+ 404 004a 3A       		.uleb128 0x3a
+ 405 004b 0B       		.uleb128 0xb
+ 406 004c 3B       		.uleb128 0x3b
+ 407 004d 0B       		.uleb128 0xb
+ 408 004e 27       		.uleb128 0x27
+ 409 004f 19       		.uleb128 0x19
+ 410 0050 11       		.uleb128 0x11
+ 411 0051 01       		.uleb128 0x1
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 10
+
+
+ 412 0052 12       		.uleb128 0x12
+ 413 0053 06       		.uleb128 0x6
+ 414 0054 40       		.uleb128 0x40
+ 415 0055 18       		.uleb128 0x18
+ 416 0056 9742     		.uleb128 0x2117
+ 417 0058 19       		.uleb128 0x19
+ 418 0059 01       		.uleb128 0x1
+ 419 005a 13       		.uleb128 0x13
+ 420 005b 00       		.byte	0
+ 421 005c 00       		.byte	0
+ 422 005d 07       		.uleb128 0x7
+ 423 005e 34       		.uleb128 0x34
+ 424 005f 00       		.byte	0
+ 425 0060 03       		.uleb128 0x3
+ 426 0061 0E       		.uleb128 0xe
+ 427 0062 3A       		.uleb128 0x3a
+ 428 0063 0B       		.uleb128 0xb
+ 429 0064 3B       		.uleb128 0x3b
+ 430 0065 0B       		.uleb128 0xb
+ 431 0066 49       		.uleb128 0x49
+ 432 0067 13       		.uleb128 0x13
+ 433 0068 00       		.byte	0
+ 434 0069 00       		.byte	0
+ 435 006a 08       		.uleb128 0x8
+ 436 006b 898201   		.uleb128 0x4109
+ 437 006e 00       		.byte	0
+ 438 006f 11       		.uleb128 0x11
+ 439 0070 01       		.uleb128 0x1
+ 440 0071 31       		.uleb128 0x31
+ 441 0072 13       		.uleb128 0x13
+ 442 0073 00       		.byte	0
+ 443 0074 00       		.byte	0
+ 444 0075 09       		.uleb128 0x9
+ 445 0076 2E       		.uleb128 0x2e
+ 446 0077 01       		.byte	0x1
+ 447 0078 3F       		.uleb128 0x3f
+ 448 0079 19       		.uleb128 0x19
+ 449 007a 03       		.uleb128 0x3
+ 450 007b 0E       		.uleb128 0xe
+ 451 007c 3A       		.uleb128 0x3a
+ 452 007d 0B       		.uleb128 0xb
+ 453 007e 3B       		.uleb128 0x3b
+ 454 007f 0B       		.uleb128 0xb
+ 455 0080 27       		.uleb128 0x27
+ 456 0081 19       		.uleb128 0x19
+ 457 0082 49       		.uleb128 0x49
+ 458 0083 13       		.uleb128 0x13
+ 459 0084 8701     		.uleb128 0x87
+ 460 0086 19       		.uleb128 0x19
+ 461 0087 11       		.uleb128 0x11
+ 462 0088 01       		.uleb128 0x1
+ 463 0089 12       		.uleb128 0x12
+ 464 008a 06       		.uleb128 0x6
+ 465 008b 40       		.uleb128 0x40
+ 466 008c 18       		.uleb128 0x18
+ 467 008d 9742     		.uleb128 0x2117
+ 468 008f 19       		.uleb128 0x19
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 11
+
+
+ 469 0090 01       		.uleb128 0x1
+ 470 0091 13       		.uleb128 0x13
+ 471 0092 00       		.byte	0
+ 472 0093 00       		.byte	0
+ 473 0094 0A       		.uleb128 0xa
+ 474 0095 898201   		.uleb128 0x4109
+ 475 0098 01       		.byte	0x1
+ 476 0099 11       		.uleb128 0x11
+ 477 009a 01       		.uleb128 0x1
+ 478 009b 31       		.uleb128 0x31
+ 479 009c 13       		.uleb128 0x13
+ 480 009d 01       		.uleb128 0x1
+ 481 009e 13       		.uleb128 0x13
+ 482 009f 00       		.byte	0
+ 483 00a0 00       		.byte	0
+ 484 00a1 0B       		.uleb128 0xb
+ 485 00a2 8A8201   		.uleb128 0x410a
+ 486 00a5 00       		.byte	0
+ 487 00a6 02       		.uleb128 0x2
+ 488 00a7 18       		.uleb128 0x18
+ 489 00a8 9142     		.uleb128 0x2111
+ 490 00aa 18       		.uleb128 0x18
+ 491 00ab 00       		.byte	0
+ 492 00ac 00       		.byte	0
+ 493 00ad 0C       		.uleb128 0xc
+ 494 00ae 01       		.uleb128 0x1
+ 495 00af 01       		.byte	0x1
+ 496 00b0 49       		.uleb128 0x49
+ 497 00b1 13       		.uleb128 0x13
+ 498 00b2 01       		.uleb128 0x1
+ 499 00b3 13       		.uleb128 0x13
+ 500 00b4 00       		.byte	0
+ 501 00b5 00       		.byte	0
+ 502 00b6 0D       		.uleb128 0xd
+ 503 00b7 21       		.uleb128 0x21
+ 504 00b8 00       		.byte	0
+ 505 00b9 49       		.uleb128 0x49
+ 506 00ba 13       		.uleb128 0x13
+ 507 00bb 2F       		.uleb128 0x2f
+ 508 00bc 0B       		.uleb128 0xb
+ 509 00bd 00       		.byte	0
+ 510 00be 00       		.byte	0
+ 511 00bf 0E       		.uleb128 0xe
+ 512 00c0 34       		.uleb128 0x34
+ 513 00c1 00       		.byte	0
+ 514 00c2 03       		.uleb128 0x3
+ 515 00c3 0E       		.uleb128 0xe
+ 516 00c4 3A       		.uleb128 0x3a
+ 517 00c5 0B       		.uleb128 0xb
+ 518 00c6 3B       		.uleb128 0x3b
+ 519 00c7 05       		.uleb128 0x5
+ 520 00c8 49       		.uleb128 0x49
+ 521 00c9 13       		.uleb128 0x13
+ 522 00ca 3F       		.uleb128 0x3f
+ 523 00cb 19       		.uleb128 0x19
+ 524 00cc 3C       		.uleb128 0x3c
+ 525 00cd 19       		.uleb128 0x19
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 12
+
+
+ 526 00ce 00       		.byte	0
+ 527 00cf 00       		.byte	0
+ 528 00d0 0F       		.uleb128 0xf
+ 529 00d1 35       		.uleb128 0x35
+ 530 00d2 00       		.byte	0
+ 531 00d3 49       		.uleb128 0x49
+ 532 00d4 13       		.uleb128 0x13
+ 533 00d5 00       		.byte	0
+ 534 00d6 00       		.byte	0
+ 535 00d7 10       		.uleb128 0x10
+ 536 00d8 2E       		.uleb128 0x2e
+ 537 00d9 00       		.byte	0
+ 538 00da 3F       		.uleb128 0x3f
+ 539 00db 19       		.uleb128 0x19
+ 540 00dc 3C       		.uleb128 0x3c
+ 541 00dd 19       		.uleb128 0x19
+ 542 00de 6E       		.uleb128 0x6e
+ 543 00df 0E       		.uleb128 0xe
+ 544 00e0 03       		.uleb128 0x3
+ 545 00e1 0E       		.uleb128 0xe
+ 546 00e2 3A       		.uleb128 0x3a
+ 547 00e3 0B       		.uleb128 0xb
+ 548 00e4 3B       		.uleb128 0x3b
+ 549 00e5 0B       		.uleb128 0xb
+ 550 00e6 00       		.byte	0
+ 551 00e7 00       		.byte	0
+ 552 00e8 00       		.byte	0
+ 553              		.section	.debug_aranges,"",%progbits
+ 554 0000 24000000 		.4byte	0x24
+ 555 0004 0200     		.2byte	0x2
+ 556 0006 00000000 		.4byte	.Ldebug_info0
+ 557 000a 04       		.byte	0x4
+ 558 000b 00       		.byte	0
+ 559 000c 0000     		.2byte	0
+ 560 000e 0000     		.2byte	0
+ 561 0010 00000000 		.4byte	.LFB65
+ 562 0014 0C000000 		.4byte	.LFE65-.LFB65
+ 563 0018 00000000 		.4byte	.LFB64
+ 564 001c 2C000000 		.4byte	.LFE64-.LFB64
+ 565 0020 00000000 		.4byte	0
+ 566 0024 00000000 		.4byte	0
+ 567              		.section	.debug_ranges,"",%progbits
+ 568              	.Ldebug_ranges0:
+ 569 0000 00000000 		.4byte	.LFB65
+ 570 0004 0C000000 		.4byte	.LFE65
+ 571 0008 00000000 		.4byte	.LFB64
+ 572 000c 2C000000 		.4byte	.LFE64
+ 573 0010 00000000 		.4byte	0
+ 574 0014 00000000 		.4byte	0
+ 575              		.section	.debug_line,"",%progbits
+ 576              	.Ldebug_line0:
+ 577 0000 B0010000 		.section	.debug_str,"MS",%progbits,1
+ 577      02008301 
+ 577      00000201 
+ 577      FB0E0D00 
+ 577      01010101 
+ 578              	.LASF23:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 13
+
+
+ 579 0000 414D7578 		.ascii	"AMux_Start\000"
+ 579      5F537461 
+ 579      727400
+ 580              	.LASF9:
+ 581 000b 5F5F696E 		.ascii	"__int32_t\000"
+ 581      7433325F 
+ 581      7400
+ 582              	.LASF17:
+ 583 0015 4F757470 		.ascii	"Output\000"
+ 583      757400
+ 584              	.LASF25:
+ 585 001c 44454255 		.ascii	"DEBUG_UART_PutString\000"
+ 585      475F5541 
+ 585      52545F50 
+ 585      75745374 
+ 585      72696E67 
+ 586              	.LASF19:
+ 587 0031 4144435F 		.ascii	"ADC_DelSig_GetResult16\000"
+ 587      44656C53 
+ 587      69675F47 
+ 587      65745265 
+ 587      73756C74 
+ 588              	.LASF12:
+ 589 0048 666C6F61 		.ascii	"float\000"
+ 589      7400
+ 590              	.LASF0:
+ 591 004e 7369676E 		.ascii	"signed char\000"
+ 591      65642063 
+ 591      68617200 
+ 592              	.LASF1:
+ 593 005a 756E7369 		.ascii	"unsigned char\000"
+ 593      676E6564 
+ 593      20636861 
+ 593      7200
+ 594              	.LASF27:
+ 595 0068 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 595      43313120 
+ 595      352E342E 
+ 595      31203230 
+ 595      31363036 
+ 596 009b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 596      20726576 
+ 596      6973696F 
+ 596      6E203233 
+ 596      37373135 
+ 597 00ce 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 597      66756E63 
+ 597      74696F6E 
+ 597      2D736563 
+ 597      74696F6E 
+ 598              	.LASF21:
+ 599 00f6 44454255 		.ascii	"DEBUG_UART_Start\000"
+ 599      475F5541 
+ 599      52545F53 
+ 599      74617274 
+ 599      00
+ 600              	.LASF5:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 14
+
+
+ 601 0107 6C6F6E67 		.ascii	"long unsigned int\000"
+ 601      20756E73 
+ 601      69676E65 
+ 601      6420696E 
+ 601      7400
+ 602              	.LASF3:
+ 603 0119 73686F72 		.ascii	"short unsigned int\000"
+ 603      7420756E 
+ 603      7369676E 
+ 603      65642069 
+ 603      6E7400
+ 604              	.LASF32:
+ 605 012c 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 605      52784275 
+ 605      66666572 
+ 605      00
+ 606              	.LASF13:
+ 607 0139 646F7562 		.ascii	"double\000"
+ 607      6C6500
+ 608              	.LASF31:
+ 609 0140 6D61696E 		.ascii	"main\000"
+ 609      00
+ 610              	.LASF11:
+ 611 0145 75696E74 		.ascii	"uint32\000"
+ 611      333200
+ 612              	.LASF29:
+ 613 014c 433A5C55 		.ascii	"C:\\Users\\Gemma\\Desktop\\PSoC\\Project-DAQ_for_Ra"
+ 613      73657273 
+ 613      5C47656D 
+ 613      6D615C44 
+ 613      65736B74 
+ 614 017a 73706265 		.ascii	"spberryPi\\Project-DAQ_for_RaspberryPi.cydsn\000"
+ 614      72727950 
+ 614      695C5072 
+ 614      6F6A6563 
+ 614      742D4441 
+ 615              	.LASF8:
+ 616 01a6 756E7369 		.ascii	"unsigned int\000"
+ 616      676E6564 
+ 616      20696E74 
+ 616      00
+ 617              	.LASF7:
+ 618 01b3 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 618      206C6F6E 
+ 618      6720756E 
+ 618      7369676E 
+ 618      65642069 
+ 619              	.LASF20:
+ 620 01ca 4144435F 		.ascii	"ADC_DelSig_CountsTo_mVolts\000"
+ 620      44656C53 
+ 620      69675F43 
+ 620      6F756E74 
+ 620      73546F5F 
+ 621              	.LASF26:
+ 622 01e5 4144435F 		.ascii	"ADC_DelSig_StartConvert\000"
+ 622      44656C53 
+ 622      69675F53 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccNpuYGJ.s 			page 15
+
+
+ 622      74617274 
+ 622      436F6E76 
+ 623              	.LASF10:
+ 624 01fd 696E7433 		.ascii	"int32_t\000"
+ 624      325F7400 
+ 625              	.LASF16:
+ 626 0205 73697A65 		.ascii	"sizetype\000"
+ 626      74797065 
+ 626      00
+ 627              	.LASF6:
+ 628 020e 6C6F6E67 		.ascii	"long long int\000"
+ 628      206C6F6E 
+ 628      6720696E 
+ 628      7400
+ 629              	.LASF28:
+ 630 021c 6D61696E 		.ascii	"main.c\000"
+ 630      2E6300
+ 631              	.LASF14:
+ 632 0223 63686172 		.ascii	"char\000"
+ 632      00
+ 633              	.LASF2:
+ 634 0228 73686F72 		.ascii	"short int\000"
+ 634      7420696E 
+ 634      7400
+ 635              	.LASF22:
+ 636 0232 4144435F 		.ascii	"ADC_DelSig_Start\000"
+ 636      44656C53 
+ 636      69675F53 
+ 636      74617274 
+ 636      00
+ 637              	.LASF4:
+ 638 0243 6C6F6E67 		.ascii	"long int\000"
+ 638      20696E74 
+ 638      00
+ 639              	.LASF15:
+ 640 024c 6C6F6E67 		.ascii	"long double\000"
+ 640      20646F75 
+ 640      626C6500 
+ 641              	.LASF18:
+ 642 0258 7472616E 		.ascii	"transmit_buffer\000"
+ 642      736D6974 
+ 642      5F627566 
+ 642      66657200 
+ 643              	.LASF24:
+ 644 0268 4144435F 		.ascii	"ADC_ISR_StartEx\000"
+ 644      4953525F 
+ 644      53746172 
+ 644      74457800 
+ 645              	.LASF30:
+ 646 0278 4D794144 		.ascii	"MyADCIsr\000"
+ 646      43497372 
+ 646      00
+ 647              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

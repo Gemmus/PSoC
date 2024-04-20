@@ -1,0 +1,1609 @@
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"ring_buffer.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.circBuffInit,"ax",%progbits
+  20              		.align	2
+  21              		.global	circBuffInit
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	circBuffInit, %function
+  25              	circBuffInit:
+  26              	.LFB1:
+  27              		.file 1 "ring_buffer.c"
+   1:ring_buffer.c **** /* ========================================
+   2:ring_buffer.c ****  *
+   3:ring_buffer.c ****  * Copyright: Gemma Qin, Metropolia UAS, Finland, 2024
+   4:ring_buffer.c ****  * 
+   5:ring_buffer.c ****  * PSoC Design Course 2024: Project 
+   6:ring_buffer.c ****  *
+   7:ring_buffer.c ****  * Circular Buffer 
+   8:ring_buffer.c ****  * 
+   9:ring_buffer.c ****  * ========================================
+  10:ring_buffer.c **** */
+  11:ring_buffer.c **** 
+  12:ring_buffer.c **** #include "ring_buffer.h"
+  13:ring_buffer.c **** 
+  14:ring_buffer.c **** /*******************************************************************************
+  15:ring_buffer.c **** * Function Name: circBuffInit 
+  16:ring_buffer.c **** ********************************************************************************
+  17:ring_buffer.c **** *
+  18:ring_buffer.c **** * Summary:
+  19:ring_buffer.c **** *   Initialises buffer instance.
+  20:ring_buffer.c **** *
+  21:ring_buffer.c **** * Parameters:  
+  22:ring_buffer.c **** *   cb: input       pointer to the buffer instance
+  23:ring_buffer.c **** *
+  24:ring_buffer.c **** * Return:
+  25:ring_buffer.c **** *   None
+  26:ring_buffer.c **** *
+  27:ring_buffer.c **** *******************************************************************************/
+  28:ring_buffer.c **** void circBuffInit(CircularBuffer *const cb) {
+  28              		.loc 1 28 0
+  29              		.cfi_startproc
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 2
+
+
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  29:ring_buffer.c ****     cb->count = 0;
+  34              		.loc 1 29 0
+  35 0000 0023     		movs	r3, #0
+  36 0002 0383     		strh	r3, [r0, #24]	@ movhi
+  30:ring_buffer.c ****     cb->head = 0;
+  37              		.loc 1 30 0
+  38 0004 8382     		strh	r3, [r0, #20]	@ movhi
+  31:ring_buffer.c ****     cb->tail = 0;
+  39              		.loc 1 31 0
+  40 0006 C382     		strh	r3, [r0, #22]	@ movhi
+  41 0008 7047     		bx	lr
+  42              		.cfi_endproc
+  43              	.LFE1:
+  44              		.size	circBuffInit, .-circBuffInit
+  45 000a 00BF     		.section	.text.isCircBuffEmpty,"ax",%progbits
+  46              		.align	2
+  47              		.global	isCircBuffEmpty
+  48              		.thumb
+  49              		.thumb_func
+  50              		.type	isCircBuffEmpty, %function
+  51              	isCircBuffEmpty:
+  52              	.LFB2:
+  32:ring_buffer.c **** }
+  33:ring_buffer.c **** 
+  34:ring_buffer.c **** /*******************************************************************************
+  35:ring_buffer.c **** * Function Name: isCircBuffEmpty        
+  36:ring_buffer.c **** ********************************************************************************
+  37:ring_buffer.c **** *
+  38:ring_buffer.c **** * Summary:
+  39:ring_buffer.c **** *  Checks if buffer instance is empty.
+  40:ring_buffer.c **** *
+  41:ring_buffer.c **** * Parameters:  
+  42:ring_buffer.c **** *   cb: input       pointer to the buffer instance
+  43:ring_buffer.c **** *
+  44:ring_buffer.c **** * Return:
+  45:ring_buffer.c **** *   true (empty) / false (not empty) 
+  46:ring_buffer.c **** *
+  47:ring_buffer.c **** *******************************************************************************/
+  48:ring_buffer.c **** uint8_t isCircBuffEmpty(const CircularBuffer *const cb) {
+  53              		.loc 1 48 0
+  54              		.cfi_startproc
+  55              		@ args = 0, pretend = 0, frame = 0
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57              		@ link register save eliminated.
+  58              	.LVL1:
+  49:ring_buffer.c ****     return (cb->count == 0) ? 1 : 0;
+  59              		.loc 1 49 0
+  60 0000 008B     		ldrh	r0, [r0, #24]
+  61              	.LVL2:
+  50:ring_buffer.c **** }
+  62              		.loc 1 50 0
+  63 0002 B0FA80F0 		clz	r0, r0
+  64 0006 4009     		lsrs	r0, r0, #5
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 3
+
+
+  65 0008 7047     		bx	lr
+  66              		.cfi_endproc
+  67              	.LFE2:
+  68              		.size	isCircBuffEmpty, .-isCircBuffEmpty
+  69 000a 00BF     		.section	.text.isCircBuffFull,"ax",%progbits
+  70              		.align	2
+  71              		.global	isCircBuffFull
+  72              		.thumb
+  73              		.thumb_func
+  74              		.type	isCircBuffFull, %function
+  75              	isCircBuffFull:
+  76              	.LFB3:
+  51:ring_buffer.c **** 
+  52:ring_buffer.c **** /*******************************************************************************
+  53:ring_buffer.c **** * Function Name: isCircBuffFull       
+  54:ring_buffer.c **** ********************************************************************************
+  55:ring_buffer.c **** *
+  56:ring_buffer.c **** * Summary:
+  57:ring_buffer.c **** *   Checks if buffer instance is full.
+  58:ring_buffer.c **** *
+  59:ring_buffer.c **** * Parameters:  
+  60:ring_buffer.c **** *   cb: input       pointer to the buffer instance
+  61:ring_buffer.c **** *
+  62:ring_buffer.c **** * Return:
+  63:ring_buffer.c **** *   true (full) / false (not full)
+  64:ring_buffer.c **** *
+  65:ring_buffer.c **** *******************************************************************************/
+  66:ring_buffer.c **** uint8_t isCircBuffFull(const CircularBuffer *const cb) {
+  77              		.loc 1 66 0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 0
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              		@ link register save eliminated.
+  82              	.LVL3:
+  67:ring_buffer.c ****     return (cb->count >= MAX_BUFFER_SIZE) ? 1 : 0;
+  83              		.loc 1 67 0
+  84 0000 008B     		ldrh	r0, [r0, #24]
+  85              	.LVL4:
+  68:ring_buffer.c **** }
+  86              		.loc 1 68 0
+  87 0002 0928     		cmp	r0, #9
+  88 0004 94BF     		ite	ls
+  89 0006 0020     		movls	r0, #0
+  90 0008 0120     		movhi	r0, #1
+  91 000a 7047     		bx	lr
+  92              		.cfi_endproc
+  93              	.LFE3:
+  94              		.size	isCircBuffFull, .-isCircBuffFull
+  95              		.section	.text.circBuffPrint,"ax",%progbits
+  96              		.align	2
+  97              		.global	circBuffPrint
+  98              		.thumb
+  99              		.thumb_func
+ 100              		.type	circBuffPrint, %function
+ 101              	circBuffPrint:
+ 102              	.LFB4:
+  69:ring_buffer.c **** 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 4
+
+
+  70:ring_buffer.c **** /*******************************************************************************
+  71:ring_buffer.c **** * Function Name: circBuffPrint      
+  72:ring_buffer.c **** ********************************************************************************
+  73:ring_buffer.c **** *
+  74:ring_buffer.c **** * Summary:
+  75:ring_buffer.c **** *   Prints the values of buffer instance.
+  76:ring_buffer.c **** *
+  77:ring_buffer.c **** * Parameters:  
+  78:ring_buffer.c **** *   cb: input       pointer to the buffer instance
+  79:ring_buffer.c **** *
+  80:ring_buffer.c **** * Return:
+  81:ring_buffer.c **** *   None
+  82:ring_buffer.c **** *
+  83:ring_buffer.c **** *******************************************************************************/
+  84:ring_buffer.c **** void circBuffPrint(const CircularBuffer *const cb) {
+ 103              		.loc 1 84 0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 0
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 107              	.LVL5:
+ 108 0000 70B5     		push	{r4, r5, r6, lr}
+ 109              		.cfi_def_cfa_offset 16
+ 110              		.cfi_offset 4, -16
+ 111              		.cfi_offset 5, -12
+ 112              		.cfi_offset 6, -8
+ 113              		.cfi_offset 14, -4
+ 114 0002 0646     		mov	r6, r0
+  85:ring_buffer.c ****     if (isCircBuffEmpty(cb)) {
+ 115              		.loc 1 85 0
+ 116 0004 FFF7FEFF 		bl	isCircBuffEmpty
+ 117              	.LVL6:
+ 118 0008 18B1     		cbz	r0, .L5
+  86:ring_buffer.c ****         printf("Empty circular buffer.\n");
+ 119              		.loc 1 86 0
+ 120 000a 0E48     		ldr	r0, .L12
+ 121 000c FFF7FEFF 		bl	puts
+ 122              	.LVL7:
+  87:ring_buffer.c ****         return;
+ 123              		.loc 1 87 0
+ 124 0010 70BD     		pop	{r4, r5, r6, pc}
+ 125              	.LVL8:
+ 126              	.L5:
+  88:ring_buffer.c ****     }
+  89:ring_buffer.c **** 
+  90:ring_buffer.c ****     uint16_t current = cb->head;
+ 127              		.loc 1 90 0
+ 128 0012 B48A     		ldrh	r4, [r6, #20]
+ 129              	.LVL9:
+  91:ring_buffer.c ****     printf("Printing circular buffer: ");
+ 130              		.loc 1 91 0
+ 131 0014 0C48     		ldr	r0, .L12+4
+ 132 0016 FFF7FEFF 		bl	printf
+ 133              	.LVL10:
+ 134              	.LBB2:
+  92:ring_buffer.c ****     for (uint16_t index = 0; index < cb->count; index++) {
+ 135              		.loc 1 92 0
+ 136 001a 0025     		movs	r5, #0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 5
+
+
+ 137 001c 0BE0     		b	.L7
+ 138              	.LVL11:
+ 139              	.L9:
+  93:ring_buffer.c ****         printf("%d ", cb->buffer[current]);
+ 140              		.loc 1 93 0
+ 141 001e 36F81410 		ldrh	r1, [r6, r4, lsl #1]
+ 142 0022 0A48     		ldr	r0, .L12+8
+ 143 0024 FFF7FEFF 		bl	printf
+ 144              	.LVL12:
+  94:ring_buffer.c ****         current++;
+ 145              		.loc 1 94 0
+ 146 0028 0134     		adds	r4, r4, #1
+ 147              	.LVL13:
+ 148 002a A4B2     		uxth	r4, r4
+ 149              	.LVL14:
+  95:ring_buffer.c ****         // Wrap around if necessary
+  96:ring_buffer.c ****         if (current >= MAX_BUFFER_SIZE) {
+ 150              		.loc 1 96 0
+ 151 002c 092C     		cmp	r4, #9
+ 152 002e 00D9     		bls	.L8
+  97:ring_buffer.c ****             current = 0;
+ 153              		.loc 1 97 0
+ 154 0030 0024     		movs	r4, #0
+ 155              	.LVL15:
+ 156              	.L8:
+  92:ring_buffer.c ****         printf("%d ", cb->buffer[current]);
+ 157              		.loc 1 92 0 discriminator 2
+ 158 0032 0135     		adds	r5, r5, #1
+ 159              	.LVL16:
+ 160 0034 ADB2     		uxth	r5, r5
+ 161              	.LVL17:
+ 162              	.L7:
+  92:ring_buffer.c ****         printf("%d ", cb->buffer[current]);
+ 163              		.loc 1 92 0 is_stmt 0 discriminator 1
+ 164 0036 338B     		ldrh	r3, [r6, #24]
+ 165 0038 9D42     		cmp	r5, r3
+ 166 003a F0D3     		bcc	.L9
+ 167              	.LBE2:
+  98:ring_buffer.c ****         }
+  99:ring_buffer.c ****     }
+ 100:ring_buffer.c ****     printf("\n");
+ 168              		.loc 1 100 0 is_stmt 1
+ 169 003c 0A20     		movs	r0, #10
+ 170 003e FFF7FEFF 		bl	putchar
+ 171              	.LVL18:
+ 172 0042 70BD     		pop	{r4, r5, r6, pc}
+ 173              	.LVL19:
+ 174              	.L13:
+ 175              		.align	2
+ 176              	.L12:
+ 177 0044 00000000 		.word	.LC0
+ 178 0048 18000000 		.word	.LC1
+ 179 004c 34000000 		.word	.LC2
+ 180              		.cfi_endproc
+ 181              	.LFE4:
+ 182              		.size	circBuffPrint, .-circBuffPrint
+ 183              		.section	.text.enqueueCircBuff,"ax",%progbits
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 6
+
+
+ 184              		.align	2
+ 185              		.global	enqueueCircBuff
+ 186              		.thumb
+ 187              		.thumb_func
+ 188              		.type	enqueueCircBuff, %function
+ 189              	enqueueCircBuff:
+ 190              	.LFB5:
+ 101:ring_buffer.c **** }
+ 102:ring_buffer.c **** 
+ 103:ring_buffer.c **** /*******************************************************************************
+ 104:ring_buffer.c **** * Function Name: enqueueCircBuff
+ 105:ring_buffer.c **** ********************************************************************************
+ 106:ring_buffer.c **** *
+ 107:ring_buffer.c **** * Summary:
+ 108:ring_buffer.c **** *   Queues new element to buffer instance. If buffer instance is full, removes
+ 109:ring_buffer.c **** *   oldest element.
+ 110:ring_buffer.c **** *
+ 111:ring_buffer.c **** * Parameters:  
+ 112:ring_buffer.c **** *   cb:     input       pointer to the buffer instance
+ 113:ring_buffer.c **** *   value:  input       new value to be queued
+ 114:ring_buffer.c **** *
+ 115:ring_buffer.c **** * Return:
+ 116:ring_buffer.c **** *   None
+ 117:ring_buffer.c **** *
+ 118:ring_buffer.c **** *******************************************************************************/
+ 119:ring_buffer.c **** void enqueueCircBuff(CircularBuffer *const cb, const uint16_t value) {
+ 191              		.loc 1 119 0
+ 192              		.cfi_startproc
+ 193              		@ args = 0, pretend = 0, frame = 0
+ 194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 195              	.LVL20:
+ 196 0000 38B5     		push	{r3, r4, r5, lr}
+ 197              		.cfi_def_cfa_offset 16
+ 198              		.cfi_offset 3, -16
+ 199              		.cfi_offset 4, -12
+ 200              		.cfi_offset 5, -8
+ 201              		.cfi_offset 14, -4
+ 202 0002 0446     		mov	r4, r0
+ 203 0004 0D46     		mov	r5, r1
+ 120:ring_buffer.c ****     if (isCircBuffFull(cb)) {
+ 204              		.loc 1 120 0
+ 205 0006 FFF7FEFF 		bl	isCircBuffFull
+ 206              	.LVL21:
+ 207 000a 50B1     		cbz	r0, .L15
+ 121:ring_buffer.c ****         // Delete head value (move head by one)
+ 122:ring_buffer.c ****         cb->head++;
+ 208              		.loc 1 122 0
+ 209 000c A38A     		ldrh	r3, [r4, #20]
+ 210 000e 0133     		adds	r3, r3, #1
+ 211 0010 9BB2     		uxth	r3, r3
+ 212 0012 A382     		strh	r3, [r4, #20]	@ movhi
+ 123:ring_buffer.c ****         cb->count--;
+ 213              		.loc 1 123 0
+ 214 0014 228B     		ldrh	r2, [r4, #24]
+ 215 0016 013A     		subs	r2, r2, #1
+ 216 0018 2283     		strh	r2, [r4, #24]	@ movhi
+ 124:ring_buffer.c **** 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 7
+
+
+ 125:ring_buffer.c ****         // Wrap around if head reached end of buffer
+ 126:ring_buffer.c ****         if (cb->head >= MAX_BUFFER_SIZE) {
+ 217              		.loc 1 126 0
+ 218 001a 092B     		cmp	r3, #9
+ 219 001c 01D9     		bls	.L15
+ 127:ring_buffer.c ****             cb->head = 0;
+ 220              		.loc 1 127 0
+ 221 001e 0023     		movs	r3, #0
+ 222 0020 A382     		strh	r3, [r4, #20]	@ movhi
+ 223              	.L15:
+ 128:ring_buffer.c ****         }
+ 129:ring_buffer.c ****     }
+ 130:ring_buffer.c ****     cb->buffer[cb->tail] = value;
+ 224              		.loc 1 130 0
+ 225 0022 E38A     		ldrh	r3, [r4, #22]
+ 226 0024 24F81350 		strh	r5, [r4, r3, lsl #1]	@ movhi
+ 131:ring_buffer.c ****     cb->tail++;
+ 227              		.loc 1 131 0
+ 228 0028 0133     		adds	r3, r3, #1
+ 229 002a 9BB2     		uxth	r3, r3
+ 230 002c E382     		strh	r3, [r4, #22]	@ movhi
+ 132:ring_buffer.c ****     cb->count++;
+ 231              		.loc 1 132 0
+ 232 002e 228B     		ldrh	r2, [r4, #24]
+ 233 0030 0132     		adds	r2, r2, #1
+ 234 0032 2283     		strh	r2, [r4, #24]	@ movhi
+ 133:ring_buffer.c **** 
+ 134:ring_buffer.c ****     // Wrap around if tail reached end of buffer
+ 135:ring_buffer.c ****     if (cb->tail >= MAX_BUFFER_SIZE) {
+ 235              		.loc 1 135 0
+ 236 0034 092B     		cmp	r3, #9
+ 237 0036 01D9     		bls	.L14
+ 136:ring_buffer.c ****         cb->tail = 0;
+ 238              		.loc 1 136 0
+ 239 0038 0023     		movs	r3, #0
+ 240 003a E382     		strh	r3, [r4, #22]	@ movhi
+ 241              	.L14:
+ 242 003c 38BD     		pop	{r3, r4, r5, pc}
+ 243              		.cfi_endproc
+ 244              	.LFE5:
+ 245              		.size	enqueueCircBuff, .-enqueueCircBuff
+ 246 003e 00BF     		.section	.text.dequeueCircBuff,"ax",%progbits
+ 247              		.align	2
+ 248              		.global	dequeueCircBuff
+ 249              		.thumb
+ 250              		.thumb_func
+ 251              		.type	dequeueCircBuff, %function
+ 252              	dequeueCircBuff:
+ 253              	.LFB6:
+ 137:ring_buffer.c ****     }
+ 138:ring_buffer.c **** }
+ 139:ring_buffer.c **** 
+ 140:ring_buffer.c **** /*******************************************************************************
+ 141:ring_buffer.c **** * Function Name: dequeueCircBuff
+ 142:ring_buffer.c **** ********************************************************************************
+ 143:ring_buffer.c **** *
+ 144:ring_buffer.c **** * Summary:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 8
+
+
+ 145:ring_buffer.c **** *   Dequeues oldest element from buffer instance. If buffer instance is empty,
+ 146:ring_buffer.c **** *   returns false.
+ 147:ring_buffer.c **** *
+ 148:ring_buffer.c **** * Parameters:  
+ 149:ring_buffer.c **** *   cb:        input       pointer to the buffer instance
+ 150:ring_buffer.c **** *   retval:    ouput       pointer to the oldest element
+ 151:ring_buffer.c **** *
+ 152:ring_buffer.c **** * Return:
+ 153:ring_buffer.c **** *   true (read success) / false (read fail)
+ 154:ring_buffer.c **** *
+ 155:ring_buffer.c **** *******************************************************************************/
+ 156:ring_buffer.c **** uint8_t dequeueCircBuff(CircularBuffer *const cb, uint16_t *const retval) {
+ 254              		.loc 1 156 0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              	.LVL22:
+ 259 0000 38B5     		push	{r3, r4, r5, lr}
+ 260              		.cfi_def_cfa_offset 16
+ 261              		.cfi_offset 3, -16
+ 262              		.cfi_offset 4, -12
+ 263              		.cfi_offset 5, -8
+ 264              		.cfi_offset 14, -4
+ 265 0002 0446     		mov	r4, r0
+ 266 0004 0D46     		mov	r5, r1
+ 157:ring_buffer.c ****     if (isCircBuffEmpty(cb)) {
+ 267              		.loc 1 157 0
+ 268 0006 FFF7FEFF 		bl	isCircBuffEmpty
+ 269              	.LVL23:
+ 270 000a 80B9     		cbnz	r0, .L20
+ 158:ring_buffer.c ****         return 0;
+ 159:ring_buffer.c ****     }
+ 160:ring_buffer.c **** 
+ 161:ring_buffer.c ****     *retval = cb->buffer[cb->head];
+ 271              		.loc 1 161 0
+ 272 000c A38A     		ldrh	r3, [r4, #20]
+ 273 000e 34F81330 		ldrh	r3, [r4, r3, lsl #1]
+ 274 0012 2B80     		strh	r3, [r5]	@ movhi
+ 162:ring_buffer.c ****     cb->head++;
+ 275              		.loc 1 162 0
+ 276 0014 A38A     		ldrh	r3, [r4, #20]
+ 277 0016 0133     		adds	r3, r3, #1
+ 278 0018 9BB2     		uxth	r3, r3
+ 279 001a A382     		strh	r3, [r4, #20]	@ movhi
+ 163:ring_buffer.c ****     cb->count--;
+ 280              		.loc 1 163 0
+ 281 001c 228B     		ldrh	r2, [r4, #24]
+ 282 001e 013A     		subs	r2, r2, #1
+ 283 0020 2283     		strh	r2, [r4, #24]	@ movhi
+ 164:ring_buffer.c **** 
+ 165:ring_buffer.c ****     // Wrap around if head reached end of buffer
+ 166:ring_buffer.c ****     if (cb->head >= MAX_BUFFER_SIZE) {
+ 284              		.loc 1 166 0
+ 285 0022 092B     		cmp	r3, #9
+ 286 0024 05D9     		bls	.L21
+ 167:ring_buffer.c ****         cb->head = 0;
+ 287              		.loc 1 167 0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 9
+
+
+ 288 0026 0023     		movs	r3, #0
+ 289 0028 A382     		strh	r3, [r4, #20]	@ movhi
+ 168:ring_buffer.c ****     }
+ 169:ring_buffer.c **** 
+ 170:ring_buffer.c ****     return 1;
+ 290              		.loc 1 170 0
+ 291 002a 0120     		movs	r0, #1
+ 292 002c 38BD     		pop	{r3, r4, r5, pc}
+ 293              	.LVL24:
+ 294              	.L20:
+ 158:ring_buffer.c ****     }
+ 295              		.loc 1 158 0
+ 296 002e 0020     		movs	r0, #0
+ 297 0030 38BD     		pop	{r3, r4, r5, pc}
+ 298              	.LVL25:
+ 299              	.L21:
+ 300              		.loc 1 170 0
+ 301 0032 0120     		movs	r0, #1
+ 171:ring_buffer.c **** }
+ 302              		.loc 1 171 0
+ 303 0034 38BD     		pop	{r3, r4, r5, pc}
+ 304              		.cfi_endproc
+ 305              	.LFE6:
+ 306              		.size	dequeueCircBuff, .-dequeueCircBuff
+ 307 0036 00BF     		.section	.rodata.str1.4,"aMS",%progbits,1
+ 308              		.align	2
+ 309              	.LC0:
+ 310 0000 456D7074 		.ascii	"Empty circular buffer.\000"
+ 310      79206369 
+ 310      7263756C 
+ 310      61722062 
+ 310      75666665 
+ 311 0017 00       		.space	1
+ 312              	.LC1:
+ 313 0018 5072696E 		.ascii	"Printing circular buffer: \000"
+ 313      74696E67 
+ 313      20636972 
+ 313      63756C61 
+ 313      72206275 
+ 314 0033 00       		.space	1
+ 315              	.LC2:
+ 316 0034 25642000 		.ascii	"%d \000"
+ 317              		.text
+ 318              	.Letext0:
+ 319              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 320              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 321              		.file 4 "ring_buffer.h"
+ 322              		.file 5 "<built-in>"
+ 323              		.file 6 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 324              		.section	.debug_info,"",%progbits
+ 325              	.Ldebug_info0:
+ 326 0000 01030000 		.4byte	0x301
+ 327 0004 0400     		.2byte	0x4
+ 328 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 329 000a 04       		.byte	0x4
+ 330 000b 01       		.uleb128 0x1
+ 331 000c 71010000 		.4byte	.LASF35
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 10
+
+
+ 332 0010 0C       		.byte	0xc
+ 333 0011 7C020000 		.4byte	.LASF36
+ 334 0015 EB000000 		.4byte	.LASF37
+ 335 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 336 001d 00000000 		.4byte	0
+ 337 0021 00000000 		.4byte	.Ldebug_line0
+ 338 0025 02       		.uleb128 0x2
+ 339 0026 01       		.byte	0x1
+ 340 0027 06       		.byte	0x6
+ 341 0028 70020000 		.4byte	.LASF0
+ 342 002c 03       		.uleb128 0x3
+ 343 002d 10000000 		.4byte	.LASF3
+ 344 0031 02       		.byte	0x2
+ 345 0032 1D       		.byte	0x1d
+ 346 0033 37000000 		.4byte	0x37
+ 347 0037 02       		.uleb128 0x2
+ 348 0038 01       		.byte	0x1
+ 349 0039 08       		.byte	0x8
+ 350 003a 89000000 		.4byte	.LASF1
+ 351 003e 02       		.uleb128 0x2
+ 352 003f 02       		.byte	0x2
+ 353 0040 05       		.byte	0x5
+ 354 0041 34020000 		.4byte	.LASF2
+ 355 0045 03       		.uleb128 0x3
+ 356 0046 DB000000 		.4byte	.LASF4
+ 357 004a 02       		.byte	0x2
+ 358 004b 2B       		.byte	0x2b
+ 359 004c 50000000 		.4byte	0x50
+ 360 0050 02       		.uleb128 0x2
+ 361 0051 02       		.byte	0x2
+ 362 0052 07       		.byte	0x7
+ 363 0053 C0000000 		.4byte	.LASF5
+ 364 0057 02       		.uleb128 0x2
+ 365 0058 04       		.byte	0x4
+ 366 0059 05       		.byte	0x5
+ 367 005a 53020000 		.4byte	.LASF6
+ 368 005e 02       		.uleb128 0x2
+ 369 005f 04       		.byte	0x4
+ 370 0060 07       		.byte	0x7
+ 371 0061 AE000000 		.4byte	.LASF7
+ 372 0065 02       		.uleb128 0x2
+ 373 0066 08       		.byte	0x8
+ 374 0067 05       		.byte	0x5
+ 375 0068 14020000 		.4byte	.LASF8
+ 376 006c 02       		.uleb128 0x2
+ 377 006d 08       		.byte	0x8
+ 378 006e 07       		.byte	0x7
+ 379 006f 52010000 		.4byte	.LASF9
+ 380 0073 04       		.uleb128 0x4
+ 381 0074 04       		.byte	0x4
+ 382 0075 05       		.byte	0x5
+ 383 0076 696E7400 		.ascii	"int\000"
+ 384 007a 02       		.uleb128 0x2
+ 385 007b 04       		.byte	0x4
+ 386 007c 07       		.byte	0x7
+ 387 007d 45010000 		.4byte	.LASF10
+ 388 0081 02       		.uleb128 0x2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 11
+
+
+ 389 0082 08       		.byte	0x8
+ 390 0083 04       		.byte	0x4
+ 391 0084 FF010000 		.4byte	.LASF11
+ 392 0088 02       		.uleb128 0x2
+ 393 0089 04       		.byte	0x4
+ 394 008a 07       		.byte	0x7
+ 395 008b 0B020000 		.4byte	.LASF12
+ 396 008f 02       		.uleb128 0x2
+ 397 0090 01       		.byte	0x1
+ 398 0091 08       		.byte	0x8
+ 399 0092 22020000 		.4byte	.LASF13
+ 400 0096 03       		.uleb128 0x3
+ 401 0097 69010000 		.4byte	.LASF14
+ 402 009b 03       		.byte	0x3
+ 403 009c 18       		.byte	0x18
+ 404 009d 2C000000 		.4byte	0x2c
+ 405 00a1 03       		.uleb128 0x3
+ 406 00a2 45020000 		.4byte	.LASF15
+ 407 00a6 03       		.byte	0x3
+ 408 00a7 24       		.byte	0x24
+ 409 00a8 45000000 		.4byte	0x45
+ 410 00ac 05       		.uleb128 0x5
+ 411 00ad 1A       		.byte	0x1a
+ 412 00ae 04       		.byte	0x4
+ 413 00af 12       		.byte	0x12
+ 414 00b0 E5000000 		.4byte	0xe5
+ 415 00b4 06       		.uleb128 0x6
+ 416 00b5 3E020000 		.4byte	.LASF16
+ 417 00b9 04       		.byte	0x4
+ 418 00ba 13       		.byte	0x13
+ 419 00bb E5000000 		.4byte	0xe5
+ 420 00bf 00       		.byte	0
+ 421 00c0 06       		.uleb128 0x6
+ 422 00c1 E6000000 		.4byte	.LASF17
+ 423 00c5 04       		.byte	0x4
+ 424 00c6 14       		.byte	0x14
+ 425 00c7 A1000000 		.4byte	0xa1
+ 426 00cb 14       		.byte	0x14
+ 427 00cc 06       		.uleb128 0x6
+ 428 00cd 4E020000 		.4byte	.LASF18
+ 429 00d1 04       		.byte	0x4
+ 430 00d2 15       		.byte	0x15
+ 431 00d3 A1000000 		.4byte	0xa1
+ 432 00d7 16       		.byte	0x16
+ 433 00d8 06       		.uleb128 0x6
+ 434 00d9 35000000 		.4byte	.LASF19
+ 435 00dd 04       		.byte	0x4
+ 436 00de 16       		.byte	0x16
+ 437 00df A1000000 		.4byte	0xa1
+ 438 00e3 18       		.byte	0x18
+ 439 00e4 00       		.byte	0
+ 440 00e5 07       		.uleb128 0x7
+ 441 00e6 A1000000 		.4byte	0xa1
+ 442 00ea F5000000 		.4byte	0xf5
+ 443 00ee 08       		.uleb128 0x8
+ 444 00ef 88000000 		.4byte	0x88
+ 445 00f3 09       		.byte	0x9
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 12
+
+
+ 446 00f4 00       		.byte	0
+ 447 00f5 03       		.uleb128 0x3
+ 448 00f6 61020000 		.4byte	.LASF20
+ 449 00fa 04       		.byte	0x4
+ 450 00fb 17       		.byte	0x17
+ 451 00fc AC000000 		.4byte	0xac
+ 452 0100 09       		.uleb128 0x9
+ 453 0101 22000000 		.4byte	.LASF23
+ 454 0105 01       		.byte	0x1
+ 455 0106 1C       		.byte	0x1c
+ 456 0107 00000000 		.4byte	.LFB1
+ 457 010b 0A000000 		.4byte	.LFE1-.LFB1
+ 458 010f 01       		.uleb128 0x1
+ 459 0110 9C       		.byte	0x9c
+ 460 0111 22010000 		.4byte	0x122
+ 461 0115 0A       		.uleb128 0xa
+ 462 0116 636200   		.ascii	"cb\000"
+ 463 0119 01       		.byte	0x1
+ 464 011a 1C       		.byte	0x1c
+ 465 011b 28010000 		.4byte	0x128
+ 466 011f 01       		.uleb128 0x1
+ 467 0120 50       		.byte	0x50
+ 468 0121 00       		.byte	0
+ 469 0122 0B       		.uleb128 0xb
+ 470 0123 04       		.byte	0x4
+ 471 0124 F5000000 		.4byte	0xf5
+ 472 0128 0C       		.uleb128 0xc
+ 473 0129 22010000 		.4byte	0x122
+ 474 012d 0D       		.uleb128 0xd
+ 475 012e 9E000000 		.4byte	.LASF21
+ 476 0132 01       		.byte	0x1
+ 477 0133 30       		.byte	0x30
+ 478 0134 96000000 		.4byte	0x96
+ 479 0138 00000000 		.4byte	.LFB2
+ 480 013c 0A000000 		.4byte	.LFE2-.LFB2
+ 481 0140 01       		.uleb128 0x1
+ 482 0141 9C       		.byte	0x9c
+ 483 0142 55010000 		.4byte	0x155
+ 484 0146 0E       		.uleb128 0xe
+ 485 0147 636200   		.ascii	"cb\000"
+ 486 014a 01       		.byte	0x1
+ 487 014b 30       		.byte	0x30
+ 488 014c 60010000 		.4byte	0x160
+ 489 0150 00000000 		.4byte	.LLST0
+ 490 0154 00       		.byte	0
+ 491 0155 0B       		.uleb128 0xb
+ 492 0156 04       		.byte	0x4
+ 493 0157 5B010000 		.4byte	0x15b
+ 494 015b 0C       		.uleb128 0xc
+ 495 015c F5000000 		.4byte	0xf5
+ 496 0160 0C       		.uleb128 0xc
+ 497 0161 55010000 		.4byte	0x155
+ 498 0165 0D       		.uleb128 0xd
+ 499 0166 6B000000 		.4byte	.LASF22
+ 500 016a 01       		.byte	0x1
+ 501 016b 42       		.byte	0x42
+ 502 016c 96000000 		.4byte	0x96
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 13
+
+
+ 503 0170 00000000 		.4byte	.LFB3
+ 504 0174 0C000000 		.4byte	.LFE3-.LFB3
+ 505 0178 01       		.uleb128 0x1
+ 506 0179 9C       		.byte	0x9c
+ 507 017a 8D010000 		.4byte	0x18d
+ 508 017e 0E       		.uleb128 0xe
+ 509 017f 636200   		.ascii	"cb\000"
+ 510 0182 01       		.byte	0x1
+ 511 0183 42       		.byte	0x42
+ 512 0184 60010000 		.4byte	0x160
+ 513 0188 21000000 		.4byte	.LLST1
+ 514 018c 00       		.byte	0
+ 515 018d 09       		.uleb128 0x9
+ 516 018e 3B000000 		.4byte	.LASF24
+ 517 0192 01       		.byte	0x1
+ 518 0193 54       		.byte	0x54
+ 519 0194 00000000 		.4byte	.LFB4
+ 520 0198 50000000 		.4byte	.LFE4-.LFB4
+ 521 019c 01       		.uleb128 0x1
+ 522 019d 9C       		.byte	0x9c
+ 523 019e 41020000 		.4byte	0x241
+ 524 01a2 0E       		.uleb128 0xe
+ 525 01a3 636200   		.ascii	"cb\000"
+ 526 01a6 01       		.byte	0x1
+ 527 01a7 54       		.byte	0x54
+ 528 01a8 60010000 		.4byte	0x160
+ 529 01ac 42000000 		.4byte	.LLST2
+ 530 01b0 0F       		.uleb128 0xf
+ 531 01b1 1A000000 		.4byte	.LASF25
+ 532 01b5 01       		.byte	0x1
+ 533 01b6 5A       		.byte	0x5a
+ 534 01b7 A1000000 		.4byte	0xa1
+ 535 01bb 6E000000 		.4byte	.LLST3
+ 536 01bf 10       		.uleb128 0x10
+ 537 01c0 1A000000 		.4byte	.LBB2
+ 538 01c4 22000000 		.4byte	.LBE2-.LBB2
+ 539 01c8 EF010000 		.4byte	0x1ef
+ 540 01cc 0F       		.uleb128 0xf
+ 541 01cd 27020000 		.4byte	.LASF26
+ 542 01d1 01       		.byte	0x1
+ 543 01d2 5C       		.byte	0x5c
+ 544 01d3 A1000000 		.4byte	0xa1
+ 545 01d7 8C000000 		.4byte	.LLST4
+ 546 01db 11       		.uleb128 0x11
+ 547 01dc 28000000 		.4byte	.LVL12
+ 548 01e0 DB020000 		.4byte	0x2db
+ 549 01e4 12       		.uleb128 0x12
+ 550 01e5 01       		.uleb128 0x1
+ 551 01e6 50       		.byte	0x50
+ 552 01e7 05       		.uleb128 0x5
+ 553 01e8 03       		.byte	0x3
+ 554 01e9 34000000 		.4byte	.LC2
+ 555 01ed 00       		.byte	0
+ 556 01ee 00       		.byte	0
+ 557 01ef 13       		.uleb128 0x13
+ 558 01f0 08000000 		.4byte	.LVL6
+ 559 01f4 2D010000 		.4byte	0x12d
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 14
+
+
+ 560 01f8 03020000 		.4byte	0x203
+ 561 01fc 12       		.uleb128 0x12
+ 562 01fd 01       		.uleb128 0x1
+ 563 01fe 50       		.byte	0x50
+ 564 01ff 02       		.uleb128 0x2
+ 565 0200 76       		.byte	0x76
+ 566 0201 00       		.sleb128 0
+ 567 0202 00       		.byte	0
+ 568 0203 13       		.uleb128 0x13
+ 569 0204 10000000 		.4byte	.LVL7
+ 570 0208 E6020000 		.4byte	0x2e6
+ 571 020c 1A020000 		.4byte	0x21a
+ 572 0210 12       		.uleb128 0x12
+ 573 0211 01       		.uleb128 0x1
+ 574 0212 50       		.byte	0x50
+ 575 0213 05       		.uleb128 0x5
+ 576 0214 03       		.byte	0x3
+ 577 0215 00000000 		.4byte	.LC0
+ 578 0219 00       		.byte	0
+ 579 021a 13       		.uleb128 0x13
+ 580 021b 1A000000 		.4byte	.LVL10
+ 581 021f DB020000 		.4byte	0x2db
+ 582 0223 31020000 		.4byte	0x231
+ 583 0227 12       		.uleb128 0x12
+ 584 0228 01       		.uleb128 0x1
+ 585 0229 50       		.byte	0x50
+ 586 022a 05       		.uleb128 0x5
+ 587 022b 03       		.byte	0x3
+ 588 022c 18000000 		.4byte	.LC1
+ 589 0230 00       		.byte	0
+ 590 0231 11       		.uleb128 0x11
+ 591 0232 42000000 		.4byte	.LVL18
+ 592 0236 F5020000 		.4byte	0x2f5
+ 593 023a 12       		.uleb128 0x12
+ 594 023b 01       		.uleb128 0x1
+ 595 023c 50       		.byte	0x50
+ 596 023d 01       		.uleb128 0x1
+ 597 023e 3A       		.byte	0x3a
+ 598 023f 00       		.byte	0
+ 599 0240 00       		.byte	0
+ 600 0241 09       		.uleb128 0x9
+ 601 0242 00000000 		.4byte	.LASF27
+ 602 0246 01       		.byte	0x1
+ 603 0247 77       		.byte	0x77
+ 604 0248 00000000 		.4byte	.LFB5
+ 605 024c 3E000000 		.4byte	.LFE5-.LFB5
+ 606 0250 01       		.uleb128 0x1
+ 607 0251 9C       		.byte	0x9c
+ 608 0252 84020000 		.4byte	0x284
+ 609 0256 0E       		.uleb128 0xe
+ 610 0257 636200   		.ascii	"cb\000"
+ 611 025a 01       		.byte	0x1
+ 612 025b 77       		.byte	0x77
+ 613 025c 28010000 		.4byte	0x128
+ 614 0260 B6000000 		.4byte	.LLST5
+ 615 0264 14       		.uleb128 0x14
+ 616 0265 2F000000 		.4byte	.LASF28
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 15
+
+
+ 617 0269 01       		.byte	0x1
+ 618 026a 77       		.byte	0x77
+ 619 026b 84020000 		.4byte	0x284
+ 620 026f D4000000 		.4byte	.LLST6
+ 621 0273 11       		.uleb128 0x11
+ 622 0274 0A000000 		.4byte	.LVL21
+ 623 0278 65010000 		.4byte	0x165
+ 624 027c 12       		.uleb128 0x12
+ 625 027d 01       		.uleb128 0x1
+ 626 027e 50       		.byte	0x50
+ 627 027f 02       		.uleb128 0x2
+ 628 0280 74       		.byte	0x74
+ 629 0281 00       		.sleb128 0
+ 630 0282 00       		.byte	0
+ 631 0283 00       		.byte	0
+ 632 0284 0C       		.uleb128 0xc
+ 633 0285 A1000000 		.4byte	0xa1
+ 634 0289 0D       		.uleb128 0xd
+ 635 028a 5B000000 		.4byte	.LASF29
+ 636 028e 01       		.byte	0x1
+ 637 028f 9C       		.byte	0x9c
+ 638 0290 96000000 		.4byte	0x96
+ 639 0294 00000000 		.4byte	.LFB6
+ 640 0298 36000000 		.4byte	.LFE6-.LFB6
+ 641 029c 01       		.uleb128 0x1
+ 642 029d 9C       		.byte	0x9c
+ 643 029e D0020000 		.4byte	0x2d0
+ 644 02a2 0E       		.uleb128 0xe
+ 645 02a3 636200   		.ascii	"cb\000"
+ 646 02a6 01       		.byte	0x1
+ 647 02a7 9C       		.byte	0x9c
+ 648 02a8 28010000 		.4byte	0x128
+ 649 02ac F5000000 		.4byte	.LLST7
+ 650 02b0 14       		.uleb128 0x14
+ 651 02b1 97000000 		.4byte	.LASF30
+ 652 02b5 01       		.byte	0x1
+ 653 02b6 9C       		.byte	0x9c
+ 654 02b7 D6020000 		.4byte	0x2d6
+ 655 02bb 13010000 		.4byte	.LLST8
+ 656 02bf 11       		.uleb128 0x11
+ 657 02c0 0A000000 		.4byte	.LVL23
+ 658 02c4 2D010000 		.4byte	0x12d
+ 659 02c8 12       		.uleb128 0x12
+ 660 02c9 01       		.uleb128 0x1
+ 661 02ca 50       		.byte	0x50
+ 662 02cb 02       		.uleb128 0x2
+ 663 02cc 74       		.byte	0x74
+ 664 02cd 00       		.sleb128 0
+ 665 02ce 00       		.byte	0
+ 666 02cf 00       		.byte	0
+ 667 02d0 0B       		.uleb128 0xb
+ 668 02d1 04       		.byte	0x4
+ 669 02d2 A1000000 		.4byte	0xa1
+ 670 02d6 0C       		.uleb128 0xc
+ 671 02d7 D0020000 		.4byte	0x2d0
+ 672 02db 15       		.uleb128 0x15
+ 673 02dc 2D020000 		.4byte	.LASF38
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 16
+
+
+ 674 02e0 2D020000 		.4byte	.LASF38
+ 675 02e4 06       		.byte	0x6
+ 676 02e5 BB       		.byte	0xbb
+ 677 02e6 16       		.uleb128 0x16
+ 678 02e7 5C020000 		.4byte	.LASF31
+ 679 02eb 7A000000 		.4byte	.LASF33
+ 680 02ef 05       		.byte	0x5
+ 681 02f0 00       		.byte	0
+ 682 02f1 5C020000 		.4byte	.LASF31
+ 683 02f5 16       		.uleb128 0x16
+ 684 02f6 D3000000 		.4byte	.LASF32
+ 685 02fa 49000000 		.4byte	.LASF34
+ 686 02fe 05       		.byte	0x5
+ 687 02ff 00       		.byte	0
+ 688 0300 D3000000 		.4byte	.LASF32
+ 689 0304 00       		.byte	0
+ 690              		.section	.debug_abbrev,"",%progbits
+ 691              	.Ldebug_abbrev0:
+ 692 0000 01       		.uleb128 0x1
+ 693 0001 11       		.uleb128 0x11
+ 694 0002 01       		.byte	0x1
+ 695 0003 25       		.uleb128 0x25
+ 696 0004 0E       		.uleb128 0xe
+ 697 0005 13       		.uleb128 0x13
+ 698 0006 0B       		.uleb128 0xb
+ 699 0007 03       		.uleb128 0x3
+ 700 0008 0E       		.uleb128 0xe
+ 701 0009 1B       		.uleb128 0x1b
+ 702 000a 0E       		.uleb128 0xe
+ 703 000b 55       		.uleb128 0x55
+ 704 000c 17       		.uleb128 0x17
+ 705 000d 11       		.uleb128 0x11
+ 706 000e 01       		.uleb128 0x1
+ 707 000f 10       		.uleb128 0x10
+ 708 0010 17       		.uleb128 0x17
+ 709 0011 00       		.byte	0
+ 710 0012 00       		.byte	0
+ 711 0013 02       		.uleb128 0x2
+ 712 0014 24       		.uleb128 0x24
+ 713 0015 00       		.byte	0
+ 714 0016 0B       		.uleb128 0xb
+ 715 0017 0B       		.uleb128 0xb
+ 716 0018 3E       		.uleb128 0x3e
+ 717 0019 0B       		.uleb128 0xb
+ 718 001a 03       		.uleb128 0x3
+ 719 001b 0E       		.uleb128 0xe
+ 720 001c 00       		.byte	0
+ 721 001d 00       		.byte	0
+ 722 001e 03       		.uleb128 0x3
+ 723 001f 16       		.uleb128 0x16
+ 724 0020 00       		.byte	0
+ 725 0021 03       		.uleb128 0x3
+ 726 0022 0E       		.uleb128 0xe
+ 727 0023 3A       		.uleb128 0x3a
+ 728 0024 0B       		.uleb128 0xb
+ 729 0025 3B       		.uleb128 0x3b
+ 730 0026 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 17
+
+
+ 731 0027 49       		.uleb128 0x49
+ 732 0028 13       		.uleb128 0x13
+ 733 0029 00       		.byte	0
+ 734 002a 00       		.byte	0
+ 735 002b 04       		.uleb128 0x4
+ 736 002c 24       		.uleb128 0x24
+ 737 002d 00       		.byte	0
+ 738 002e 0B       		.uleb128 0xb
+ 739 002f 0B       		.uleb128 0xb
+ 740 0030 3E       		.uleb128 0x3e
+ 741 0031 0B       		.uleb128 0xb
+ 742 0032 03       		.uleb128 0x3
+ 743 0033 08       		.uleb128 0x8
+ 744 0034 00       		.byte	0
+ 745 0035 00       		.byte	0
+ 746 0036 05       		.uleb128 0x5
+ 747 0037 13       		.uleb128 0x13
+ 748 0038 01       		.byte	0x1
+ 749 0039 0B       		.uleb128 0xb
+ 750 003a 0B       		.uleb128 0xb
+ 751 003b 3A       		.uleb128 0x3a
+ 752 003c 0B       		.uleb128 0xb
+ 753 003d 3B       		.uleb128 0x3b
+ 754 003e 0B       		.uleb128 0xb
+ 755 003f 01       		.uleb128 0x1
+ 756 0040 13       		.uleb128 0x13
+ 757 0041 00       		.byte	0
+ 758 0042 00       		.byte	0
+ 759 0043 06       		.uleb128 0x6
+ 760 0044 0D       		.uleb128 0xd
+ 761 0045 00       		.byte	0
+ 762 0046 03       		.uleb128 0x3
+ 763 0047 0E       		.uleb128 0xe
+ 764 0048 3A       		.uleb128 0x3a
+ 765 0049 0B       		.uleb128 0xb
+ 766 004a 3B       		.uleb128 0x3b
+ 767 004b 0B       		.uleb128 0xb
+ 768 004c 49       		.uleb128 0x49
+ 769 004d 13       		.uleb128 0x13
+ 770 004e 38       		.uleb128 0x38
+ 771 004f 0B       		.uleb128 0xb
+ 772 0050 00       		.byte	0
+ 773 0051 00       		.byte	0
+ 774 0052 07       		.uleb128 0x7
+ 775 0053 01       		.uleb128 0x1
+ 776 0054 01       		.byte	0x1
+ 777 0055 49       		.uleb128 0x49
+ 778 0056 13       		.uleb128 0x13
+ 779 0057 01       		.uleb128 0x1
+ 780 0058 13       		.uleb128 0x13
+ 781 0059 00       		.byte	0
+ 782 005a 00       		.byte	0
+ 783 005b 08       		.uleb128 0x8
+ 784 005c 21       		.uleb128 0x21
+ 785 005d 00       		.byte	0
+ 786 005e 49       		.uleb128 0x49
+ 787 005f 13       		.uleb128 0x13
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 18
+
+
+ 788 0060 2F       		.uleb128 0x2f
+ 789 0061 0B       		.uleb128 0xb
+ 790 0062 00       		.byte	0
+ 791 0063 00       		.byte	0
+ 792 0064 09       		.uleb128 0x9
+ 793 0065 2E       		.uleb128 0x2e
+ 794 0066 01       		.byte	0x1
+ 795 0067 3F       		.uleb128 0x3f
+ 796 0068 19       		.uleb128 0x19
+ 797 0069 03       		.uleb128 0x3
+ 798 006a 0E       		.uleb128 0xe
+ 799 006b 3A       		.uleb128 0x3a
+ 800 006c 0B       		.uleb128 0xb
+ 801 006d 3B       		.uleb128 0x3b
+ 802 006e 0B       		.uleb128 0xb
+ 803 006f 27       		.uleb128 0x27
+ 804 0070 19       		.uleb128 0x19
+ 805 0071 11       		.uleb128 0x11
+ 806 0072 01       		.uleb128 0x1
+ 807 0073 12       		.uleb128 0x12
+ 808 0074 06       		.uleb128 0x6
+ 809 0075 40       		.uleb128 0x40
+ 810 0076 18       		.uleb128 0x18
+ 811 0077 9742     		.uleb128 0x2117
+ 812 0079 19       		.uleb128 0x19
+ 813 007a 01       		.uleb128 0x1
+ 814 007b 13       		.uleb128 0x13
+ 815 007c 00       		.byte	0
+ 816 007d 00       		.byte	0
+ 817 007e 0A       		.uleb128 0xa
+ 818 007f 05       		.uleb128 0x5
+ 819 0080 00       		.byte	0
+ 820 0081 03       		.uleb128 0x3
+ 821 0082 08       		.uleb128 0x8
+ 822 0083 3A       		.uleb128 0x3a
+ 823 0084 0B       		.uleb128 0xb
+ 824 0085 3B       		.uleb128 0x3b
+ 825 0086 0B       		.uleb128 0xb
+ 826 0087 49       		.uleb128 0x49
+ 827 0088 13       		.uleb128 0x13
+ 828 0089 02       		.uleb128 0x2
+ 829 008a 18       		.uleb128 0x18
+ 830 008b 00       		.byte	0
+ 831 008c 00       		.byte	0
+ 832 008d 0B       		.uleb128 0xb
+ 833 008e 0F       		.uleb128 0xf
+ 834 008f 00       		.byte	0
+ 835 0090 0B       		.uleb128 0xb
+ 836 0091 0B       		.uleb128 0xb
+ 837 0092 49       		.uleb128 0x49
+ 838 0093 13       		.uleb128 0x13
+ 839 0094 00       		.byte	0
+ 840 0095 00       		.byte	0
+ 841 0096 0C       		.uleb128 0xc
+ 842 0097 26       		.uleb128 0x26
+ 843 0098 00       		.byte	0
+ 844 0099 49       		.uleb128 0x49
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 19
+
+
+ 845 009a 13       		.uleb128 0x13
+ 846 009b 00       		.byte	0
+ 847 009c 00       		.byte	0
+ 848 009d 0D       		.uleb128 0xd
+ 849 009e 2E       		.uleb128 0x2e
+ 850 009f 01       		.byte	0x1
+ 851 00a0 3F       		.uleb128 0x3f
+ 852 00a1 19       		.uleb128 0x19
+ 853 00a2 03       		.uleb128 0x3
+ 854 00a3 0E       		.uleb128 0xe
+ 855 00a4 3A       		.uleb128 0x3a
+ 856 00a5 0B       		.uleb128 0xb
+ 857 00a6 3B       		.uleb128 0x3b
+ 858 00a7 0B       		.uleb128 0xb
+ 859 00a8 27       		.uleb128 0x27
+ 860 00a9 19       		.uleb128 0x19
+ 861 00aa 49       		.uleb128 0x49
+ 862 00ab 13       		.uleb128 0x13
+ 863 00ac 11       		.uleb128 0x11
+ 864 00ad 01       		.uleb128 0x1
+ 865 00ae 12       		.uleb128 0x12
+ 866 00af 06       		.uleb128 0x6
+ 867 00b0 40       		.uleb128 0x40
+ 868 00b1 18       		.uleb128 0x18
+ 869 00b2 9742     		.uleb128 0x2117
+ 870 00b4 19       		.uleb128 0x19
+ 871 00b5 01       		.uleb128 0x1
+ 872 00b6 13       		.uleb128 0x13
+ 873 00b7 00       		.byte	0
+ 874 00b8 00       		.byte	0
+ 875 00b9 0E       		.uleb128 0xe
+ 876 00ba 05       		.uleb128 0x5
+ 877 00bb 00       		.byte	0
+ 878 00bc 03       		.uleb128 0x3
+ 879 00bd 08       		.uleb128 0x8
+ 880 00be 3A       		.uleb128 0x3a
+ 881 00bf 0B       		.uleb128 0xb
+ 882 00c0 3B       		.uleb128 0x3b
+ 883 00c1 0B       		.uleb128 0xb
+ 884 00c2 49       		.uleb128 0x49
+ 885 00c3 13       		.uleb128 0x13
+ 886 00c4 02       		.uleb128 0x2
+ 887 00c5 17       		.uleb128 0x17
+ 888 00c6 00       		.byte	0
+ 889 00c7 00       		.byte	0
+ 890 00c8 0F       		.uleb128 0xf
+ 891 00c9 34       		.uleb128 0x34
+ 892 00ca 00       		.byte	0
+ 893 00cb 03       		.uleb128 0x3
+ 894 00cc 0E       		.uleb128 0xe
+ 895 00cd 3A       		.uleb128 0x3a
+ 896 00ce 0B       		.uleb128 0xb
+ 897 00cf 3B       		.uleb128 0x3b
+ 898 00d0 0B       		.uleb128 0xb
+ 899 00d1 49       		.uleb128 0x49
+ 900 00d2 13       		.uleb128 0x13
+ 901 00d3 02       		.uleb128 0x2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 20
+
+
+ 902 00d4 17       		.uleb128 0x17
+ 903 00d5 00       		.byte	0
+ 904 00d6 00       		.byte	0
+ 905 00d7 10       		.uleb128 0x10
+ 906 00d8 0B       		.uleb128 0xb
+ 907 00d9 01       		.byte	0x1
+ 908 00da 11       		.uleb128 0x11
+ 909 00db 01       		.uleb128 0x1
+ 910 00dc 12       		.uleb128 0x12
+ 911 00dd 06       		.uleb128 0x6
+ 912 00de 01       		.uleb128 0x1
+ 913 00df 13       		.uleb128 0x13
+ 914 00e0 00       		.byte	0
+ 915 00e1 00       		.byte	0
+ 916 00e2 11       		.uleb128 0x11
+ 917 00e3 898201   		.uleb128 0x4109
+ 918 00e6 01       		.byte	0x1
+ 919 00e7 11       		.uleb128 0x11
+ 920 00e8 01       		.uleb128 0x1
+ 921 00e9 31       		.uleb128 0x31
+ 922 00ea 13       		.uleb128 0x13
+ 923 00eb 00       		.byte	0
+ 924 00ec 00       		.byte	0
+ 925 00ed 12       		.uleb128 0x12
+ 926 00ee 8A8201   		.uleb128 0x410a
+ 927 00f1 00       		.byte	0
+ 928 00f2 02       		.uleb128 0x2
+ 929 00f3 18       		.uleb128 0x18
+ 930 00f4 9142     		.uleb128 0x2111
+ 931 00f6 18       		.uleb128 0x18
+ 932 00f7 00       		.byte	0
+ 933 00f8 00       		.byte	0
+ 934 00f9 13       		.uleb128 0x13
+ 935 00fa 898201   		.uleb128 0x4109
+ 936 00fd 01       		.byte	0x1
+ 937 00fe 11       		.uleb128 0x11
+ 938 00ff 01       		.uleb128 0x1
+ 939 0100 31       		.uleb128 0x31
+ 940 0101 13       		.uleb128 0x13
+ 941 0102 01       		.uleb128 0x1
+ 942 0103 13       		.uleb128 0x13
+ 943 0104 00       		.byte	0
+ 944 0105 00       		.byte	0
+ 945 0106 14       		.uleb128 0x14
+ 946 0107 05       		.uleb128 0x5
+ 947 0108 00       		.byte	0
+ 948 0109 03       		.uleb128 0x3
+ 949 010a 0E       		.uleb128 0xe
+ 950 010b 3A       		.uleb128 0x3a
+ 951 010c 0B       		.uleb128 0xb
+ 952 010d 3B       		.uleb128 0x3b
+ 953 010e 0B       		.uleb128 0xb
+ 954 010f 49       		.uleb128 0x49
+ 955 0110 13       		.uleb128 0x13
+ 956 0111 02       		.uleb128 0x2
+ 957 0112 17       		.uleb128 0x17
+ 958 0113 00       		.byte	0
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 21
+
+
+ 959 0114 00       		.byte	0
+ 960 0115 15       		.uleb128 0x15
+ 961 0116 2E       		.uleb128 0x2e
+ 962 0117 00       		.byte	0
+ 963 0118 3F       		.uleb128 0x3f
+ 964 0119 19       		.uleb128 0x19
+ 965 011a 3C       		.uleb128 0x3c
+ 966 011b 19       		.uleb128 0x19
+ 967 011c 6E       		.uleb128 0x6e
+ 968 011d 0E       		.uleb128 0xe
+ 969 011e 03       		.uleb128 0x3
+ 970 011f 0E       		.uleb128 0xe
+ 971 0120 3A       		.uleb128 0x3a
+ 972 0121 0B       		.uleb128 0xb
+ 973 0122 3B       		.uleb128 0x3b
+ 974 0123 0B       		.uleb128 0xb
+ 975 0124 00       		.byte	0
+ 976 0125 00       		.byte	0
+ 977 0126 16       		.uleb128 0x16
+ 978 0127 2E       		.uleb128 0x2e
+ 979 0128 00       		.byte	0
+ 980 0129 3F       		.uleb128 0x3f
+ 981 012a 19       		.uleb128 0x19
+ 982 012b 3C       		.uleb128 0x3c
+ 983 012c 19       		.uleb128 0x19
+ 984 012d 6E       		.uleb128 0x6e
+ 985 012e 0E       		.uleb128 0xe
+ 986 012f 03       		.uleb128 0x3
+ 987 0130 0E       		.uleb128 0xe
+ 988 0131 3A       		.uleb128 0x3a
+ 989 0132 0B       		.uleb128 0xb
+ 990 0133 3B       		.uleb128 0x3b
+ 991 0134 0B       		.uleb128 0xb
+ 992 0135 6E       		.uleb128 0x6e
+ 993 0136 0E       		.uleb128 0xe
+ 994 0137 00       		.byte	0
+ 995 0138 00       		.byte	0
+ 996 0139 00       		.byte	0
+ 997              		.section	.debug_loc,"",%progbits
+ 998              	.Ldebug_loc0:
+ 999              	.LLST0:
+ 1000 0000 00000000 		.4byte	.LVL1
+ 1001 0004 02000000 		.4byte	.LVL2
+ 1002 0008 0100     		.2byte	0x1
+ 1003 000a 50       		.byte	0x50
+ 1004 000b 02000000 		.4byte	.LVL2
+ 1005 000f 0A000000 		.4byte	.LFE2
+ 1006 0013 0400     		.2byte	0x4
+ 1007 0015 F3       		.byte	0xf3
+ 1008 0016 01       		.uleb128 0x1
+ 1009 0017 50       		.byte	0x50
+ 1010 0018 9F       		.byte	0x9f
+ 1011 0019 00000000 		.4byte	0
+ 1012 001d 00000000 		.4byte	0
+ 1013              	.LLST1:
+ 1014 0021 00000000 		.4byte	.LVL3
+ 1015 0025 02000000 		.4byte	.LVL4
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 22
+
+
+ 1016 0029 0100     		.2byte	0x1
+ 1017 002b 50       		.byte	0x50
+ 1018 002c 02000000 		.4byte	.LVL4
+ 1019 0030 0C000000 		.4byte	.LFE3
+ 1020 0034 0400     		.2byte	0x4
+ 1021 0036 F3       		.byte	0xf3
+ 1022 0037 01       		.uleb128 0x1
+ 1023 0038 50       		.byte	0x50
+ 1024 0039 9F       		.byte	0x9f
+ 1025 003a 00000000 		.4byte	0
+ 1026 003e 00000000 		.4byte	0
+ 1027              	.LLST2:
+ 1028 0042 00000000 		.4byte	.LVL5
+ 1029 0046 07000000 		.4byte	.LVL6-1
+ 1030 004a 0100     		.2byte	0x1
+ 1031 004c 50       		.byte	0x50
+ 1032 004d 07000000 		.4byte	.LVL6-1
+ 1033 0051 44000000 		.4byte	.LVL19
+ 1034 0055 0100     		.2byte	0x1
+ 1035 0057 56       		.byte	0x56
+ 1036 0058 44000000 		.4byte	.LVL19
+ 1037 005c 50000000 		.4byte	.LFE4
+ 1038 0060 0400     		.2byte	0x4
+ 1039 0062 F3       		.byte	0xf3
+ 1040 0063 01       		.uleb128 0x1
+ 1041 0064 50       		.byte	0x50
+ 1042 0065 9F       		.byte	0x9f
+ 1043 0066 00000000 		.4byte	0
+ 1044 006a 00000000 		.4byte	0
+ 1045              	.LLST3:
+ 1046 006e 14000000 		.4byte	.LVL9
+ 1047 0072 2A000000 		.4byte	.LVL13
+ 1048 0076 0100     		.2byte	0x1
+ 1049 0078 54       		.byte	0x54
+ 1050 0079 2C000000 		.4byte	.LVL14
+ 1051 007d 44000000 		.4byte	.LVL19
+ 1052 0081 0100     		.2byte	0x1
+ 1053 0083 54       		.byte	0x54
+ 1054 0084 00000000 		.4byte	0
+ 1055 0088 00000000 		.4byte	0
+ 1056              	.LLST4:
+ 1057 008c 1A000000 		.4byte	.LVL10
+ 1058 0090 1E000000 		.4byte	.LVL11
+ 1059 0094 0200     		.2byte	0x2
+ 1060 0096 30       		.byte	0x30
+ 1061 0097 9F       		.byte	0x9f
+ 1062 0098 1E000000 		.4byte	.LVL11
+ 1063 009c 34000000 		.4byte	.LVL16
+ 1064 00a0 0100     		.2byte	0x1
+ 1065 00a2 55       		.byte	0x55
+ 1066 00a3 36000000 		.4byte	.LVL17
+ 1067 00a7 44000000 		.4byte	.LVL19
+ 1068 00ab 0100     		.2byte	0x1
+ 1069 00ad 55       		.byte	0x55
+ 1070 00ae 00000000 		.4byte	0
+ 1071 00b2 00000000 		.4byte	0
+ 1072              	.LLST5:
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 23
+
+
+ 1073 00b6 00000000 		.4byte	.LVL20
+ 1074 00ba 09000000 		.4byte	.LVL21-1
+ 1075 00be 0100     		.2byte	0x1
+ 1076 00c0 50       		.byte	0x50
+ 1077 00c1 09000000 		.4byte	.LVL21-1
+ 1078 00c5 3E000000 		.4byte	.LFE5
+ 1079 00c9 0100     		.2byte	0x1
+ 1080 00cb 54       		.byte	0x54
+ 1081 00cc 00000000 		.4byte	0
+ 1082 00d0 00000000 		.4byte	0
+ 1083              	.LLST6:
+ 1084 00d4 00000000 		.4byte	.LVL20
+ 1085 00d8 09000000 		.4byte	.LVL21-1
+ 1086 00dc 0100     		.2byte	0x1
+ 1087 00de 51       		.byte	0x51
+ 1088 00df 09000000 		.4byte	.LVL21-1
+ 1089 00e3 3E000000 		.4byte	.LFE5
+ 1090 00e7 0400     		.2byte	0x4
+ 1091 00e9 F3       		.byte	0xf3
+ 1092 00ea 01       		.uleb128 0x1
+ 1093 00eb 51       		.byte	0x51
+ 1094 00ec 9F       		.byte	0x9f
+ 1095 00ed 00000000 		.4byte	0
+ 1096 00f1 00000000 		.4byte	0
+ 1097              	.LLST7:
+ 1098 00f5 00000000 		.4byte	.LVL22
+ 1099 00f9 09000000 		.4byte	.LVL23-1
+ 1100 00fd 0100     		.2byte	0x1
+ 1101 00ff 50       		.byte	0x50
+ 1102 0100 09000000 		.4byte	.LVL23-1
+ 1103 0104 36000000 		.4byte	.LFE6
+ 1104 0108 0100     		.2byte	0x1
+ 1105 010a 54       		.byte	0x54
+ 1106 010b 00000000 		.4byte	0
+ 1107 010f 00000000 		.4byte	0
+ 1108              	.LLST8:
+ 1109 0113 00000000 		.4byte	.LVL22
+ 1110 0117 09000000 		.4byte	.LVL23-1
+ 1111 011b 0100     		.2byte	0x1
+ 1112 011d 51       		.byte	0x51
+ 1113 011e 09000000 		.4byte	.LVL23-1
+ 1114 0122 36000000 		.4byte	.LFE6
+ 1115 0126 0100     		.2byte	0x1
+ 1116 0128 55       		.byte	0x55
+ 1117 0129 00000000 		.4byte	0
+ 1118 012d 00000000 		.4byte	0
+ 1119              		.section	.debug_aranges,"",%progbits
+ 1120 0000 44000000 		.4byte	0x44
+ 1121 0004 0200     		.2byte	0x2
+ 1122 0006 00000000 		.4byte	.Ldebug_info0
+ 1123 000a 04       		.byte	0x4
+ 1124 000b 00       		.byte	0
+ 1125 000c 0000     		.2byte	0
+ 1126 000e 0000     		.2byte	0
+ 1127 0010 00000000 		.4byte	.LFB1
+ 1128 0014 0A000000 		.4byte	.LFE1-.LFB1
+ 1129 0018 00000000 		.4byte	.LFB2
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 24
+
+
+ 1130 001c 0A000000 		.4byte	.LFE2-.LFB2
+ 1131 0020 00000000 		.4byte	.LFB3
+ 1132 0024 0C000000 		.4byte	.LFE3-.LFB3
+ 1133 0028 00000000 		.4byte	.LFB4
+ 1134 002c 50000000 		.4byte	.LFE4-.LFB4
+ 1135 0030 00000000 		.4byte	.LFB5
+ 1136 0034 3E000000 		.4byte	.LFE5-.LFB5
+ 1137 0038 00000000 		.4byte	.LFB6
+ 1138 003c 36000000 		.4byte	.LFE6-.LFB6
+ 1139 0040 00000000 		.4byte	0
+ 1140 0044 00000000 		.4byte	0
+ 1141              		.section	.debug_ranges,"",%progbits
+ 1142              	.Ldebug_ranges0:
+ 1143 0000 00000000 		.4byte	.LFB1
+ 1144 0004 0A000000 		.4byte	.LFE1
+ 1145 0008 00000000 		.4byte	.LFB2
+ 1146 000c 0A000000 		.4byte	.LFE2
+ 1147 0010 00000000 		.4byte	.LFB3
+ 1148 0014 0C000000 		.4byte	.LFE3
+ 1149 0018 00000000 		.4byte	.LFB4
+ 1150 001c 50000000 		.4byte	.LFE4
+ 1151 0020 00000000 		.4byte	.LFB5
+ 1152 0024 3E000000 		.4byte	.LFE5
+ 1153 0028 00000000 		.4byte	.LFB6
+ 1154 002c 36000000 		.4byte	.LFE6
+ 1155 0030 00000000 		.4byte	0
+ 1156 0034 00000000 		.4byte	0
+ 1157              		.section	.debug_line,"",%progbits
+ 1158              	.Ldebug_line0:
+ 1159 0000 4D020000 		.section	.debug_str,"MS",%progbits,1
+ 1159      0200B301 
+ 1159      00000201 
+ 1159      FB0E0D00 
+ 1159      01010101 
+ 1160              	.LASF27:
+ 1161 0000 656E7175 		.ascii	"enqueueCircBuff\000"
+ 1161      65756543 
+ 1161      69726342 
+ 1161      75666600 
+ 1162              	.LASF3:
+ 1163 0010 5F5F7569 		.ascii	"__uint8_t\000"
+ 1163      6E74385F 
+ 1163      7400
+ 1164              	.LASF25:
+ 1165 001a 63757272 		.ascii	"current\000"
+ 1165      656E7400 
+ 1166              	.LASF23:
+ 1167 0022 63697263 		.ascii	"circBuffInit\000"
+ 1167      42756666 
+ 1167      496E6974 
+ 1167      00
+ 1168              	.LASF28:
+ 1169 002f 76616C75 		.ascii	"value\000"
+ 1169      6500
+ 1170              	.LASF19:
+ 1171 0035 636F756E 		.ascii	"count\000"
+ 1171      7400
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 25
+
+
+ 1172              	.LASF24:
+ 1173 003b 63697263 		.ascii	"circBuffPrint\000"
+ 1173      42756666 
+ 1173      5072696E 
+ 1173      7400
+ 1174              	.LASF34:
+ 1175 0049 5F5F6275 		.ascii	"__builtin_putchar\000"
+ 1175      696C7469 
+ 1175      6E5F7075 
+ 1175      74636861 
+ 1175      7200
+ 1176              	.LASF29:
+ 1177 005b 64657175 		.ascii	"dequeueCircBuff\000"
+ 1177      65756543 
+ 1177      69726342 
+ 1177      75666600 
+ 1178              	.LASF22:
+ 1179 006b 69734369 		.ascii	"isCircBuffFull\000"
+ 1179      72634275 
+ 1179      66664675 
+ 1179      6C6C00
+ 1180              	.LASF33:
+ 1181 007a 5F5F6275 		.ascii	"__builtin_puts\000"
+ 1181      696C7469 
+ 1181      6E5F7075 
+ 1181      747300
+ 1182              	.LASF1:
+ 1183 0089 756E7369 		.ascii	"unsigned char\000"
+ 1183      676E6564 
+ 1183      20636861 
+ 1183      7200
+ 1184              	.LASF30:
+ 1185 0097 72657476 		.ascii	"retval\000"
+ 1185      616C00
+ 1186              	.LASF21:
+ 1187 009e 69734369 		.ascii	"isCircBuffEmpty\000"
+ 1187      72634275 
+ 1187      6666456D 
+ 1187      70747900 
+ 1188              	.LASF7:
+ 1189 00ae 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1189      20756E73 
+ 1189      69676E65 
+ 1189      6420696E 
+ 1189      7400
+ 1190              	.LASF5:
+ 1191 00c0 73686F72 		.ascii	"short unsigned int\000"
+ 1191      7420756E 
+ 1191      7369676E 
+ 1191      65642069 
+ 1191      6E7400
+ 1192              	.LASF32:
+ 1193 00d3 70757463 		.ascii	"putchar\000"
+ 1193      68617200 
+ 1194              	.LASF4:
+ 1195 00db 5F5F7569 		.ascii	"__uint16_t\000"
+ 1195      6E743136 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 26
+
+
+ 1195      5F7400
+ 1196              	.LASF17:
+ 1197 00e6 68656164 		.ascii	"head\000"
+ 1197      00
+ 1198              	.LASF37:
+ 1199 00eb 433A5C55 		.ascii	"C:\\Users\\Gemma\\Desktop\\PSoC\\Project-DAQ_for_Ra"
+ 1199      73657273 
+ 1199      5C47656D 
+ 1199      6D615C44 
+ 1199      65736B74 
+ 1200 0119 73706265 		.ascii	"spberryPi\\Project-DAQ_for_RaspberryPi.cydsn\000"
+ 1200      72727950 
+ 1200      695C5072 
+ 1200      6F6A6563 
+ 1200      742D4441 
+ 1201              	.LASF10:
+ 1202 0145 756E7369 		.ascii	"unsigned int\000"
+ 1202      676E6564 
+ 1202      20696E74 
+ 1202      00
+ 1203              	.LASF9:
+ 1204 0152 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1204      206C6F6E 
+ 1204      6720756E 
+ 1204      7369676E 
+ 1204      65642069 
+ 1205              	.LASF14:
+ 1206 0169 75696E74 		.ascii	"uint8_t\000"
+ 1206      385F7400 
+ 1207              	.LASF35:
+ 1208 0171 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1208      43313120 
+ 1208      352E342E 
+ 1208      31203230 
+ 1208      31363036 
+ 1209 01a4 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1209      20726576 
+ 1209      6973696F 
+ 1209      6E203233 
+ 1209      37373135 
+ 1210 01d7 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1210      66756E63 
+ 1210      74696F6E 
+ 1210      2D736563 
+ 1210      74696F6E 
+ 1211              	.LASF11:
+ 1212 01ff 6C6F6E67 		.ascii	"long double\000"
+ 1212      20646F75 
+ 1212      626C6500 
+ 1213              	.LASF12:
+ 1214 020b 73697A65 		.ascii	"sizetype\000"
+ 1214      74797065 
+ 1214      00
+ 1215              	.LASF8:
+ 1216 0214 6C6F6E67 		.ascii	"long long int\000"
+ 1216      206C6F6E 
+ 1216      6720696E 
+ARM GAS  C:\Users\Gemma\AppData\Local\Temp\ccng04U5.s 			page 27
+
+
+ 1216      7400
+ 1217              	.LASF13:
+ 1218 0222 63686172 		.ascii	"char\000"
+ 1218      00
+ 1219              	.LASF26:
+ 1220 0227 696E6465 		.ascii	"index\000"
+ 1220      7800
+ 1221              	.LASF38:
+ 1222 022d 7072696E 		.ascii	"printf\000"
+ 1222      746600
+ 1223              	.LASF2:
+ 1224 0234 73686F72 		.ascii	"short int\000"
+ 1224      7420696E 
+ 1224      7400
+ 1225              	.LASF16:
+ 1226 023e 62756666 		.ascii	"buffer\000"
+ 1226      657200
+ 1227              	.LASF15:
+ 1228 0245 75696E74 		.ascii	"uint16_t\000"
+ 1228      31365F74 
+ 1228      00
+ 1229              	.LASF18:
+ 1230 024e 7461696C 		.ascii	"tail\000"
+ 1230      00
+ 1231              	.LASF6:
+ 1232 0253 6C6F6E67 		.ascii	"long int\000"
+ 1232      20696E74 
+ 1232      00
+ 1233              	.LASF31:
+ 1234 025c 70757473 		.ascii	"puts\000"
+ 1234      00
+ 1235              	.LASF20:
+ 1236 0261 43697263 		.ascii	"CircularBuffer\000"
+ 1236      756C6172 
+ 1236      42756666 
+ 1236      657200
+ 1237              	.LASF0:
+ 1238 0270 7369676E 		.ascii	"signed char\000"
+ 1238      65642063 
+ 1238      68617200 
+ 1239              	.LASF36:
+ 1240 027c 72696E67 		.ascii	"ring_buffer.c\000"
+ 1240      5F627566 
+ 1240      6665722E 
+ 1240      6300
+ 1241              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
