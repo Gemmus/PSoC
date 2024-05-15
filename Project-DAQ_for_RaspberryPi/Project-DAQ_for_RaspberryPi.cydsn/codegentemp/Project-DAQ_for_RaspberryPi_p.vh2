@@ -1,5 +1,5 @@
 -- Project:   Project-DAQ_for_RaspberryPi
--- Generated: 04/20/2024 20:26:12
+-- Generated: 05/01/2024 20:11:53
 -- PSoC Creator  4.2
 
 ENTITY \Project-DAQ_for_RaspberryPi\ IS
@@ -7,8 +7,7 @@ ENTITY \Project-DAQ_for_RaspberryPi\ IS
         Tx(0)_PAD : OUT std_ulogic;
         Rx(0)_PAD : IN std_ulogic;
         SDA(0)_PAD : INOUT std_ulogic;
-        SCL(0)_PAD : INOUT std_ulogic;
-        RST(0)_PAD : IN std_ulogic);
+        SCL(0)_PAD : INOUT std_ulogic);
     ATTRIBUTE voltage_VDDABUF OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VUSB OF __DEFAULT__ : ENTITY IS 5e0;
@@ -43,16 +42,14 @@ ARCHITECTURE __DEFAULT__ OF \Project-DAQ_for_RaspberryPi\ IS
     ATTRIBUTE udbclken_assigned OF Net_40 : SIGNAL IS "True";
     ATTRIBUTE global_signal OF Net_40 : SIGNAL IS true;
     SIGNAL Net_40_local : bit;
-    SIGNAL Net_42 : bit;
     SIGNAL Net_52 : bit;
     SIGNAL Net_92 : bit;
-    SIGNAL Pin25(0)__PA : bit;
-    SIGNAL Pin26(0)__PA : bit;
-    SIGNAL Potentiometer_Pin23(0)__PA : bit;
-    SIGNAL RST(0)__PA : bit;
+    SIGNAL Potentiometer0_Pin23(0)__PA : bit;
+    SIGNAL Potentiometer3_Pin26(0)__PA : bit;
     SIGNAL Rx(0)__PA : bit;
     SIGNAL SCL(0)__PA : bit;
     SIGNAL SDA(0)__PA : bit;
+    SIGNAL TMP36_Pin25(0)__PA : bit;
     SIGNAL Tx(0)__PA : bit;
     SIGNAL \ADC_DelSig:Net_245_0\ : bit;
     SIGNAL \ADC_DelSig:Net_245_1\ : bit;
@@ -164,20 +161,20 @@ ARCHITECTURE __DEFAULT__ OF \Project-DAQ_for_RaspberryPi\ IS
     ATTRIBUTE POWER OF __ONE__ : SIGNAL IS true;
     SIGNAL __ZERO__ : bit;
     ATTRIBUTE GROUND OF __ZERO__ : SIGNAL IS true;
-    SIGNAL tmpOE__Potentiometer_Pin23_net_0 : bit;
-    ATTRIBUTE POWER OF tmpOE__Potentiometer_Pin23_net_0 : SIGNAL IS true;
+    SIGNAL tmpOE__Potentiometer0_Pin23_net_0 : bit;
+    ATTRIBUTE POWER OF tmpOE__Potentiometer0_Pin23_net_0 : SIGNAL IS true;
     SIGNAL zero : bit;
     ATTRIBUTE GROUND OF zero : SIGNAL IS true;
     SIGNAL \ClockBlock.aclk_glb_ff_0__sig\ : bit;
     ATTRIBUTE lib_model OF \I2C:bI2C_UDB:status_0_split\ : LABEL IS "macrocell1";
-    ATTRIBUTE lib_model OF Potentiometer_Pin23(0) : LABEL IS "iocell1";
-    ATTRIBUTE Location OF Potentiometer_Pin23(0) : LABEL IS "P2[3]";
+    ATTRIBUTE lib_model OF Potentiometer0_Pin23(0) : LABEL IS "iocell1";
+    ATTRIBUTE Location OF Potentiometer0_Pin23(0) : LABEL IS "P2[3]";
     ATTRIBUTE lib_model OF LM35_Pin24(0) : LABEL IS "iocell2";
     ATTRIBUTE Location OF LM35_Pin24(0) : LABEL IS "P2[4]";
-    ATTRIBUTE lib_model OF Pin25(0) : LABEL IS "iocell3";
-    ATTRIBUTE Location OF Pin25(0) : LABEL IS "P2[5]";
-    ATTRIBUTE lib_model OF Pin26(0) : LABEL IS "iocell4";
-    ATTRIBUTE Location OF Pin26(0) : LABEL IS "P2[6]";
+    ATTRIBUTE lib_model OF TMP36_Pin25(0) : LABEL IS "iocell3";
+    ATTRIBUTE Location OF TMP36_Pin25(0) : LABEL IS "P2[5]";
+    ATTRIBUTE lib_model OF Potentiometer3_Pin26(0) : LABEL IS "iocell4";
+    ATTRIBUTE Location OF Potentiometer3_Pin26(0) : LABEL IS "P2[6]";
     ATTRIBUTE lib_model OF Tx(0) : LABEL IS "iocell5";
     ATTRIBUTE Location OF Tx(0) : LABEL IS "P12[7]";
     ATTRIBUTE lib_model OF Rx(0) : LABEL IS "iocell6";
@@ -186,7 +183,6 @@ ARCHITECTURE __DEFAULT__ OF \Project-DAQ_for_RaspberryPi\ IS
     ATTRIBUTE Location OF SDA(0) : LABEL IS "P12[1]";
     ATTRIBUTE lib_model OF SCL(0) : LABEL IS "iocell8";
     ATTRIBUTE Location OF SCL(0) : LABEL IS "P12[0]";
-    ATTRIBUTE lib_model OF RST(0) : LABEL IS "iocell_ireg";
     ATTRIBUTE lib_model OF Net_52 : LABEL IS "macrocell2";
     ATTRIBUTE lib_model OF \DEBUG_UART:BUART:counter_load_not\ : LABEL IS "macrocell3";
     ATTRIBUTE lib_model OF \DEBUG_UART:BUART:tx_status_0\ : LABEL IS "macrocell4";
@@ -651,7 +647,7 @@ BEGIN
             dclk_2 => \DEBUG_UART:Net_9_local\,
             aclk_glb_ff_0 => \ClockBlock.aclk_glb_ff_0__sig\);
 
-    Potentiometer_Pin23:logicalport
+    Potentiometer0_Pin23:logicalport
         GENERIC MAP(
             drive_mode => "000",
             ibuf_enabled => "0",
@@ -722,16 +718,16 @@ BEGIN
             out_clock_en => open,
             out_reset => open);
 
-    Potentiometer_Pin23(0):iocell
+    Potentiometer0_Pin23(0):iocell
         GENERIC MAP(
             in_sync_mode => 0,
             out_sync_mode => 0,
             oe_sync_mode => 0,
-            logicalport => "Potentiometer_Pin23",
+            logicalport => "Potentiometer0_Pin23",
             logicalport_pin_id => 0,
             io_capabilities => "0000000000000000000000000000000000000000000000000000000000000010")
         PORT MAP(
-            pa_out => Potentiometer_Pin23(0)__PA,
+            pa_out => Potentiometer0_Pin23(0)__PA,
             oe => open,
             in_clock => open,
             in_clock_en => '1',
@@ -829,7 +825,7 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
-    Pin25:logicalport
+    TMP36_Pin25:logicalport
         GENERIC MAP(
             drive_mode => "000",
             ibuf_enabled => "0",
@@ -900,16 +896,16 @@ BEGIN
             out_clock_en => open,
             out_reset => open);
 
-    Pin25(0):iocell
+    TMP36_Pin25(0):iocell
         GENERIC MAP(
             in_sync_mode => 0,
             out_sync_mode => 0,
             oe_sync_mode => 0,
-            logicalport => "Pin25",
+            logicalport => "TMP36_Pin25",
             logicalport_pin_id => 0,
             io_capabilities => "0000000000000000000000000000000000000000000000000000000000000010")
         PORT MAP(
-            pa_out => Pin25(0)__PA,
+            pa_out => TMP36_Pin25(0)__PA,
             oe => open,
             in_clock => open,
             in_clock_en => '1',
@@ -918,7 +914,7 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
-    Pin26:logicalport
+    Potentiometer3_Pin26:logicalport
         GENERIC MAP(
             drive_mode => "000",
             ibuf_enabled => "0",
@@ -989,16 +985,16 @@ BEGIN
             out_clock_en => open,
             out_reset => open);
 
-    Pin26(0):iocell
+    Potentiometer3_Pin26(0):iocell
         GENERIC MAP(
             in_sync_mode => 0,
             out_sync_mode => 0,
             oe_sync_mode => 0,
-            logicalport => "Pin26",
+            logicalport => "Potentiometer3_Pin26",
             logicalport_pin_id => 0,
             io_capabilities => "0000000000000000000000000000000000000000000000000000000000000010")
         PORT MAP(
-            pa_out => Pin26(0)__PA,
+            pa_out => Potentiometer3_Pin26(0)__PA,
             oe => open,
             in_clock => open,
             in_clock_en => '1',
@@ -1193,7 +1189,7 @@ BEGIN
 
     SDA:logicalport
         GENERIC MAP(
-            drive_mode => "100",
+            drive_mode => "010",
             ibuf_enabled => "1",
             id => "f79a72e9-7c3f-4676-ba3b-a63cdb16397f",
             init_dr_st => "1",
@@ -1287,7 +1283,7 @@ BEGIN
 
     SCL:logicalport
         GENERIC MAP(
-            drive_mode => "100",
+            drive_mode => "010",
             ibuf_enabled => "1",
             id => "e8a2b249-4a10-4e6b-aa51-88b730f91e5d",
             init_dr_st => "1",
@@ -1372,98 +1368,6 @@ BEGIN
             pin_input => \I2C:Net_643_3\,
             pad_out => SCL(0)_PAD,
             pad_in => SCL(0)_PAD,
-            in_clock => ClockBlock_BUS_CLK,
-            in_clock_en => '1',
-            in_reset => '0',
-            out_clock => open,
-            out_clock_en => '1',
-            out_reset => '0');
-
-    RST:logicalport
-        GENERIC MAP(
-            drive_mode => "001",
-            ibuf_enabled => "1",
-            id => "1425177d-0d0e-4468-8bcc-e638e5509a9b",
-            init_dr_st => "0",
-            input_buffer_sel => "00",
-            input_clk_en => 0,
-            input_sync => "1",
-            input_sync_mode => "0",
-            intr_mode => "00",
-            invert_in_clock => 0,
-            invert_in_clock_en => 0,
-            invert_in_reset => 0,
-            invert_out_clock => 0,
-            invert_out_clock_en => 0,
-            invert_out_reset => 0,
-            io_voltage => "",
-            layout_mode => "CONTIGUOUS",
-            oe_conn => "0",
-            oe_reset => 0,
-            oe_sync => "0",
-            output_clk_en => 0,
-            output_clock_mode => "0",
-            output_conn => "0",
-            output_mode => "0",
-            output_reset => 0,
-            output_sync => "0",
-            ovt_hyst_trim => "0",
-            ovt_needed => "0",
-            ovt_slew_control => "00",
-            pa_in_clock => -1,
-            pa_in_clock_en => -1,
-            pa_in_reset => -1,
-            pa_out_clock => -1,
-            pa_out_clock_en => -1,
-            pa_out_reset => -1,
-            pin_aliases => "",
-            pin_mode => "I",
-            por_state => 4,
-            port_alias_group => "",
-            port_alias_required => 0,
-            sio_group_cnt => 0,
-            sio_hifreq => "00000000",
-            sio_hyst => "1",
-            sio_ibuf => "00000000",
-            sio_info => "00",
-            sio_obuf => "00000000",
-            sio_refsel => "00000000",
-            sio_vohsel => "00000000",
-            sio_vtrip => "00000000",
-            slew_rate => "0",
-            spanning => 0,
-            sw_only => 0,
-            use_annotation => "0",
-            vtrip => "00",
-            width => 1,
-            in_clk_inv => 0,
-            in_clken_inv => 0,
-            in_clken_mode => 1,
-            in_rst_inv => 0,
-            out_clk_inv => 0,
-            out_clken_inv => 0,
-            out_clken_mode => 1,
-            out_rst_inv => 0)
-        PORT MAP(
-            in_clock_en => open,
-            in_reset => open,
-            out_clock_en => open,
-            out_reset => open,
-            in_clock => open);
-
-    RST(0):iocell
-        GENERIC MAP(
-            in_sync_mode => 2,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "RST",
-            logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
-        PORT MAP(
-            pa_out => RST(0)__PA,
-            oe => open,
-            fb => Net_42,
-            pad_in => RST(0)_PAD,
             in_clock => ClockBlock_BUS_CLK,
             in_clock_en => '1',
             in_reset => '0',
@@ -2489,19 +2393,18 @@ BEGIN
 
     \I2C:bI2C_UDB:s_reset\:macrocell
         GENERIC MAP(
-            eqn_main => "(main_0) + (!main_1) + (main_2 * main_3 * main_4 * !main_5 * main_6)",
+            eqn_main => "(!main_0) + (main_1 * main_2 * main_3 * !main_4 * main_5)",
             regmode => 1,
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
             q => \I2C:bI2C_UDB:s_reset\,
             clock_0 => Net_40,
-            main_0 => Net_42,
-            main_1 => \I2C:bI2C_UDB:control_0\,
-            main_2 => \I2C:bI2C_UDB:scl_in_reg\,
-            main_3 => \I2C:bI2C_UDB:scl_in_last_reg\,
-            main_4 => \I2C:bI2C_UDB:scl_in_last2_reg\,
-            main_5 => \I2C:bI2C_UDB:sda_in_last_reg\,
-            main_6 => \I2C:bI2C_UDB:sda_in_last2_reg\);
+            main_0 => \I2C:bI2C_UDB:control_0\,
+            main_1 => \I2C:bI2C_UDB:scl_in_reg\,
+            main_2 => \I2C:bI2C_UDB:scl_in_last_reg\,
+            main_3 => \I2C:bI2C_UDB:scl_in_last2_reg\,
+            main_4 => \I2C:bI2C_UDB:sda_in_last_reg\,
+            main_5 => \I2C:bI2C_UDB:sda_in_last2_reg\);
 
 END __DEFAULT__;

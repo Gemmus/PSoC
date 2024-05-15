@@ -19,7 +19,34 @@
         <register>
           <name>TX_DEBUG_UART_TX_DATA</name>
           <description>TX Data Register</description>
-          <addressOffset>0x40006447</addressOffset>
+          <addressOffset>0x40006444</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+        </register>
+        <register>
+          <name>RX_DEBUG_UART_RX_ADDRESS1</name>
+          <description>RX Address1 Register</description>
+          <addressOffset>0x4000652A</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+        </register>
+        <register>
+          <name>RX_DEBUG_UART_RX_ADDRESS2</name>
+          <description>RX Address2 Register</description>
+          <addressOffset>0x4000653A</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+        </register>
+        <register>
+          <name>RX_DEBUG_UART_RX_DATA</name>
+          <description>RX Data Register</description>
+          <addressOffset>0x4000654A</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -28,7 +55,7 @@
         <register>
           <name>TX_DEBUG_UART_TX_STATUS</name>
           <description>TX status register</description>
-          <addressOffset>0x40006467</addressOffset>
+          <addressOffset>0x40006567</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -65,36 +92,9 @@
           </fields>
         </register>
         <register>
-          <name>RX_DEBUG_UART_RX_ADDRESS1</name>
-          <description>RX Address1 Register</description>
-          <addressOffset>0x40006528</addressOffset>
-          <size>8</size>
-          <access>read-write</access>
-          <resetValue>0</resetValue>
-          <resetMask>0</resetMask>
-        </register>
-        <register>
-          <name>RX_DEBUG_UART_RX_ADDRESS2</name>
-          <description>RX Address2 Register</description>
-          <addressOffset>0x40006538</addressOffset>
-          <size>8</size>
-          <access>read-write</access>
-          <resetValue>0</resetValue>
-          <resetMask>0</resetMask>
-        </register>
-        <register>
-          <name>RX_DEBUG_UART_RX_DATA</name>
-          <description>RX Data Register</description>
-          <addressOffset>0x40006548</addressOffset>
-          <size>8</size>
-          <access>read-write</access>
-          <resetValue>0</resetValue>
-          <resetMask>0</resetMask>
-        </register>
-        <register>
           <name>RX_DEBUG_UART_RX_STATUS</name>
           <description>RX status register</description>
-          <addressOffset>0x40006569</addressOffset>
+          <addressOffset>0x4000656B</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -166,7 +166,7 @@
         <register>
           <name>I2C_DATA</name>
           <description>I2C Data Register</description>
-          <addressOffset>0x40006405</addressOffset>
+          <addressOffset>0x40006406</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -184,7 +184,7 @@
         <register>
           <name>I2C_ADDR</name>
           <description>I2C Slave Adddress Register</description>
-          <addressOffset>0x40006425</addressOffset>
+          <addressOffset>0x40006426</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -202,7 +202,7 @@
         <register>
           <name>I2C_CSR</name>
           <description>I2C Status Register</description>
-          <addressOffset>0x40006465</addressOffset>
+          <addressOffset>0x40006467</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -239,48 +239,9 @@
           </fields>
         </register>
         <register>
-          <name>I2C_INT_MASK</name>
-          <description>I2C Interrupt Enable Mask</description>
-          <addressOffset>0x40006485</addressOffset>
-          <size>8</size>
-          <access>read-write</access>
-          <resetValue>0</resetValue>
-          <resetMask>0</resetMask>
-          <fields>
-            <field>
-              <name>stop_status</name>
-              <description>Enables interrupt from the corresponding bit in status register.</description>
-              <lsb>5</lsb>
-              <msb>5</msb>
-              <access>read-write</access>
-            </field>
-            <field>
-              <name>address</name>
-              <description>Enables interrupt from the corresponding bit in status register.</description>
-              <lsb>3</lsb>
-              <msb>3</msb>
-              <access>read-write</access>
-            </field>
-            <field>
-              <name>lrb</name>
-              <description>Enables interrupt from the corresponding bit in status register.</description>
-              <lsb>1</lsb>
-              <msb>1</msb>
-              <access>read-write</access>
-            </field>
-            <field>
-              <name>byte_complete</name>
-              <description>Enables interrupt from the corresponding bit in status register.</description>
-              <lsb>0</lsb>
-              <msb>0</msb>
-              <access>read-write</access>
-            </field>
-          </fields>
-        </register>
-        <register>
           <name>I2C_CFG</name>
           <description>I2C Configuration Register</description>
-          <addressOffset>0x40006576</addressOffset>
+          <addressOffset>0x40006475</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -310,6 +271,45 @@
             <field>
               <name>slave_en</name>
               <description>Set to 1 to enable the slave functionality.</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>I2C_INT_MASK</name>
+          <description>I2C Interrupt Enable Mask</description>
+          <addressOffset>0x40006487</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0</resetValue>
+          <resetMask>0</resetMask>
+          <fields>
+            <field>
+              <name>stop_status</name>
+              <description>Enables interrupt from the corresponding bit in status register.</description>
+              <lsb>5</lsb>
+              <msb>5</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>address</name>
+              <description>Enables interrupt from the corresponding bit in status register.</description>
+              <lsb>3</lsb>
+              <msb>3</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>lrb</name>
+              <description>Enables interrupt from the corresponding bit in status register.</description>
+              <lsb>1</lsb>
+              <msb>1</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>byte_complete</name>
+              <description>Enables interrupt from the corresponding bit in status register.</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <access>read-write</access>

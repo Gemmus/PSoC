@@ -7,17 +7,17 @@
     <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="TX_DEBUG_UART_TX_DATA" address="0x40006447" bitWidth="8" desc="TX Data Register" hidden="false" />
-    <register name="TX_DEBUG_UART_TX_STATUS" address="0x40006467" bitWidth="8" desc="TX status register" hidden="false">
+    <register name="TX_DEBUG_UART_TX_DATA" address="0x40006444" bitWidth="8" desc="TX Data Register" hidden="false" />
+    <register name="RX_DEBUG_UART_RX_ADDRESS1" address="0x4000652A" bitWidth="8" desc="RX Address1 Register" hidden="false" />
+    <register name="RX_DEBUG_UART_RX_ADDRESS2" address="0x4000653A" bitWidth="8" desc="RX Address2 Register" hidden="false" />
+    <register name="RX_DEBUG_UART_RX_DATA" address="0x4000654A" bitWidth="8" desc="RX Data Register" hidden="false" />
+    <register name="TX_DEBUG_UART_TX_STATUS" address="0x40006567" bitWidth="8" desc="TX status register" hidden="false">
       <field name="DEBUG_UART_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
       <field name="DEBUG_UART_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
       <field name="DEBUG_UART_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
       <field name="DEBUG_UART_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
     </register>
-    <register name="RX_DEBUG_UART_RX_ADDRESS1" address="0x40006528" bitWidth="8" desc="RX Address1 Register" hidden="false" />
-    <register name="RX_DEBUG_UART_RX_ADDRESS2" address="0x40006538" bitWidth="8" desc="RX Address2 Register" hidden="false" />
-    <register name="RX_DEBUG_UART_RX_DATA" address="0x40006548" bitWidth="8" desc="RX Data Register" hidden="false" />
-    <register name="RX_DEBUG_UART_RX_STATUS" address="0x40006569" bitWidth="8" desc="RX status register" hidden="false">
+    <register name="RX_DEBUG_UART_RX_STATUS" address="0x4000656B" bitWidth="8" desc="RX status register" hidden="false">
       <field name="DEBUG_UART_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
       <field name="DEBUG_UART_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
       <field name="DEBUG_UART_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
@@ -27,10 +27,9 @@
       <field name="DEBUG_UART_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
     </register>
   </block>
-  <block name="I2C_Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Em_EEPROM_Dynamic" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="RST" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="I2C_Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="I2C" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="or_udb" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -51,32 +50,33 @@
     <block name="OneTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="Vmux_scl_out" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="bI2C_UDB" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="I2C_DATA" address="0x40006405" bitWidth="8" desc="I2C Data Register" hidden="false">
+    <register name="I2C_DATA" address="0x40006406" bitWidth="8" desc="I2C Data Register" hidden="false">
       <field name="data" from="7" to="0" access="RW" resetVal="" desc="Read received data or write data to transmit. These bits are held zero if I2C_CFG.en_mstr and I2C_CFG.en_slave are both zero." hidden="false" />
     </register>
-    <register name="I2C_ADDR" address="0x40006425" bitWidth="8" desc="I2C Slave Adddress Register" hidden="false">
+    <register name="I2C_ADDR" address="0x40006426" bitWidth="8" desc="I2C Slave Adddress Register" hidden="false">
       <field name="slave_address" from="6" to="0" access="RW" resetVal="" desc="These seven bits hold the slave's own device address." hidden="false" />
     </register>
-    <register name="I2C_CSR" address="0x40006465" bitWidth="8" desc="I2C Status Register" hidden="false">
+    <register name="I2C_CSR" address="0x40006467" bitWidth="8" desc="I2C Status Register" hidden="false">
       <field name="stop_status" from="5" to="5" access="R" resetVal="" desc="If set, indicates a Stop condition was detected on the bus." hidden="false" />
       <field name="address" from="3" to="3" access="R" resetVal="" desc="Address detection. If set, indicates that an address byte was sent." hidden="false" />
       <field name="lrb" from="1" to="1" access="R" resetVal="" desc="Last Received Bit. Indicates the state of the last received bit, which is the ACK/NAK received for the last byte transmitted. Cleared = ACK and set = NAK." hidden="false" />
       <field name="byte_complete" from="0" to="0" access="R" resetVal="" desc="Transmit or receive status since the last read of this register. In Transmit mode this bit indicates that eight bits of data plus ACK/NAK have been transmitted since the last read. In Receive mode this bit indicates that eight bits of data have been received since the last read of this register." hidden="false" />
     </register>
-    <register name="I2C_INT_MASK" address="0x40006485" bitWidth="8" desc="I2C Interrupt Enable Mask" hidden="false">
-      <field name="stop_status" from="5" to="5" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
-      <field name="address" from="3" to="3" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
-      <field name="lrb" from="1" to="1" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
-      <field name="byte_complete" from="0" to="0" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
-    </register>
-    <register name="I2C_CFG" address="0x40006576" bitWidth="8" desc="I2C Configuration Register" hidden="false">
+    <register name="I2C_CFG" address="0x40006475" bitWidth="8" desc="I2C Configuration Register" hidden="false">
       <field name="nack" from="4" to="4" access="RW" resetVal="" desc="If set, used to NAK the last byte received. This bit must be cleared by firmware between bytes." hidden="false" />
       <field name="hw_addr_en" from="3" to="3" access="RW" resetVal="" desc="If set, used to enable the device to respond any device addresses it receives rather than just the single address provided in I2C_ADDRESS." hidden="false" />
       <field name="transmit" from="2" to="2" access="RW" resetVal="" desc="Used to set the mode to transmit or receive data. This bit must be cleared by firmware between bytes. Set = transmit and cleared = receive." hidden="false" />
       <field name="slave_en" from="0" to="0" access="RW" resetVal="" desc="Set to 1 to enable the slave functionality." hidden="false" />
     </register>
+    <register name="I2C_INT_MASK" address="0x40006487" bitWidth="8" desc="I2C Interrupt Enable Mask" hidden="false">
+      <field name="stop_status" from="5" to="5" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
+      <field name="address" from="3" to="3" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
+      <field name="lrb" from="1" to="1" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
+      <field name="byte_complete" from="0" to="0" access="RW" resetVal="" desc="Enables interrupt from the corresponding bit in status register." hidden="false" />
+    </register>
   </block>
-  <block name="Potentiometer_Pin23" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Tx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Potentiometer0_Pin23" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="LM35_Pin24" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="ADC_DelSig" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="cy_analog_virtualmux_5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -899,9 +899,8 @@
     </register>
   </block>
   <block name="AMux" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin25" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="ADC_ISR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Tx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin26" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="ADC_Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ADC_ISR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="TMP36_Pin25" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Potentiometer3_Pin26" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
 </blockRegMap>

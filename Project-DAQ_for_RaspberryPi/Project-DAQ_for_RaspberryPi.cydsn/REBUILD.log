@@ -1,0 +1,12 @@
+--------------- Rebuild Started: 04/28/2024 18:11:51 Project: main.c, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
+main.c: In function 'main':
+main.c:100:24: error: 'mySPITXIsr' undeclared (first use in this function)
+     SPI_TX_ISR_StartEx(mySPITXIsr);
+                        ^
+main.c:100:24: note: each undeclared identifier is reported only once for each function it appears in
+main.c:101:24: error: 'mySPIRXIsr' undeclared (first use in this function)
+     SPI_RX_ISR_StartEx(mySPIRXIsr);
+                        ^
+The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
+--------------- Rebuild Failed: 04/28/2024 18:11:51 ---------------

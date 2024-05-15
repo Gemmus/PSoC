@@ -1,7 +1,7 @@
-C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\Project-DAQ_for_RaspberryPi.cyprj|77642eb6-aadd-4a73-ada5-e8c1eac961fb
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|26448b5a-becb-4dfe-8f95-3f22e691fe75
-C:\Users\Gemma\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|a98ab3f1-b1f4-4b3a-8bfc-474883f20e2a
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|05df365f-1d78-41cf-a952-623e99100be1
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|f8f1e322-3f13-4830-a665-ba37078a45ca
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|e3d206d5-9f43-4957-8501-2a1a09095d42
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|f1d738b2-dd93-4d39-8c91-3b3ec2639280
+C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\Project-DAQ_for_RaspberryPi.cyprj|85378099-e9d4-4229-8184-c0f4b07052fd
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|a6eca67e-884a-4416-ae59-871a57aff767
+C:\Users\Gemma\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|9a661b2e-ec29-4e11-a303-d67f1497981e
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|4df63cd5-e308-421e-801b-78a1aa8c3f76
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|869b1fd6-ccbc-47e9-be44-647b6d577374
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|32c3c4c4-90d0-48d8-b4cc-3eda10860e29
+C:\Users\Gemma\Documents\PSoC Creator\My Templates\Project-DAQ_for_RaspberryPi.cydsn\Project-DAQ_for_RaspberryPi.cyprj|4c2785ee-9360-49bf-870d-0c41ff700355

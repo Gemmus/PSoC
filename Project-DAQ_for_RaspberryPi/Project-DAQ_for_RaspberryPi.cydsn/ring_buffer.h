@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define MAX_BUFFER_SIZE 10
+#define MAX_BUFFER_SIZE 64
 
 typedef struct {
     uint16_t buffer[MAX_BUFFER_SIZE];

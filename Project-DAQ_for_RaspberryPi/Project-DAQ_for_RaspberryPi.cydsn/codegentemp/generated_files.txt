@@ -24,18 +24,18 @@
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\ADC_DelSig_INT.c" value="SOURCE_C;CortexM3;;;;ADC_DelSig" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\AMux.c" value="SOURCE_C;CortexM3;;;;AMux" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\AMux.h" value="HEADER;;;;;AMux" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer_Pin23_aliases.h" value="HEADER;;;;;Potentiometer_Pin23" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer_Pin23.c" value="SOURCE_C;CortexM3;;;;Potentiometer_Pin23" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer_Pin23.h" value="HEADER;;;;;Potentiometer_Pin23" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer0_Pin23_aliases.h" value="HEADER;;;;;Potentiometer0_Pin23" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer0_Pin23.c" value="SOURCE_C;CortexM3;;;;Potentiometer0_Pin23" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer0_Pin23.h" value="HEADER;;;;;Potentiometer0_Pin23" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\LM35_Pin24_aliases.h" value="HEADER;;;;;LM35_Pin24" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\LM35_Pin24.c" value="SOURCE_C;CortexM3;;;;LM35_Pin24" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\LM35_Pin24.h" value="HEADER;;;;;LM35_Pin24" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Pin25_aliases.h" value="HEADER;;;;;Pin25" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Pin25.c" value="SOURCE_C;CortexM3;;;;Pin25" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Pin25.h" value="HEADER;;;;;Pin25" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Pin26_aliases.h" value="HEADER;;;;;Pin26" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Pin26.c" value="SOURCE_C;CortexM3;;;;Pin26" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Pin26.h" value="HEADER;;;;;Pin26" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\TMP36_Pin25_aliases.h" value="HEADER;;;;;TMP36_Pin25" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\TMP36_Pin25.c" value="SOURCE_C;CortexM3;;;;TMP36_Pin25" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\TMP36_Pin25.h" value="HEADER;;;;;TMP36_Pin25" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer3_Pin26_aliases.h" value="HEADER;;;;;Potentiometer3_Pin26" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer3_Pin26.c" value="SOURCE_C;CortexM3;;;;Potentiometer3_Pin26" />
+  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\Potentiometer3_Pin26.h" value="HEADER;;;;;Potentiometer3_Pin26" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\ADC_Clock.c" value="SOURCE_C;CortexM3;;;;ADC_Clock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\ADC_Clock.h" value="HEADER;;;;;ADC_Clock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\ADC_ISR.c" value="SOURCE_C;CortexM3;;;;ADC_ISR" />
@@ -53,9 +53,6 @@
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\SCL.h" value="HEADER;;;;;SCL" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\I2C_Clock.c" value="SOURCE_C;CortexM3;;;;I2C_Clock" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\I2C_Clock.h" value="HEADER;;;;;I2C_Clock" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\RST_aliases.h" value="HEADER;;;;;RST" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\RST.c" value="SOURCE_C;CortexM3;;;;RST" />
-  <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\RST.h" value="HEADER;;;;;RST" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\I2C.c" value="SOURCE_C;CortexM3;;;;I2C" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\I2C.h" value="HEADER;;;;;I2C" />
   <file name="C:\Users\Gemma\Desktop\PSoC\Project-DAQ_for_RaspberryPi\Project-DAQ_for_RaspberryPi.cydsn\codegentemp\I2C_BOOT.c" value="SOURCE_C;CortexM3;;;;I2C" />

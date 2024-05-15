@@ -2,7 +2,7 @@
 --	Conversion of Project-DAQ_for_RaspberryPi.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Sat Apr 20 20:26:11 2024
+--	Wed May 01 20:11:53 2024
 --
 
 USE cypress.cypress.all;
@@ -55,27 +55,27 @@ TERMINAL Net_20 : bit;
 TERMINAL Net_19 : bit;
 TERMINAL Net_18 : bit;
 TERMINAL Net_17 : bit;
-SIGNAL tmpOE__Potentiometer_Pin23_net_0 : bit;
-SIGNAL tmpFB_0__Potentiometer_Pin23_net_0 : bit;
-SIGNAL tmpIO_0__Potentiometer_Pin23_net_0 : bit;
-TERMINAL tmpSIOVREF__Potentiometer_Pin23_net_0 : bit;
+SIGNAL tmpOE__Potentiometer0_Pin23_net_0 : bit;
+SIGNAL tmpFB_0__Potentiometer0_Pin23_net_0 : bit;
+SIGNAL tmpIO_0__Potentiometer0_Pin23_net_0 : bit;
+TERMINAL tmpSIOVREF__Potentiometer0_Pin23_net_0 : bit;
 SIGNAL one : bit;
-SIGNAL tmpINTERRUPT_0__Potentiometer_Pin23_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__Potentiometer0_Pin23_net_0 : bit;
 SIGNAL tmpOE__LM35_Pin24_net_0 : bit;
 SIGNAL tmpFB_0__LM35_Pin24_net_0 : bit;
 SIGNAL tmpIO_0__LM35_Pin24_net_0 : bit;
 TERMINAL tmpSIOVREF__LM35_Pin24_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__LM35_Pin24_net_0 : bit;
-SIGNAL tmpOE__Pin25_net_0 : bit;
-SIGNAL tmpFB_0__Pin25_net_0 : bit;
-SIGNAL tmpIO_0__Pin25_net_0 : bit;
-TERMINAL tmpSIOVREF__Pin25_net_0 : bit;
-SIGNAL tmpINTERRUPT_0__Pin25_net_0 : bit;
-SIGNAL tmpOE__Pin26_net_0 : bit;
-SIGNAL tmpFB_0__Pin26_net_0 : bit;
-SIGNAL tmpIO_0__Pin26_net_0 : bit;
-TERMINAL tmpSIOVREF__Pin26_net_0 : bit;
-SIGNAL tmpINTERRUPT_0__Pin26_net_0 : bit;
+SIGNAL tmpOE__TMP36_Pin25_net_0 : bit;
+SIGNAL tmpFB_0__TMP36_Pin25_net_0 : bit;
+SIGNAL tmpIO_0__TMP36_Pin25_net_0 : bit;
+TERMINAL tmpSIOVREF__TMP36_Pin25_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__TMP36_Pin25_net_0 : bit;
+SIGNAL tmpOE__Potentiometer3_Pin26_net_0 : bit;
+SIGNAL tmpFB_0__Potentiometer3_Pin26_net_0 : bit;
+SIGNAL tmpIO_0__Potentiometer3_Pin26_net_0 : bit;
+TERMINAL tmpSIOVREF__Potentiometer3_Pin26_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__Potentiometer3_Pin26_net_0 : bit;
 SIGNAL tmpOE__Tx_net_0 : bit;
 SIGNAL Net_52 : bit;
 SIGNAL tmpFB_0__Tx_net_0 : bit;
@@ -102,9 +102,9 @@ SIGNAL \DEBUG_UART:BUART:tx_ctrl_mark\ : bit;
 SIGNAL \DEBUG_UART:BUART:reset_sr\ : bit;
 SIGNAL \DEBUG_UART:BUART:HalfDuplexSend_last\ : bit;
 SIGNAL \DEBUG_UART:BUART:txn\ : bit;
-SIGNAL Net_98 : bit;
+SIGNAL Net_131 : bit;
 SIGNAL \DEBUG_UART:BUART:tx_interrupt_out\ : bit;
-SIGNAL Net_99 : bit;
+SIGNAL Net_132 : bit;
 SIGNAL \DEBUG_UART:BUART:rx_interrupt_out\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_state_1\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_state_0\ : bit;
@@ -190,7 +190,7 @@ SIGNAL \DEBUG_UART:BUART:tx_status_0\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_status_1\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_status_2\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_status_3\ : bit;
-SIGNAL Net_95 : bit;
+SIGNAL Net_128 : bit;
 SIGNAL \DEBUG_UART:BUART:tx_bitclk\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_ctrl_mark_last\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_mark\ : bit;
@@ -333,7 +333,7 @@ SIGNAL \DEBUG_UART:BUART:rx_status_4\ : bit;
 SIGNAL \DEBUG_UART:BUART:rx_status_5\ : bit;
 SIGNAL \DEBUG_UART:BUART:rx_status_6\ : bit;
 SIGNAL \DEBUG_UART:BUART:rx_addr_match_status\ : bit;
-SIGNAL Net_94 : bit;
+SIGNAL Net_127 : bit;
 SIGNAL \DEBUG_UART:BUART:rx_markspace_pre\ : bit;
 SIGNAL \DEBUG_UART:BUART:rx_parity_error_pre\ : bit;
 SIGNAL \DEBUG_UART:BUART:rx_break_status\ : bit;
@@ -434,11 +434,6 @@ SIGNAL Net_39 : bit;
 TERMINAL tmpSIOVREF__SCL_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__SCL_net_0 : bit;
 SIGNAL Net_40 : bit;
-SIGNAL tmpOE__RST_net_0 : bit;
-SIGNAL Net_42 : bit;
-SIGNAL tmpIO_0__RST_net_0 : bit;
-TERMINAL tmpSIOVREF__RST_net_0 : bit;
-SIGNAL tmpINTERRUPT_0__RST_net_0 : bit;
 SIGNAL \I2C:sda_x_wire\ : bit;
 SIGNAL \I2C:Net_643_4\ : bit;
 SIGNAL \I2C:Net_697\ : bit;
@@ -576,26 +571,26 @@ SIGNAL \I2C:bI2C_UDB:master_rst_reg\ : bit;
 SIGNAL \I2C:scl_x_wire\ : bit;
 SIGNAL \I2C:Net_969\ : bit;
 SIGNAL \I2C:Net_968\ : bit;
-SIGNAL Net_84 : bit;
+SIGNAL Net_137 : bit;
 SIGNAL \I2C:Net_973\ : bit;
 SIGNAL \I2C:bus_clk\ : bit;
-SIGNAL Net_85 : bit;
+SIGNAL Net_138 : bit;
 SIGNAL \I2C:Net_974\ : bit;
 SIGNAL \I2C:scl_yfb\ : bit;
 SIGNAL \I2C:sda_yfb\ : bit;
 SIGNAL \I2C:tmpOE__Bufoe_scl_net_0\ : bit;
 SIGNAL \I2C:tmpOE__Bufoe_sda_net_0\ : bit;
 SIGNAL \I2C:timeout_clk\ : bit;
-SIGNAL Net_90 : bit;
+SIGNAL Net_143 : bit;
 SIGNAL \I2C:Net_975\ : bit;
-SIGNAL Net_88 : bit;
-SIGNAL Net_89 : bit;
+SIGNAL Net_141 : bit;
+SIGNAL Net_142 : bit;
 SIGNAL \DEBUG_UART:BUART:reset_reg\\D\ : bit;
 SIGNAL \DEBUG_UART:BUART:txn\\D\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_state_1\\D\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_state_0\\D\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_state_2\\D\ : bit;
-SIGNAL Net_95D : bit;
+SIGNAL Net_128D : bit;
 SIGNAL \DEBUG_UART:BUART:tx_bitclk\\D\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_ctrl_mark_last\\D\ : bit;
 SIGNAL \DEBUG_UART:BUART:tx_mark\\D\ : bit;
@@ -641,7 +636,7 @@ BEGIN
 
 zero <=  ('0') ;
 
-tmpOE__Potentiometer_Pin23_net_0 <=  ('1') ;
+tmpOE__Potentiometer0_Pin23_net_0 <=  ('1') ;
 
 Net_52 <= (not \DEBUG_UART:BUART:txn\);
 
@@ -653,7 +648,7 @@ Net_52 <= (not \DEBUG_UART:BUART:txn\);
 
 \DEBUG_UART:BUART:tx_status_2\ <= (not \DEBUG_UART:BUART:tx_fifo_notfull\);
 
-Net_95D <= ((not \DEBUG_UART:BUART:reset_reg\ and \DEBUG_UART:BUART:tx_state_2\)
+Net_128D <= ((not \DEBUG_UART:BUART:reset_reg\ and \DEBUG_UART:BUART:tx_state_2\)
 	OR (not \DEBUG_UART:BUART:reset_reg\ and \DEBUG_UART:BUART:tx_state_0\)
 	OR (not \DEBUG_UART:BUART:reset_reg\ and \DEBUG_UART:BUART:tx_state_1\));
 
@@ -839,11 +834,9 @@ Net_95D <= ((not \DEBUG_UART:BUART:reset_reg\ and \DEBUG_UART:BUART:tx_state_2\)
 	OR (not \I2C:bI2C_UDB:s_state_2\ and not \I2C:bI2C_UDB:s_state_1\ and \I2C:bI2C_UDB:scl_went_high\ and \I2C:bI2C_UDB:s_state_0\));
 
 \I2C:bI2C_UDB:slave_rst_reg\\D\ <= ((not \I2C:bI2C_UDB:sda_in_last_reg\ and \I2C:bI2C_UDB:scl_in_reg\ and \I2C:bI2C_UDB:scl_in_last_reg\ and \I2C:bI2C_UDB:scl_in_last2_reg\ and \I2C:bI2C_UDB:sda_in_last2_reg\)
-	OR not \I2C:bI2C_UDB:control_0\
-	OR Net_42);
+	OR not \I2C:bI2C_UDB:control_0\);
 
-\I2C:bI2C_UDB:master_rst_reg\\D\ <= (not \I2C:bI2C_UDB:control_1\
-	OR Net_42);
+\I2C:bI2C_UDB:master_rst_reg\\D\ <= (not \I2C:bI2C_UDB:control_1\);
 
 \ADC_DelSig:vRef_2\:cy_vref_v1_0
 	GENERIC MAP(guid=>"15B3DB15-B7B3-4d62-A2DF-25EA392A7161",
@@ -937,7 +930,7 @@ Net_95D <= ((not \DEBUG_UART:BUART:reset_reg\ and \DEBUG_UART:BUART:tx_state_2\)
 	GENERIC MAP(cy_registers=>"")
 	PORT MAP(aclock=>\ADC_DelSig:aclock\,
 		mod_dat=>(\ADC_DelSig:mod_dat_3\, \ADC_DelSig:mod_dat_2\, \ADC_DelSig:mod_dat_1\, \ADC_DelSig:mod_dat_0\),
-		ext_start=>tmpOE__Potentiometer_Pin23_net_0,
+		ext_start=>tmpOE__Potentiometer0_Pin23_net_0,
 		mod_reset=>\ADC_DelSig:mod_reset\,
 		interrupt=>Net_13);
 AMux:cy_psoc3_amux_v1_0
@@ -951,7 +944,7 @@ AMux:cy_psoc3_amux_v1_0
 	PORT MAP(muxin=>(Net_20, Net_19, Net_18, Net_17),
 		hw_ctrl_en=>(others => zero),
 		vout=>Net_10);
-Potentiometer_Pin23:cy_psoc3_pins_v1_10
+Potentiometer0_Pin23:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"77715107-f8d5-47e5-a629-0fb83101ac6b",
 		drive_mode=>"000",
 		ibuf_enabled=>"0",
@@ -1007,20 +1000,20 @@ Potentiometer_Pin23:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>(zero),
-		fb=>(tmpFB_0__Potentiometer_Pin23_net_0),
+		fb=>(tmpFB_0__Potentiometer0_Pin23_net_0),
 		analog=>Net_17,
-		io=>(tmpIO_0__Potentiometer_Pin23_net_0),
-		siovref=>(tmpSIOVREF__Potentiometer_Pin23_net_0),
+		io=>(tmpIO_0__Potentiometer0_Pin23_net_0),
+		siovref=>(tmpSIOVREF__Potentiometer0_Pin23_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__Potentiometer_Pin23_net_0);
+		interrupt=>tmpINTERRUPT_0__Potentiometer0_Pin23_net_0);
 LM35_Pin24:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"7e9d63e2-400e-47a7-9ec6-bbdee2a5c627",
 		drive_mode=>"000",
@@ -1077,7 +1070,7 @@ LM35_Pin24:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>(zero),
 		fb=>(tmpFB_0__LM35_Pin24_net_0),
 		analog=>Net_18,
@@ -1085,13 +1078,13 @@ LM35_Pin24:cy_psoc3_pins_v1_10
 		siovref=>(tmpSIOVREF__LM35_Pin24_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__LM35_Pin24_net_0);
-Pin25:cy_psoc3_pins_v1_10
+TMP36_Pin25:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"a030e9e2-647b-45e3-a7d1-930e38eca40b",
 		drive_mode=>"000",
 		ibuf_enabled=>"0",
@@ -1147,21 +1140,21 @@ Pin25:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>(zero),
-		fb=>(tmpFB_0__Pin25_net_0),
+		fb=>(tmpFB_0__TMP36_Pin25_net_0),
 		analog=>Net_19,
-		io=>(tmpIO_0__Pin25_net_0),
-		siovref=>(tmpSIOVREF__Pin25_net_0),
+		io=>(tmpIO_0__TMP36_Pin25_net_0),
+		siovref=>(tmpSIOVREF__TMP36_Pin25_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__Pin25_net_0);
-Pin26:cy_psoc3_pins_v1_10
+		interrupt=>tmpINTERRUPT_0__TMP36_Pin25_net_0);
+Potentiometer3_Pin26:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"522c680e-db1c-456d-a007-bf64bd36955c",
 		drive_mode=>"000",
 		ibuf_enabled=>"0",
@@ -1217,20 +1210,20 @@ Pin26:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>(zero),
-		fb=>(tmpFB_0__Pin26_net_0),
+		fb=>(tmpFB_0__Potentiometer3_Pin26_net_0),
 		analog=>Net_20,
-		io=>(tmpIO_0__Pin26_net_0),
-		siovref=>(tmpSIOVREF__Pin26_net_0),
+		io=>(tmpIO_0__Potentiometer3_Pin26_net_0),
+		siovref=>(tmpSIOVREF__Potentiometer3_Pin26_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__Pin26_net_0);
+		interrupt=>tmpINTERRUPT_0__Potentiometer3_Pin26_net_0);
 ADC_Clock:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
 		id=>"bf8461df-86ce-4c16-abd1-e120c8bae7d8",
@@ -1301,7 +1294,7 @@ Tx:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>Net_52,
 		fb=>(tmpFB_0__Tx_net_0),
 		analog=>(open),
@@ -1309,10 +1302,10 @@ Tx:cy_psoc3_pins_v1_10
 		siovref=>(tmpSIOVREF__Tx_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Tx_net_0);
 Rx:cy_psoc3_pins_v1_10
@@ -1371,7 +1364,7 @@ Rx:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>(zero),
 		fb=>Net_92,
 		analog=>(open),
@@ -1379,10 +1372,10 @@ Rx:cy_psoc3_pins_v1_10
 		siovref=>(tmpSIOVREF__Rx_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Rx_net_0);
 \DEBUG_UART:IntClock\:cy_clock_v1_0
@@ -1398,7 +1391,7 @@ Rx:cy_psoc3_pins_v1_10
 \DEBUG_UART:BUART:ClkSync\:cy_psoc3_udb_clock_enable_v1_0
 	GENERIC MAP(sync_mode=>'1')
 	PORT MAP(clock_in=>\DEBUG_UART:Net_9\,
-		enable=>tmpOE__Potentiometer_Pin23_net_0,
+		enable=>tmpOE__Potentiometer0_Pin23_net_0,
 		clock_out=>\DEBUG_UART:BUART:clock_op\);
 \DEBUG_UART:BUART:sTX:TxShifter:u0\:cy_psoc3_dp
 	GENERIC MAP(cy_dpconfig=>"0000000000000000000000000000000000000000000000000000000011000000000000000000000000000010010000000000000000000000000000000000000011111111000000001111111111111111000000000000000001000100111100000000000000001100",
@@ -1677,7 +1670,7 @@ Rx:cy_psoc3_pins_v1_10
 	PORT MAP(clock=>\DEBUG_UART:BUART:clock_op\,
 		reset=>\DEBUG_UART:BUART:reset_reg\,
 		load=>\DEBUG_UART:BUART:rx_counter_load\,
-		enable=>tmpOE__Potentiometer_Pin23_net_0,
+		enable=>tmpOE__Potentiometer0_Pin23_net_0,
 		count=>(\DEBUG_UART:BUART:rx_count_6\, \DEBUG_UART:BUART:rx_count_5\, \DEBUG_UART:BUART:rx_count_4\, \DEBUG_UART:BUART:rx_count_3\,
 			\DEBUG_UART:BUART:rx_count_2\, \DEBUG_UART:BUART:rx_count_1\, \DEBUG_UART:BUART:rx_count_0\),
 		tc=>\DEBUG_UART:BUART:rx_count7_tc\);
@@ -1692,7 +1685,7 @@ Rx:cy_psoc3_pins_v1_10
 		interrupt=>\DEBUG_UART:BUART:rx_interrupt_out\);
 SDA:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"f79a72e9-7c3f-4676-ba3b-a63cdb16397f",
-		drive_mode=>"100",
+		drive_mode=>"010",
 		ibuf_enabled=>"1",
 		init_dr_st=>"1",
 		input_sync=>"1",
@@ -1746,7 +1739,7 @@ SDA:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>(zero),
 		fb=>(tmpFB_0__SDA_net_0),
 		analog=>(open),
@@ -1754,15 +1747,15 @@ SDA:cy_psoc3_pins_v1_10
 		siovref=>(tmpSIOVREF__SDA_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__SDA_net_0);
 SCL:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"e8a2b249-4a10-4e6b-aa51-88b730f91e5d",
-		drive_mode=>"100",
+		drive_mode=>"010",
 		ibuf_enabled=>"1",
 		init_dr_st=>"1",
 		input_sync=>"1",
@@ -1816,7 +1809,7 @@ SCL:cy_psoc3_pins_v1_10
 		ovt_slew_control=>"00",
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
+	PORT MAP(oe=>(tmpOE__Potentiometer0_Pin23_net_0),
 		y=>(zero),
 		fb=>(tmpFB_0__SCL_net_0),
 		analog=>(open),
@@ -1824,92 +1817,22 @@ SCL:cy_psoc3_pins_v1_10
 		siovref=>(tmpSIOVREF__SCL_net_0),
 		annotation=>(open),
 		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		in_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		in_reset=>zero,
 		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
+		out_clock_en=>tmpOE__Potentiometer0_Pin23_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__SCL_net_0);
 I2C_Clock:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
 		id=>"d63e3c31-06bb-4b92-9fb2-102854725f29",
-		source_clock_id=>"",
+		source_clock_id=>"39D5E4C2-EBFC-44ab-AE3D-19F9BBFD674D",
 		divisor=>0,
-		period=>"166666666.666667",
+		period=>"156250000",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_40,
 		dig_domain_out=>open);
-RST:cy_psoc3_pins_v1_10
-	GENERIC MAP(id=>"1425177d-0d0e-4468-8bcc-e638e5509a9b",
-		drive_mode=>"001",
-		ibuf_enabled=>"1",
-		init_dr_st=>"0",
-		input_sync=>"1",
-		input_clk_en=>'0',
-		input_sync_mode=>"0",
-		intr_mode=>"00",
-		invert_in_clock=>'0',
-		invert_in_clock_en=>'0',
-		invert_in_reset=>'0',
-		invert_out_clock=>'0',
-		invert_out_clock_en=>'0',
-		invert_out_reset=>'0',
-		io_voltage=>"",
-		layout_mode=>"CONTIGUOUS",
-		output_conn=>"0",
-		output_sync=>"0",
-		output_clk_en=>'0',
-		output_mode=>"0",
-		output_reset=>'0',
-		output_clock_mode=>"0",
-		oe_sync=>"0",
-		oe_conn=>"0",
-		oe_reset=>'0',
-		pin_aliases=>"",
-		pin_mode=>"I",
-		por_state=>4,
-		sio_group_cnt=>0,
-		sio_hifreq=>"00000000",
-		sio_hyst=>"1",
-		sio_ibuf=>"00000000",
-		sio_info=>"00",
-		sio_obuf=>"00000000",
-		sio_refsel=>"00000000",
-		sio_vtrip=>"00000000",
-		sio_vohsel=>"00000000",
-		slew_rate=>"0",
-		spanning=>'0',
-		sw_only=>'0',
-		vtrip=>"00",
-		width=>1,
-		port_alias_required=>'0',
-		port_alias_group=>"",
-		use_annotation=>"0",
-		pa_in_clock=>-1,
-		pa_in_clock_en=>-1,
-		pa_in_reset=>-1,
-		pa_out_clock=>-1,
-		pa_out_clock_en=>-1,
-		pa_out_reset=>-1,
-		ovt_needed=>"0",
-		ovt_slew_control=>"00",
-		ovt_hyst_trim=>"0",
-		input_buffer_sel=>"00")
-	PORT MAP(oe=>(tmpOE__Potentiometer_Pin23_net_0),
-		y=>(zero),
-		fb=>Net_42,
-		analog=>(open),
-		io=>(tmpIO_0__RST_net_0),
-		siovref=>(tmpSIOVREF__RST_net_0),
-		annotation=>(open),
-		in_clock=>zero,
-		in_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
-		in_reset=>zero,
-		out_clock=>zero,
-		out_clock_en=>tmpOE__Potentiometer_Pin23_net_0,
-		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__RST_net_0);
 \I2C:I2C_IRQ\:cy_isr_v1_0
 	GENERIC MAP(int_type=>"00",
 		is_nmi=>'0')
@@ -1917,7 +1840,7 @@ RST:cy_psoc3_pins_v1_10
 \I2C:bI2C_UDB:ClkSync0\:cy_psoc3_udb_clock_enable_v1_0
 	GENERIC MAP(sync_mode=>'1')
 	PORT MAP(clock_in=>Net_40,
-		enable=>tmpOE__Potentiometer_Pin23_net_0,
+		enable=>tmpOE__Potentiometer0_Pin23_net_0,
 		clock_out=>\I2C:bI2C_UDB:op_clk\);
 \I2C:bI2C_UDB:SyncCtl:CtrlReg\:cy_psoc3_control
 	GENERIC MAP(cy_init_value=>"00000000",
@@ -2039,12 +1962,12 @@ RST:cy_psoc3_pins_v1_10
 		tc=>open);
 \I2C:Bufoe_scl\:cy_bufoe
 	PORT MAP(x=>\I2C:Net_643_3\,
-		oe=>tmpOE__Potentiometer_Pin23_net_0,
+		oe=>tmpOE__Potentiometer0_Pin23_net_0,
 		y=>Net_39,
 		yfb=>\I2C:Net_1109_0\);
 \I2C:Bufoe_sda\:cy_bufoe
 	PORT MAP(x=>\I2C:sda_x_wire\,
-		oe=>tmpOE__Potentiometer_Pin23_net_0,
+		oe=>tmpOE__Potentiometer0_Pin23_net_0,
 		y=>Net_104,
 		yfb=>\I2C:Net_1109_1\);
 \DEBUG_UART:BUART:reset_reg\:cy_dff
@@ -2067,10 +1990,10 @@ RST:cy_psoc3_pins_v1_10
 	PORT MAP(d=>\DEBUG_UART:BUART:tx_state_2\\D\,
 		clk=>\DEBUG_UART:BUART:clock_op\,
 		q=>\DEBUG_UART:BUART:tx_state_2\);
-Net_95:cy_dff
-	PORT MAP(d=>Net_95D,
+Net_128:cy_dff
+	PORT MAP(d=>Net_128D,
 		clk=>\DEBUG_UART:BUART:clock_op\,
-		q=>Net_95);
+		q=>Net_128);
 \DEBUG_UART:BUART:tx_bitclk\:cy_dff
 	PORT MAP(d=>\DEBUG_UART:BUART:tx_bitclk\\D\,
 		clk=>\DEBUG_UART:BUART:clock_op\,
